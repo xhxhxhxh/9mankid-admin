@@ -1,0 +1,13 @@
+{
+  "presets": ["env","stage-0","react"],
+  "plugins": ["transform-runtime",["import", {
+    "libraryName": "antd",
+    "libraryDirectory": "es",
+    "style": "css"
+  }]],
+  "env": {
+    "development": {
+      "presets": ["react-hmre"]
+    }
+  }
+}

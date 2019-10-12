@@ -1,0 +1,6 @@
+/*全局公共样式*/
+@keyframes fadeInArea {
+    to {
+        opacity: 1;
+    }
+}

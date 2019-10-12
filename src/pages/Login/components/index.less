@@ -1,0 +1,105 @@
+#components-form-demo-normal-login {
+ :global {
+   .tabs {
+     height: 45px;
+     display: flex;
+     justify-content: center;
+     margin-bottom: 24px;
+     > div {
+       height: 100%;
+       font-size: 14px;
+       padding: 12px 16px;
+       color: rgba(0, 2, 4, 0.655);
+       cursor: pointer;
+       transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+       &.account {
+         margin-right: 32px;
+       }
+       &.selected {
+         position: relative;
+         color: #1890FF;
+         &::after {
+           content: "";
+           width: 100%;
+           height: 2px;
+           background-color: #1890FF;
+           position: absolute;
+           left: 0;
+           bottom: 0;
+         }
+       }
+       &:hover {
+         color: #1890FF;
+       }
+     }
+
+   }
+   .login-form {
+     min-width: 368px;
+     .ant-form-item.autoLogin {
+       .ant-form-item-control {
+         line-height: unset;
+       }
+     }
+     .ant-form-item-control {
+       .login-form-button {
+         margin: 24px 0;
+       }
+     }
+     .account-area, .phone-area {
+       input::-webkit-outer-spin-button,
+       input::-webkit-inner-spin-button{
+         -webkit-appearance: none !important;
+       }
+       input[type="number"]{
+         -moz-appearance:textfield;
+       }
+       display: none;
+       &.selected {
+         opacity: 0;
+         display: block;
+         animation: fadeInArea .5s ease;
+         animation-fill-mode: forwards;
+       }
+       .ant-form-item {
+
+       }
+       .ant-form-item-with-help {
+         margin-bottom: 5.5px;
+         height: 60px;
+         .ant-form-explain {
+           margin-bottom: 0;
+         }
+         .ant-form-item-control.has-error {
+
+         }
+       }
+     }
+     .phone-area {
+       > div:nth-child(2) {
+         .ant-form-item-control {
+           .ant-input-affix-wrapper {
+             width: 240px;
+             margin-right: 16px;
+           }
+           button {
+             width: 112px;
+           }
+         }
+       }
+     }
+     .ant-input-affix-wrapper {
+       height: 40px;
+       input {
+         font-size: 16px;
+       }
+     }
+   }
+   .login-form-forgot {
+     float: right;
+   }
+   .login-form-button {
+     width: 100%;
+   }
+ }
+}

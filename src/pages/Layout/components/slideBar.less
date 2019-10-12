@@ -1,0 +1,36 @@
+.layout {
+  height: 100%;
+  :global {
+    aside {
+      width: 256px !important;
+      max-width: 256px !important;
+      min-width: 256px !important;
+      .ant-menu-submenu {
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+      .ant-menu-item {
+        a {
+          display: inline-block;
+        }
+      }
+    }
+    .trigger {
+      font-size: 18px;
+      line-height: 64px;
+      padding: 0 24px;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .trigger:hover {
+      color: #1890ff;
+    }
+    .logo {
+      height: 64px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 16px;
+    }
+  }
+}
