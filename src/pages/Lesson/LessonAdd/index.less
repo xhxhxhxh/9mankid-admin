@@ -1,0 +1,89 @@
+.lesson-add-container {
+  :global {
+    @media (max-width: 1300px){
+      .lesson-add-info {
+        .age-item {
+          .ant-select {
+            width: 50px !important;
+          }
+        }
+      }
+    }
+    .ant-row.ant-form-item {
+      display: flex;
+      height: 32px;
+      &.uploadImg {
+        .avatar-uploader {
+          margin-top: -15px;
+          .ant-upload {
+            width: 100px;
+            height: 62px;
+            img {
+              width: unset;
+              height: 100%;
+            }
+          }
+        }
+      }
+      .ant-form-item-label {
+        line-height: 32px;
+        width: 64px;
+        text-align: right;
+        margin-right: 10px;
+        > label::after {
+          margin: 0;
+        }
+      }
+      &.ant-form-item-with-help {
+        margin-bottom: 24px;
+      }
+      .ant-form-item-control-wrapper {
+        flex: 1;
+        .ant-form-item-control {
+          height: 32px;
+          line-height: 32px;
+          .ant-upload-list-item {
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+    .lesson-add-info {
+      background-color: #fff;
+      margin-bottom: 24px;
+      border-radius: 2px;
+      color: rgba(0, 0, 0, 0.85);
+      padding: 24px;
+      .addCourseware {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #1890ff;
+        margin-top: 20px;
+        > span {
+          cursor: pointer;
+        }
+      }
+      .ant-table-wrapper {
+        margin-top: 24px;
+        .ant-table {
+          .changeColor {
+            background-color: #e6f7ff;
+          }
+        }
+      }
+      .update {
+        margin-top: 50px;
+        text-align: center;
+        button {
+          &:nth-child(2) {
+            margin: 0 50px;
+            background-color: #0DD78D;
+            border-color: #0DD78D;
+          }
+        }
+      }
+    }
+
+  }
+}

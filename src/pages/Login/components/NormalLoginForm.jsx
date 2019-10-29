@@ -19,8 +19,8 @@ class NormalLoginForm extends React.Component {
     };
 
     componentWillMount() {
-        const id = common.getLocalStorage('id')
-        if (id) return
+        const token = common.getLocalStorage('token')
+        if (token) return
         // 勾选自动登录
         const autoLogin = common.getLocalStorage('autoLogin')
         if (autoLogin === false) { // 本地自动登录状态为false时
@@ -54,6 +54,7 @@ class NormalLoginForm extends React.Component {
 
     //验证码登录
     loginByVerificationCode (values) {
+        return  message.warning('暂不支持验证码登录',5);
         const params = {
             mobile: values.phone,
             code: values.verificationCode
@@ -61,7 +62,6 @@ class NormalLoginForm extends React.Component {
         Axios.get(this.props.rootUrl + '/indexapp.php?c=CTUser&a=loginByMobile', {params})
             .then(res => {
                 let data = res.data;
-                console.log(data);
                 if (data.code == 200) {
                     common.setLocalStorage('id', data.info.id);
                     common.setLocalStorage('userInfo', data.info);
@@ -79,16 +79,14 @@ class NormalLoginForm extends React.Component {
     //密码登录
     loginByPassword (values) {
         const params = {
-            mobile: values.username,
+            phone: values.username,
             password: md5(values.password).toLowerCase()
         };
-        Axios.get(this.props.rootUrl + '/indexapp.php?c=CTUser&a=loginMobile', {params})
+        Axios.post(this.props.rootUrl + '/admin/login/login', params)
             .then(res => {
                 let data = res.data;
-                console.log(data);
                 if (data.code == 200) {
-                    common.setLocalStorage('id', data.info.id);
-                    common.setLocalStorage('userInfo', data.info);
+                    common.setLocalStorage('token', data.data.token)
                     common.setLocalStorage('autoLogin', this.state.autoLoginStatus)
                     this.props.history.push('/')
                 } else {
@@ -126,6 +124,7 @@ class NormalLoginForm extends React.Component {
 
     //发送验证码
     sendVerificationCode = () => {
+        return  message.warning('暂不支持验证码登录',5);
         this.props.form.validateFields(['phone'], (err, values) => {
             if (err) return;
             if (this.state.buttonDisabled) return;

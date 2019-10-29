@@ -1,0 +1,51 @@
+.student-edit-container {
+  :global {
+    .ant-row.ant-form-item {
+      display: flex;
+      height: 32px;
+      .ant-form-item-label {
+        line-height: 32px;
+        width: 64px;
+        text-align: right;
+        margin-right: 10px;
+        > label::after {
+          margin: 0;
+        }
+      }
+      .ant-form-item-control-wrapper {
+        flex: 1;
+        .ant-form-item-control {
+          height: 32px;
+          line-height: 32px;
+        }
+      }
+    }
+    .register-info {
+      background-color: #fff;
+      margin-bottom: 24px;
+      border-radius: 2px;
+      .register-head {
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 500;
+        font-size: 16px;
+        padding: 16px 24px;
+        border-bottom: 1px solid #e8e8e8;
+        border-radius: 2px 2px 0 0;
+      }
+      .register-body {
+        padding: 24px;
+        color: rgba(0, 0, 0, 0.85);
+        border-radius: 0 0 2px 2px;
+      }
+    }
+    .update {
+      margin-top: 50px;
+      text-align: center;
+      button {
+        &:first-child {
+          margin-right: 50px;
+        }
+      }
+    }
+  }
+}

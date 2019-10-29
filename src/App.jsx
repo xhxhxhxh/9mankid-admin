@@ -22,8 +22,9 @@ export default class App extends React.Component {
         return (
             <BrowserRouter>
                 <Switch>
+                    <Redirect from="/" to="/user/teacher" exact></Redirect>
                     <Route path="/login" exact component={Login}></Route>
-                    <PrivateRoute path="/" component={Layout} exact></PrivateRoute>
+                    <PrivateRoute path="/" component={Layout}></PrivateRoute>
                     <Route component={NotFound404}></Route>
                 </Switch>
             </BrowserRouter>

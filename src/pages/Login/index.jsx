@@ -9,8 +9,8 @@ export default class Login extends React.Component {
         super()
     }
     componentWillMount() {
-        const id = common.getLocalStorage('id')
-        if (id) { // 本地自动登录状态为true时
+        const token = common.getLocalStorage('token')
+        if (token) { // 本地自动登录状态为true时
             this.props.history.replace('/')
         }
     }

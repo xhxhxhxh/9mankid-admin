@@ -11,6 +11,7 @@ module.exports = {
     output: {
         path: path.join(__dirname,'./dist'),
         filename: 'bundle.js',
+        publicPath: "/"
     },
     devServer: {
         open: true,
@@ -22,6 +23,11 @@ module.exports = {
         proxy: {
             "/indexapp.php": {
                 target: 'https://edu.9man.com',
+                pathRewrite: {'^/' : '/'},
+                changeOrigin: true
+            },
+            "/admin": {
+                target: 'http://kt2.9man.com/tp5/public/api',
                 pathRewrite: {'^/' : '/'},
                 changeOrigin: true
             },
@@ -37,7 +43,25 @@ module.exports = {
             {test: /\.css$/, use: ['style-loader','css-loader']},
             {test: /\.less$/, use: ['style-loader','css-loader?modules&localIdentName=[path][name]-[local]-[hash:5]','less-loader']},
             {test: /\.(jpg|png|gif|bmp|jpeg)$/, use: ['url-loader?limit=102400&name=[hash:8]-[name].[ext]']},
-            {test: /\.(ttf|eot|svg|woff|woff2)$/, use: ['url-loader']}
+            {test: /\.(ttf|eot|woff|woff2)$/, use: ['url-loader']},
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                    },
+                    {
+                        loader: '@svgr/webpack',
+                        options: {
+                            babel: false,
+                            icon: true,
+                        },
+                    },
+                    {
+                        loader: 'url-loader',
+                    },
+                ],
+            }
         ]
     },
     resolve: {

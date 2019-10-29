@@ -12,8 +12,8 @@ common.setLocalStorage = (key, value) =>{
  * 读取LocalStorage
  */
 common.getLocalStorage = (key) =>{
-    const value = localStorage.getItem(key)
-    if (value === null) {
+    const value = localStorage.getItem(key);
+    if (value === null || value === '') {
         return null
     } else {
         return JSON.parse(localStorage.getItem(key));

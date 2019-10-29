@@ -12,19 +12,20 @@ class PrivateRoute extends React.Component {
     };
 
     componentWillMount() {
-        const sessionId = common.getLocalStorage('id')
-        console.log(sessionId);
-        if (!sessionId) {
-            // localStorage.removeItem('autoLogin');
-            this.setState({
-                isLogin: false
-            })
-        }else {
-            this.setState({
-                isLogin: true
-            })
-        }
+        // const token = common.getLocalStorage('token')
+        // console.log(123)
+        // if (!token) {
+        //     // localStorage.removeItem('autoLogin');
+        //     this.setState({
+        //         isLogin: false
+        //     })
+        // }else {
+        //     this.setState({
+        //         isLogin: true
+        //     })
+        // }
     };
+
 
     //校验props类型
     static propTypes = {
@@ -35,9 +36,9 @@ class PrivateRoute extends React.Component {
     };
 
     render() {
-        const isLogin = this.state.isLogin;
+        const token = common.getLocalStorage('token')
         const {component: Component, path='/', exact=false, strict=false} = this.props;
-        return isLogin? (
+        return token? (
             <Route path={path} exact={exact} strict={strict} component={Component}></Route>
         ): (
             <Redirect to="/login"></Redirect>

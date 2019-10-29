@@ -1,0 +1,27 @@
+.lesson-container {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 2px;
+  :global {
+    @media (max-width: 1000px) {
+      .ant-table {
+        width: 100%;
+        overflow-x: auto;
+      }
+    }
+    .check {
+      .ant-row {
+        .ant-input-suffix {
+          i {
+            cursor: unset;
+          }
+        }
+      }
+    }
+    .ant-table {
+      .changeColor {
+        background-color: #e6f7ff;
+      }
+    }
+  }
+}

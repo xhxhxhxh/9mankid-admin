@@ -4,3 +4,6 @@
         opacity: 1;
     }
 }
+.ant-menu-item a {
+    display: inline-block;
+}

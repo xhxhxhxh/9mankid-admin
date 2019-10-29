@@ -2,9 +2,6 @@
   height: 100%;
   :global {
     aside {
-      width: 256px !important;
-      max-width: 256px !important;
-      min-width: 256px !important;
       .ant-menu-submenu {
         -webkit-user-select:none;
         -moz-user-select:none;
@@ -14,6 +11,13 @@
       .ant-menu-item {
         a {
           display: inline-block;
+        }
+      }
+      .ant-menu-inline-collapsed > .ant-menu-item {
+        span {
+          max-width: 0;
+          display: inline-block;
+          opacity: 0;
         }
       }
     }
@@ -31,6 +35,23 @@
       height: 64px;
       background: rgba(255, 255, 255, 0.2);
       margin: 16px;
+    }
+    header {
+      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+      position: relative;
+      z-index: 2;
+    }
+    .breadcrumb {
+      padding: 12px 24px;
+      background-color: #fff;
+      .ant-breadcrumb-link {
+        a:hover {
+          color: #40a9ff;
+        }
+      }
+    }
+    main {
+      margin: 24px !important;
     }
   }
 }
