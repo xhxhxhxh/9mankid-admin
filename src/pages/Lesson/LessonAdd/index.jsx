@@ -97,6 +97,12 @@ class LessonAdd extends React.Component {
         };
     }
 
+    componentWillUnmount = () => {
+        this.setState = ()=>{
+            return false;
+        };
+    }
+
     // 最小年龄改变
     ageLowChange = (value) => {
         const ageHigh = []

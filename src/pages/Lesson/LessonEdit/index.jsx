@@ -118,6 +118,12 @@ class LessonEdit extends React.Component {
             })
     }
 
+    componentWillUnmount = () => {
+        this.setState = ()=>{
+            return false;
+        };
+    }
+
     // 查询课程信息
     queryLessonInfo = () => {
         const params = {

@@ -24,6 +24,12 @@ class StudentEdit extends React.Component {
         }, this.queryuserInfo);
     }
 
+    componentWillUnmount = () => {
+        this.setState = ()=>{
+            return false;
+        };
+    }
+
     queryuserInfo = () => {
         const studentId = this.state.studentId;
         const params = {

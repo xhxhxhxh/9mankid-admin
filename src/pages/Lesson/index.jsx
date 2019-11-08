@@ -64,7 +64,7 @@ class Lesson extends React.Component {
             loading: true,
             modalVisible: false,
             pageNum: 1,
-            pageSize: 3,
+            pageSize: 10,
             totalCount: 0,
             searchValue: ''
         }
@@ -74,6 +74,12 @@ class Lesson extends React.Component {
         this.queryLesson()
     }
 
+    componentWillUnmount = () => {
+        this.setState = ()=>{
+            return false;
+        };
+    }
+
     queryLesson = lessonName => {
         const {pageSize, pageNum} = this.state;
         const params = {
@@ -81,6 +87,9 @@ class Lesson extends React.Component {
             pagesize: pageSize
         };
         if (lessonName) {
+            this.setState({
+                pageNum: 1
+            })
             Object.assign(params, {key: lessonName, pageno: 1})
         }
         Axios.get(this.props.rootUrl + '/admin/lesson/queryLesson', {params})

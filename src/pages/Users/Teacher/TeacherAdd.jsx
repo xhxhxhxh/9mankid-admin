@@ -16,6 +16,12 @@ class TeacherAdd extends React.Component {
         this.querySubject()
     }
 
+    componentWillUnmount = () => {
+        this.setState = ()=>{
+            return false;
+        };
+    }
+
     // 查询科目信息
     querySubject = () => {
         Axios.get(this.props.rootUrl + '/admin/lesson/querySubject')

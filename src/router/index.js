@@ -8,6 +8,8 @@ import LessonAdd from '@/pages/Lesson/LessonAdd'
 import LessonEdit from '@/pages/Lesson/LessonEdit'
 import CoursewareEdit from '@/pages/Lesson/CoursewareEdit'
 import Class from '@/pages/Class'
+import ClassEdit from '@/pages/Class/ClassEdit'
+import Demand from '@/pages/Demand'
 
 const routes = [
     {
@@ -90,6 +92,21 @@ const routes = [
         name: 'class',
         component: Class,
         meta: { title: '班级', icon: 'icon-class'},
+        children: [
+            {
+                path: 'edit',
+                name: 'classEdit',
+                component: ClassEdit,
+                hidden: true,
+                meta: { title: '班级编辑'}
+            }
+        ]
+    },
+    {
+        path: '/demand',
+        name: 'demand',
+        component: Demand,
+        meta: { title: '需求', icon: 'icon-demandmanagement'},
     }
 ];
 

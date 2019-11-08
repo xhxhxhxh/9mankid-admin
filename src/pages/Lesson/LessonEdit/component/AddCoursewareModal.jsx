@@ -13,6 +13,12 @@ class AddCoursewareModal extends React.Component {
         };
     }
 
+    componentWillUnmount = () => {
+        this.setState = ()=>{
+            return false;
+        };
+    }
+
     // 添加课件
     addCourseware = e => {
         e.preventDefault();

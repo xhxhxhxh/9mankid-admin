@@ -8,6 +8,9 @@ import Axios from "@/axios";
 const { Search } = Input;
 const { Option } = Select;
 
+const statusObj = {1: '未处理', 2: '处理中', 3: '待付款', 4: '待上课', 5: '完结', 6: '错过上课', 7: '冻结', 0: '所有'}
+const typeObj = {1: '正式课', 2: '体验课', 0: '所有'}
+
 const columns = [
     {
         key: 'num',
@@ -15,58 +18,46 @@ const columns = [
         render: (text,record,index) => index + 1,
     },
     {
-        title: '班级名称',
-        dataIndex: 'name',
-        key: 'name',
+        title: '账号',
+        dataIndex: 'phone',
+        key: 'phone',
     },
     {
-        title: '阶段',
-        render: text => 'L' + text,
-        dataIndex: 'level',
-        key: 'level',
+        title: '昵称',
+        dataIndex: 'uname',
+        key: 'uname',
     },
     {
-        title: '类型',
-        render: text => text === 1? '正式课': '体验课',
+        title: '需求类型',
         dataIndex: 'type',
+        render: text => typeObj[text],
         key: 'type',
     },
     {
-        title: '上课时间',
-        dataIndex: 'startdate',
-        key: 'startdate',
+        title: '年龄',
+        dataIndex: 'age',
+        key: 'age',
     },
     {
-        title: '教师',
-        dataIndex: 'teacher',
-        render: text => <div>{text.map(item => <p key={item.id} style={{marginBottom: 0}}>{item['subject_name'] + ': ' + item['teacher_name']}</p>)}</div>,
-        key: 'teacher',
+        title: '课程顾问',
+        dataIndex: 'adviser',
+        key: 'adviser',
     },
     {
-        title: '最大学生数',
-        dataIndex: 'limit_num',
-        key: 'limit_num',
+        title: '创建日期',
+        dataIndex: 'create_time',
+        key: 'create_time',
     },
     {
-        title: '报名学生数',
-        dataIndex: 'reserve_num',
-        key: 'reserve_num',
+        title: '沟通次数',
+        dataIndex: 'contactnum',
+        key: 'contactnum',
     },
     {
-        title: '在班学生数',
-        dataIndex: 'actual_num',
-        key: 'actual_num',
-    },
-    {
-        title: '已上课程数',
-        dataIndex: 'finish_count',
-        key: 'finish_count',
-    },
-    {
-        title: '剩余课程数',
-        render: (text, record) => text - record['finish_count'],
-        dataIndex: 'count',
-        key: 'count',
+        title: '需求状态',
+        dataIndex: 'status',
+        render: text => statusObj[text],
+        key: 'status',
     },
     {
         title: '操作',
@@ -75,7 +66,7 @@ const columns = [
     },
 ];
 
-class Class extends React.Component {
+class Demand extends React.Component {
     constructor () {
         super();
         this.state = {
@@ -83,13 +74,13 @@ class Class extends React.Component {
             data: [],
             pageNum: 1,
             pageSize: 10,
-            type: 'all',
-            level: 'all',
+            type: 0,
+            status: 0,
         }
     }
 
     componentWillMount() {
-        this.queryClass()
+        this.queryDemand()
     }
 
     componentWillUnmount = () => {
@@ -104,12 +95,14 @@ class Class extends React.Component {
         }
     };
 
-    queryClass = (key) => {
-        const { pageNum, pageSize } = this.state;
+    queryDemand = (key) => {
+        const { pageNum, pageSize, status, type } = this.state;
 
         const params = {
             pageno: pageNum,
-            pagesize: pageSize
+            pagesize: pageSize,
+            status,
+            type
         };
 
         if (key) {
@@ -120,7 +113,7 @@ class Class extends React.Component {
             loading: true
         });
 
-        Axios.get(this.props.rootUrl + '/admin/classes/queryClass', {params})
+        Axios.get(this.props.rootUrl + '/admin/demand/queryDemand', {params})
             .then(res => {
                 let data = res.data;
                 console.log(data)
@@ -145,14 +138,14 @@ class Class extends React.Component {
     };
 
     // 查询指定班级
-    querySingleClass = () => {
+    querySingleDemand = () => {
         this.props.form.validateFields((err, values) => {
             if (err) return false;
             const key = values.phone;
             if (key) {
                 this.setState({
                     pageNum: 1
-                }, () => {this.queryClass(key)})
+                }, () => {this.queryDemand(key)})
             }
         })
     };
@@ -160,67 +153,63 @@ class Class extends React.Component {
     // 重置查询结果
     resetForm = () => {
         this.props.form.resetFields();
-        this.queryClass()
+        this.queryDemand()
     };
 
     // 页码改变
     pageChange = (page) => {
         this.setState({
             pageNum: page
-        }, this.queryClass)
+        }, this.queryDemand)
     };
 
     // 类型筛选
     typeChange = value => {
         this.setState({
             type: value
-        })
+        }, this.queryDemand)
     };
 
     // 阶段筛选
-    levelChange = value => {
+    statusChange = value => {
         this.setState({
-            level: value
-        })
+            status: value
+        }, this.queryDemand)
     };
 
 
     render() {
-        const { columns, data, totalCount, pageSize, pageNum, loading, type, level } = this.state;
+        const { columns, data, totalCount, pageSize, pageNum, loading, type, status } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
-            <div className={style['class-container']}>
+            <div className={style['demand-container']}>
                 <div className="check">
                     <Form hideRequiredMark={true}>
                         <Row gutter={{ xs: 0, sm: 16, md: 16, lg: 0, xl: 0 }}>
-                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={8}>
                                 <Form.Item colon={false}>
-                                    {getFieldDecorator('phone')(<Search placeholder="请输入班级名或学生教师账号"
+                                    {getFieldDecorator('phone')(<Search placeholder="请输入学生账号"
                                                                        style={{marginBottom: '24px'}} />)}
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={8} md={8} lg={{span: 6}} xl={{span: 6, offset: 1}}>
+                            <Col xs={24} sm={24} md={12} lg={{span: 12}} xl={{span: 4, offset: 1}}>
                                 <div className="buttonBox">
                                     <Button style={{marginRight: '8px', marginBottom: '24px'}} type="primary"
-                                            onClick={this.querySingleClass}>查询</Button>
+                                            onClick={this.querySingleDemand}>查询</Button>
                                     <Button onClick={this.resetForm}>重置</Button>
                                 </div>
                             </Col>
-                            <Col xs={24} sm={16} md={16} lg={{span: 10}} xl={{span: 8}}>
+                            <Col xs={24} sm={24} md={24} lg={{span: 24}} xl={{span: 11}}>
                                 <div className="selectBox">
                                     <span>类型</span>
                                     <Select value={type} style={{ width: 100, marginRight: '16px', marginBottom: '24px' }} onChange={this.typeChange}>
-                                        <Option value={1}>正式课</Option>
-                                        <Option value={2}>体验课</Option>
-                                        <Option value={'all'}>所有</Option>
+                                        {Object.keys(typeObj).map(key => <Option value={Number(key)} key={key}>{typeObj[key]}</Option>)}
                                     </Select>
-                                    <span>阶段</span>
-                                    <Select value={level} style={{ width: 100 }} onChange={this.levelChange}>
-                                        <Option value={1}>L1</Option>
-                                        <Option value={2}>L2</Option>
-                                        <Option value={3}>L3</Option>
-                                        <Option value={'all'}>所有</Option>
+                                    <span>状态</span>
+                                    <Select value={status} style={{ width: 100 }} onChange={this.statusChange}>
+                                        {Object.keys(statusObj).map(key => <Option value={Number(key)} key={key}>{statusObj[key]}</Option>)}
                                     </Select>
+                                    <Button onClick={this.resetForm} type="primary" style={{float: 'right'}}>新增需求</Button>
                                 </div>
                             </Col>
                         </Row>
@@ -241,4 +230,4 @@ function mapStateToProps(state) {
 
 export default connect(
     mapStateToProps,
-)(Form.create({ name: 'class' })(Class))
+)(Form.create({ name: 'demand' })(Demand))

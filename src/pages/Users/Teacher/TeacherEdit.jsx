@@ -23,6 +23,12 @@ class TeacherEdit extends React.Component {
         this.querySubject()
     }
 
+    componentWillUnmount = () => {
+        this.setState = ()=>{
+            return false;
+        };
+    }
+
     queryTeacher = () => {
         const { pageNum, pageSize, teacherId } = this.state;
 

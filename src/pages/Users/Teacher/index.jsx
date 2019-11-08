@@ -58,6 +58,12 @@ class Teacher extends React.Component {
         this.queryTeachers()
     }
 
+    componentWillUnmount = () => {
+        this.setState = ()=>{
+            return false;
+        };
+    }
+
     rowClassName = (record, index) => {
         if (index % 2 === 1) {
             return 'changeColor'

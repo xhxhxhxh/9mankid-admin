@@ -62,6 +62,12 @@ class Student extends React.Component {
         this.queryStudents()
     }
 
+    componentWillUnmount = () => {
+        this.setState = ()=>{
+            return false;
+        };
+    }
+
     rowClassName = (record, index) => {
         if (index % 2 === 1) {
             return 'changeColor'

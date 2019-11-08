@@ -20,6 +20,12 @@ class AddLessonModal extends React.Component {
         this.querySubject()
     }
 
+    componentWillUnmount = () => {
+        this.setState = ()=>{
+            return false;
+        };
+    }
+
     // 添加课件
     addLesson = e => {
         e.preventDefault();

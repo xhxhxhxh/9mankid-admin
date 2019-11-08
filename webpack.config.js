@@ -27,7 +27,12 @@ module.exports = {
                 changeOrigin: true
             },
             "/admin": {
-                target: 'http://kt2.9man.com/tp5/public/api',
+                target: 'https://api.9mankid.com/api',
+                pathRewrite: {'^/' : '/'},
+                changeOrigin: true
+            },
+            "/v1": {
+                target: 'https://api.9mankid.com/api',
                 pathRewrite: {'^/' : '/'},
                 changeOrigin: true
             },
