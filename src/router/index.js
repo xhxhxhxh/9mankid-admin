@@ -10,6 +10,7 @@ import CoursewareEdit from '@/pages/Lesson/CoursewareEdit'
 import Class from '@/pages/Class'
 import ClassEdit from '@/pages/Class/ClassEdit'
 import Demand from '@/pages/Demand'
+import DemandEdit from '@/pages/Demand/DemandEdit'
 
 const routes = [
     {
@@ -107,6 +108,15 @@ const routes = [
         name: 'demand',
         component: Demand,
         meta: { title: '需求', icon: 'icon-demandmanagement'},
+        children: [
+            {
+                path: 'edit',
+                name: 'demandEdit',
+                component: DemandEdit,
+                hidden: true,
+                meta: { title: '需求编辑'}
+            }
+        ]
     }
 ];
 

@@ -2,6 +2,11 @@ import Axios from 'axios';
 import common from '@/api/common.js';
 import history from '@/history';
 
+const AUTH_TOKEN = common.getLocalStorage('token');
+if (AUTH_TOKEN) {
+    Axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+}
+
 Axios.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     const data = response.data;
@@ -17,10 +22,6 @@ Axios.interceptors.response.use(function (response) {
 // 添加请求拦截器
 Axios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
-    const token = common.getLocalStorage('token');
-    if (token) {
-        config.headers.Authorization = token
-    }
     return config;
 }, function (error) {
     // 对请求错误做些什么

@@ -1,0 +1,61 @@
+.demand-edit-container {
+  :global {
+    @media (max-width: 992px){
+      .ant-row.ant-form-item {
+        &.teacher-item {
+          height: 73px;
+        }
+      }
+    }
+    .ant-row.ant-form-item {
+      display: flex;
+      height: 32px;
+      &.remark-box {
+        height: auto;
+        margin-bottom: 0;
+        .ant-form-item-control {
+          height: auto !important;
+          line-height: unset !important;
+        }
+      }
+      .ant-form-item-label {
+        line-height: 32px;
+        width: 87px;
+        text-align: right;
+        margin-right: 10px;
+        > label::after {
+          margin: 0;
+        }
+      }
+      .ant-form-item-control-wrapper {
+        flex: 1;
+        .ant-form-item-control {
+          height: 32px;
+          line-height: 32px;
+        }
+      }
+    }
+    .demand-info {
+      background-color: #fff;
+      margin-bottom: 24px;
+      border-radius: 2px;
+      .demand-body {
+        padding: 24px;
+        color: rgba(0, 0, 0, 0.85);
+        border-radius: 0 0 2px 2px;
+        .contact-num {
+          display: flex;
+        }
+      }
+    }
+    .update {
+      margin-top: 50px;
+      text-align: center;
+      button {
+        &:first-child {
+          margin-right: 50px;
+        }
+      }
+    }
+  }
+}
