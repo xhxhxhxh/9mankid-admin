@@ -9,6 +9,7 @@ import LessonEdit from '@/pages/Lesson/LessonEdit'
 import CoursewareEdit from '@/pages/Lesson/CoursewareEdit'
 import Class from '@/pages/Class'
 import ClassEdit from '@/pages/Class/ClassEdit'
+import ClassAdd from '@/pages/Class/ClassAdd'
 import Demand from '@/pages/Demand'
 import DemandEdit from '@/pages/Demand/DemandEdit'
 
@@ -100,6 +101,13 @@ const routes = [
                 component: ClassEdit,
                 hidden: true,
                 meta: { title: '班级编辑'}
+            },
+            {
+                path: 'add',
+                name: 'classAdd',
+                component: ClassAdd,
+                hidden: true,
+                meta: { title: '新建班级'}
             }
         ]
     },

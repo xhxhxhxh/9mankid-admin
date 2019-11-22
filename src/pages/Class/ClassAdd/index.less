@@ -1,0 +1,94 @@
+.class-add-container {
+  :global {
+    .ant-row.ant-form-item {
+      display: flex;
+      height: 32px;
+      .ant-form-item-label {
+        line-height: 32px;
+        width: 64px;
+        text-align: right;
+        margin-right: 10px;
+        > label::after {
+          margin: 0;
+        }
+      }
+      &.ant-form-item-with-help {
+        margin-bottom: 24px;
+      }
+      .ant-form-item-control-wrapper {
+        flex: 1;
+        .ant-form-item-control {
+          height: 32px;
+          line-height: 32px;
+          #classAdd_teacher {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 64px;
+            margin-top: -16px;
+            span {
+              color: #1890ff;
+              cursor: pointer;
+              height: 20px;
+              display: inline-block;
+            }
+          }
+          .cycle {
+            button{
+              border-radius: unset;
+              position: relative;
+              + button {
+                margin-left: -1px;
+              }
+              &.selected {
+                z-index: 1;
+                color: #096dd9 !important;
+                border-color: #096dd9 !important;
+              }
+              &:active {
+                color: rgba(0, 0, 0, 0.65);
+                border-color: #d9d9d9;
+              }
+              &:focus {
+                color: rgba(0, 0, 0, 0.65);
+                border-color: #d9d9d9;
+              }
+              &:hover {
+                z-index: 1;
+                color: #096dd9;
+                border-color: #096dd9;
+              }
+              &:first-of-type {
+                border-radius: 4px 0 0 4px;
+              }
+              &:last-of-type {
+                border-radius:  0 4px 4px 0;
+              }
+            }
+
+          }
+        }
+      }
+    }
+    .class-info {
+      background-color: #fff;
+      margin-bottom: 24px;
+      border-radius: 2px;
+      .class-body {
+        padding: 24px;
+        color: rgba(0, 0, 0, 0.85);
+        border-radius: 0 0 2px 2px;
+        .update {
+          margin-top: 50px;
+          text-align: center;
+          button {
+            &:first-child {
+              margin-right: 50px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

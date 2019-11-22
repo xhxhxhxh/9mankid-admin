@@ -193,20 +193,20 @@ class Class extends React.Component {
                 <div className="check">
                     <Form hideRequiredMark={true}>
                         <Row gutter={{ xs: 0, sm: 16, md: 16, lg: 0, xl: 0 }}>
-                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={8}>
                                 <Form.Item colon={false}>
                                     {getFieldDecorator('phone')(<Search placeholder="请输入班级名或学生教师账号"
                                                                        style={{marginBottom: '24px'}} />)}
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={8} md={8} lg={{span: 6}} xl={{span: 6, offset: 1}}>
+                            <Col xs={24} sm={24} md={12} lg={{span: 12}} xl={{span: 4, offset: 1}}>
                                 <div className="buttonBox">
                                     <Button style={{marginRight: '8px', marginBottom: '24px'}} type="primary"
                                             onClick={this.querySingleClass}>查询</Button>
                                     <Button onClick={this.resetForm}>重置</Button>
                                 </div>
                             </Col>
-                            <Col xs={24} sm={16} md={16} lg={{span: 10}} xl={{span: 8}}>
+                            <Col xs={24} sm={24} md={24} lg={{span: 24}} xl={{span: 11}}>
                                 <div className="selectBox">
                                     <span>类型</span>
                                     <Select value={type} style={{ width: 100, marginRight: '16px', marginBottom: '24px' }} onChange={this.typeChange}>
@@ -221,6 +221,7 @@ class Class extends React.Component {
                                         <Option value={3}>L3</Option>
                                         <Option value={'all'}>所有</Option>
                                     </Select>
+                                    <Button type="primary" style={{float: 'right'}} onClick={() => this.props.history.push('/class/add')}>新建班级</Button>
                                 </div>
                             </Col>
                         </Row>

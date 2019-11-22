@@ -209,7 +209,7 @@ class Demand extends React.Component {
                                     <Select value={status} style={{ width: 100 }} onChange={this.statusChange}>
                                         {Object.keys(statusObj).map(key => <Option value={Number(key)} key={key}>{statusObj[key]}</Option>)}
                                     </Select>
-                                    <Button onClick={this.resetForm} type="primary" style={{float: 'right'}}>新增需求</Button>
+                                    <Button type="primary" style={{float: 'right'}}>新增需求</Button>
                                 </div>
                             </Col>
                         </Row>

@@ -1,9 +1,9 @@
 import React from 'react';
 import style from './index.less';
-import moment from 'moment';
 import {Button, Col, Form, Input, Row, Select, DatePicker, message} from "antd";
 import Axios from "@/axios";
 import {connect} from "react-redux";
+import SelectTeacherModal from "../component/SelectTeacherModal";
 
 const { Option } = Select;
 
@@ -12,11 +12,18 @@ class ClassEdit extends React.Component {
         super();
         this.state = {
             classInfo: {},
-            age: 0
+            subjectList: [],
+            subjectObj: {},
+            age: 0,
+            modalVisible: false,
+            selectSubjectName: '',
+            selectSubjectId: '',
+            selectTeacherObj: {}
         }
     }
 
     componentWillMount() {
+        this.querySubject();
         const classId = this.props.location.search.substr(1).split('=')[1];
         this.setState({
             classId
@@ -49,6 +56,31 @@ class ClassEdit extends React.Component {
                 }
             })
             .catch(() => {
+            })
+    };
+
+    // 查询科目信息
+    querySubject = () => {
+        Axios.get(this.props.rootUrl + '/admin/lesson/querySubject')
+            .then(res => {
+                let data = res.data;
+                console.log(data)
+                if (data.code === 200) {
+                    const subjectList = data.data.data;
+                    const subjectObj = {};
+                    subjectList.forEach(item => {
+                        subjectObj[item.id] = item.name
+                    });
+                    this.setState({
+                        subjectList,
+                        subjectObj
+                    })
+                } else {
+                    message.warning(data.msg,5);
+                }
+            })
+            .catch(() => {
+
             })
     };
 
@@ -101,22 +133,56 @@ class ClassEdit extends React.Component {
             })
     };
 
+    // 添加班级老师
+    addClassTeacher = (teacherId, subjectId) => {
+        const params = {
+            teacher_id: teacherId,
+            class_id: this.state.classId,
+            subject_id: subjectId
+        };
+        Axios.post(this.props.rootUrl + '/admin/classTeacher/addClassTeacher', params)
+            .then(res => {
+                let data = res.data;
+                if (data.code === 200) {
 
-    // 计算年龄
-    countAge = (date) => {
-        const birth = date;
-        const now = moment();
-        const age = now.diff(birth, 'years');
+                } else {
+                    message.warning(data.msg,5);
+                }
+            })
+            .catch(() => {
+            })
+    };
+
+    // 选择老师
+    selectTeacher = (id, name) => {
         this.setState({
-            age
-        });
+            selectSubjectName: name,
+            selectSubjectId: id,
+            modalVisible: true
+        })
+    };
+
+    setTeacher = data => {
+        const selectTeacherObj = {};
+        selectTeacherObj[data.subjects] = data.uname;
+        this.addClassTeacher(data.id, data.subjects);
+        this.setState({
+            selectTeacherObj
+        }, this.closeModal)
+    };
+
+    closeModal = () => {
+        this.setState({modalVisible: false})
     };
 
     render() {
-        const { classInfo } = this.state;
+        const { classInfo, subjectList, modalVisible, selectSubjectName, selectSubjectId, subjectObj, selectTeacherObj } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <div className={style['class-edit-container']}>
+                <SelectTeacherModal rootUrl={this.props.rootUrl} history={this.props.history} setTeacher={this.setTeacher}
+                                   modalVisible={modalVisible} closeModal={this.closeModal} selectSubjectName={selectSubjectName}
+                                    selectSubjectId={selectSubjectId} subjectObj={subjectObj}></SelectTeacherModal>
                 <div className="class-info">
                     <div className="class-head">班级名称: {classInfo.name}</div>
                     <div className="class-body">
@@ -152,11 +218,23 @@ class ClassEdit extends React.Component {
                                         {classInfo.lesson? classInfo.lesson.count - classInfo['finish_count']: 0}</span>)}
                                 </Form.Item>
                             </Col>
+                            <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                                <Form.Item label="教师:&nbsp;" colon={false}>
+                                    {getFieldDecorator('teacher')(
+                                        <div>
+                                            {subjectList.map(item =>
+                                                <span key={item.id} onClick={() => this.selectTeacher(item.id, item.name)}>
+                                                    <span>{item.name + ': '}</span>
+                                                    <span>{selectTeacherObj[item.id]? ' ' + selectTeacherObj[item.id]: ' 未指定'}</span>
+                                                </span>)}
+                                        </div>)}
+                                </Form.Item>
+                            </Col>
                         </Row>
                     </div>
                 </div>
                 <div className="update">
-                    <Button size="large" onClick={() => this.props.history.push('/user/class')}>取消返回</Button>
+                    <Button size="large" onClick={() => this.props.history.push('/class')}>取消返回</Button>
                     <Button type="primary" size="large" onClick={this.updateInfo}>确认修改</Button>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox, Row, Col, message } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import Axios from '@/axios'
 import styles from './index.less';
 import {connect} from 'react-redux'
@@ -62,7 +62,7 @@ class NormalLoginForm extends React.Component {
         Axios.get(this.props.rootUrl + '/indexapp.php?c=CTUser&a=loginByMobile', {params})
             .then(res => {
                 let data = res.data;
-                if (data.code == 200) {
+                if (data.code === 200) {
                     common.setLocalStorage('id', data.info.id);
                     common.setLocalStorage('userInfo', data.info);
                     common.setLocalStorage('autoLogin', this.state.autoLoginStatus)
@@ -71,7 +71,7 @@ class NormalLoginForm extends React.Component {
                     message.warning(data.msg,5);
                 }
             })
-            .catch(err => {
+            .catch(() => {
 
             })
     }
@@ -85,7 +85,7 @@ class NormalLoginForm extends React.Component {
         Axios.post(this.props.rootUrl + '/admin/login/login', params)
             .then(res => {
                 let data = res.data;
-                if (data.code == 200) {
+                if (data.code === 200) {
                     common.setLocalStorage('token', data.data.token)
                     common.setLocalStorage('autoLogin', this.state.autoLoginStatus)
                     this.props.history.push('/')
@@ -93,7 +93,7 @@ class NormalLoginForm extends React.Component {
                     message.warning(data.msg,5);
                 }
             })
-            .catch(err => {
+            .catch(() => {
 
             })
 
@@ -166,7 +166,7 @@ class NormalLoginForm extends React.Component {
                         message.warning(data.msg,5);
                     }
                 })
-                .catch(err => {
+                .catch(() => {
 
                 })
 
