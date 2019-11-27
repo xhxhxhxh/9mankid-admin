@@ -51,7 +51,7 @@ const columns = [
     {
         title: '操作',
         key: 'operate',
-        render: (text,record) => <Link to={'/lesson/edit?id=' + record.id}>查看编辑</Link>,
+        render: (text,record) => <Link to={'/lesson/edit?id=' + record.id}>编辑</Link>,
     },
 ];
 

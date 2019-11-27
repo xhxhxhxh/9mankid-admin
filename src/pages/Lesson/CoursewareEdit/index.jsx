@@ -37,14 +37,15 @@ function beforeUpload(file) {
 
 
 function beforeFileUpload(file, fileList, id) {
-    const isZip = file.type === 'application/zip';
+    const isZip = file.type === 'application/zip' || 'application/x-zip-compressed';
+    const isMp4 = file.type === 'video/mp4';
     const uploadList = document.querySelector(`.row-id-${id} .ant-upload-list`);
     uploadList.style.display = 'block';
-    if (!isZip) {
-        message.error('只支持 ZIP 文件!');
+    if (!isZip && !isMp4) {
+        message.error('只支持ZIP和MP4文件!');
         uploadList.style.display = 'none'
     }
-    return isZip;
+    return isZip || isMp4;
 }
 
 class CoursewareEdit extends React.Component {
@@ -106,7 +107,7 @@ class CoursewareEdit extends React.Component {
             addCoursewareResourseVisible: false,
             coursewareResourseType: 1,
             pageNum: 1,
-            pageSize: 5,
+            pageSize: 100,
             totalCount: 0,
             lessonInfo: {},
             fileName: {}, // 上传文件的名称
@@ -208,6 +209,7 @@ class CoursewareEdit extends React.Component {
                 headers={{authorization: common.getLocalStorage('token')}}
                 beforeUpload={beforeUpload}
                 onChange={(info) => {this.uploadChange(info, id)}}
+                accept='image/jpeg,image/png'
             >
                 {imageUrl ? <img src={this.props.imgUrl + imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
             </Upload>
@@ -243,12 +245,16 @@ class CoursewareEdit extends React.Component {
     fileUploadRender = (record) => {
         const url = record.url;
         const id = record.id;
+        const type = record.type;
+        // console.log(record)
         const fileProps = {
             name: 'file',
+            data: {type},
             action: this.props.rootUrl + '/admin/coursewareResource/uploadCoursewareResource',
             headers: {
                 authorization: common.getLocalStorage('token'),
             },
+            accept: 'application/zip,application/x-zip-compressed,video/mp4',
             beforeUpload: (file, fileList) => beforeFileUpload(file, fileList, record.id),
             onChange: info => {
                 const {file, fileList} = info;
@@ -264,10 +270,14 @@ class CoursewareEdit extends React.Component {
                     }, 300)
                 }
                 if (info.file.status === 'done') {
+                    const response = info.file.response;
+                    if (response.code !== 200) {
+                        return message.warning(response.msg,5);
+                    }
                     const name = info.file.name.split('.')[0];
                     const fileName = this.state.fileName;
                     const id = record.id;
-                    const url = info.file.response.data.data;
+                    const url = response.data.data;
                     const params = {
                         id,
                         url,
@@ -407,7 +417,7 @@ class CoursewareEdit extends React.Component {
                     .then(res => {
                         let data = res.data;
                         if (data.code === 200) {
-                            console.log(data);
+                            // console.log(data);
                             message.success('课件资源删除成功',5);
                             let { pageNum, pageSize, totalCount, data} = this.state;
                             const currentCount = totalCount - 1;
@@ -443,7 +453,7 @@ class CoursewareEdit extends React.Component {
             .then(res => {
                 let data = res.data;
                 if (data.code === 200) {
-                    console.log(data);
+                    // console.log(data);
                     const lessonInfo = data.data.data;
                     this.setState({
                         lessonInfo,
@@ -475,7 +485,7 @@ class CoursewareEdit extends React.Component {
             .then(res => {
                 let data = res.data;
                 if (data.code === 200) {
-                    console.log(data);
+                    // console.log(data);
                     const result = data.data.data;
                     const totalCount = data.data.count;
                     const imgUrlObj = {};
@@ -642,7 +652,7 @@ class CoursewareEdit extends React.Component {
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={8} xl={8}>
                                 <Form.Item label="课程类型:&nbsp;" colon={false}>
-                                    {lessonInfo.type === 1? '体验课': '正式课'}
+                                    {lessonInfo.type === 1? '正式课': '体验课'}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={8} xl={8}>

@@ -1,8 +1,12 @@
 import React from 'react';
-import { Layout, Menu, Icon, Breadcrumb } from 'antd';
+import { Layout, Menu, Icon, Breadcrumb, Dropdown } from 'antd';
 import {Link, Redirect, Route, Switch, withRouter} from 'react-router-dom';
-import style from './slideBar.less'
-import routes from '@/router'
+import style from './slideBar.less';
+import routes from '@/router';
+import common from '@/api/common';
+import Avatar from '../images/avatar.png';
+import history from "@/history"
+import NotFound404 from "@/pages/404"
 
 
 const { Header, Sider, Content } = Layout;
@@ -67,6 +71,24 @@ class SlideBar extends React.Component {
         this.setState({
             collapsed: !this.state.collapsed,
         });
+    };
+
+    // 退出登录下拉菜单
+    renderLogoutMenu = () => {
+        return (
+            <Menu>
+                <Menu.Item onClick={this.logout}>
+                    <Icon type="logout" />
+                    <span>退出登录</span>
+                </Menu.Item>
+            </Menu>
+        );
+    };
+
+    // 退出登录
+    logout = () => {
+        localStorage.removeItem('token');
+        this.props.history.push('/login')
     };
 
     //渲染面包屑
@@ -170,6 +192,9 @@ class SlideBar extends React.Component {
     };
 
     render() {
+        const userInfo = common.getLocalStorage('userInfo');
+        const userName = userInfo? userInfo.uname:  'user';
+        // const avatar = userInfo.headimg;
         return (
             <Layout className={style.layout}>
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed} width="256">
@@ -178,18 +203,6 @@ class SlideBar extends React.Component {
                           selectedKeys={[this.selectedKeys()]}
                           defaultOpenKeys={['/' + this.state.subMenuExpand.split('/')[1]]}>
                         {this.state.renderSlideByRoutes}
-                        <Menu.Item key="1">
-                            <Icon type="user" />
-                            <span>nav 1</span>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <Icon type="video-camera" />
-                            <span>nav 2</span>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Icon type="upload" />
-                            <span>nav 3</span>
-                        </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout>
@@ -199,6 +212,12 @@ class SlideBar extends React.Component {
                             type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                             onClick={this.toggle}
                         />
+                        <Dropdown overlay={this.renderLogoutMenu} className="logout" overlayClassName="logout-dropdown">
+                            <span>
+                                <img src={Avatar} alt=""/>
+                                <span>{userName}</span>
+                            </span>
+                        </Dropdown>
                     </Header>
                     <div className="breadcrumb">
                         <Breadcrumb>
@@ -213,6 +232,8 @@ class SlideBar extends React.Component {
                     >
                         <Switch>
                             {routesDom.map(item => item)}
+                            <Route to="/404" component={NotFound404}></Route>
+                            <Redirect to="/404"></Redirect>
                         </Switch>
                     </Content>
                 </Layout>

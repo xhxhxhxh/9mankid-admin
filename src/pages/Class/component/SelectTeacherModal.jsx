@@ -86,7 +86,7 @@ class SelectTeacherModal extends React.Component {
         Axios.get(this.props.rootUrl + '/admin/teacher/queryTeacher', {params})
             .then(res => {
                 let data = res.data;
-                console.log(data)
+                // console.log(data)
                 if (data.code === 200) {
                     const teacherList = data.data.data;
                     this.setState({

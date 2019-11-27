@@ -1,7 +1,5 @@
 import React from 'react';
-import { Route, Redirect, withRouter } from 'react-router-dom';
-import ReactType from 'prop-types';
-import common from '@/api/common';
+import { Button, Result } from 'antd';
 
 export default class NotFound404 extends React.Component {
     constructor () {
@@ -10,7 +8,16 @@ export default class NotFound404 extends React.Component {
 
     render() {
         return (
-            <div>NotFound404</div>
+            <Result
+                status="404"
+                title="404"
+                subTitle="抱歉，你访问的页面不存在。"
+                extra={
+                    <Button type="primary" onClick={() => this.props.history.push('/')}>
+                        返回首页
+                    </Button>
+                }
+            ></Result>
         )
     }
 }

@@ -116,7 +116,7 @@ class Demand extends React.Component {
         Axios.get(this.props.rootUrl + '/admin/demand/queryDemand', {params})
             .then(res => {
                 let data = res.data;
-                console.log(data)
+                // console.log(data)
                 if (data.code === 200) {
                     this.setState({
                         data: data.data.data,

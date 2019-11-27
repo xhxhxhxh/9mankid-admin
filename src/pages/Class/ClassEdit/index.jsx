@@ -64,7 +64,7 @@ class ClassEdit extends React.Component {
         Axios.get(this.props.rootUrl + '/admin/lesson/querySubject')
             .then(res => {
                 let data = res.data;
-                console.log(data)
+                // console.log(data)
                 if (data.code === 200) {
                     const subjectList = data.data.data;
                     const subjectObj = {};

@@ -31,7 +31,7 @@ class AddLessonModal extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (err) return;
-            console.log(values);
+            // console.log(values);
             const params = {
                 name: values.name,
                 level: values.level,
@@ -122,6 +122,13 @@ class AddLessonModal extends React.Component {
         })
     };
 
+    // 课程类型改变事件
+    lessonChange = value => {
+        if (value === '2') {
+            this.props.form.setFieldsValue({['price']: 0})
+        }
+    };
+
     render () {
         const { addLessonLoading, subjectList, ageLow, ageHigh } = this.state;
         const { getFieldDecorator } = this.props.form;
@@ -149,7 +156,7 @@ class AddLessonModal extends React.Component {
                         </Select>)}
                     </Form.Item>
                     <Form.Item label="课程类型:&nbsp;" colon={false}>
-                        {getFieldDecorator('type', {initialValue: '2'})(<Select style={{width: '100%'}}>
+                        {getFieldDecorator('type', {initialValue: '2'})(<Select style={{width: '100%'}} onChange={this.lessonChange}>
                             <Option value="2">体验课</Option>
                             <Option value="1">正式课</Option>
                         </Select>)}
@@ -174,9 +181,9 @@ class AddLessonModal extends React.Component {
                         })(<InputNumber min={1} style={{width: '100%'}}/>)}
                     </Form.Item>
                     <Form.Item label="课程总价:&nbsp;" colon={false}>
-                        {getFieldDecorator('price', {
+                        {getFieldDecorator('price', {initialValue: 0,
                             rules: [{ required: true, message: '请输入课程总价' }],
-                        })(<InputNumber min={1} style={{width: '100%'}}/>)}
+                        })(<InputNumber min={0} style={{width: '100%'}}/>)}
                     </Form.Item>
                     <Form.Item label="科目:&nbsp;" colon={false}>
                         {getFieldDecorator('subjects', {

@@ -46,7 +46,7 @@ class DemandEdit extends React.Component {
                 let data = res.data;
                 if (data.code === 200) {
                     const demandInfo = data.data.data;
-                    console.log(demandInfo)
+                    // console.log(demandInfo)
                     this.setState({
                         demandInfo,
                     })
@@ -299,7 +299,7 @@ class DemandEdit extends React.Component {
                             </Col>
                         </Row>
                         <div className="update">
-                            <Button size="large" onClick={() => this.props.history.push('/user/demand')}>取消返回</Button>
+                            <Button size="large" onClick={() => this.props.history.push('/demand')}>取消返回</Button>
                             <Button type="primary" size="large" onClick={this.updateInfo}>确认修改</Button>
                         </div>
                     </div>

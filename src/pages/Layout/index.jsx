@@ -1,11 +1,6 @@
 import React from 'react';
-import { Route, Redirect, withRouter, Switch, BrowserRouter } from 'react-router-dom';
-import ReactType from 'prop-types';
-import common from '@/api/common';
+import { Route, Redirect } from 'react-router-dom';
 import SlideBar from './components/SlideBar'
-import routes from '@/router'
-import Student from '@/pages/Users/Student'
-import Teacher from '@/pages/Users/Teacher'
 
 export default class Layout extends React.Component {
     constructor () {

@@ -86,8 +86,9 @@ class NormalLoginForm extends React.Component {
             .then(res => {
                 let data = res.data;
                 if (data.code === 200) {
-                    common.setLocalStorage('token', data.data.token)
-                    common.setLocalStorage('autoLogin', this.state.autoLoginStatus)
+                    common.setLocalStorage('token', data.data.token);
+                    common.setLocalStorage('autoLogin', this.state.autoLoginStatus);
+                    common.setLocalStorage('userInfo', data.data.data);
                     this.props.history.push('/')
                 } else {
                     message.warning(data.msg,5);

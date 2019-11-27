@@ -79,7 +79,7 @@ class LessonEdit extends React.Component {
             lessonInfo: {},
             cacheLessonInfo: {},
             pageNum: 1,
-            pageSize: 5,
+            pageSize: 100,
             totalCount: 0,
         };
     }
@@ -133,7 +133,7 @@ class LessonEdit extends React.Component {
             .then(res => {
                 let data = res.data;
                 if (data.code === 200) {
-                    console.log(data);
+                    // console.log(data);
                     const lessonInfo = data.data.data;
                     const stage = lessonInfo.stage;
 
@@ -177,7 +177,7 @@ class LessonEdit extends React.Component {
             .then(res => {
                 let data = res.data;
                 if (data.code === 200) {
-                    console.log(data);
+                    // console.log(data);
                     const totalCount = data.data.count;
                     this.setState({
                         data: data.data.data,
@@ -215,7 +215,7 @@ class LessonEdit extends React.Component {
                     .then(res => {
                         let data = res.data;
                         if (data.code === 200) {
-                            console.log(data);
+                            // console.log(data);
                             message.success('课件删除成功',5);
                             let { pageNum, pageSize, totalCount, data} = this.state;
                             const currentCount = totalCount - 1;
@@ -339,7 +339,7 @@ class LessonEdit extends React.Component {
         }
         if (info.file.status === 'done') {
             // Get this url from response in real world.
-            console.log(info);
+            // console.log(info);
             const imgUrl = info.file.response.data.data;
             this.setState({
                 imageUrl: imgUrl,
@@ -578,7 +578,7 @@ class LessonEdit extends React.Component {
                                <Form.Item label="课程总价:&nbsp;" colon={false}>
                                    {getFieldDecorator('price', {initialValue: lessonInfo.price,
                                        rules: [{ required: true, message: '请输入课程总价' }],
-                                   })(<InputNumber min={1} style={{width: '100%'}}/>)}
+                                   })(<InputNumber min={0} style={{width: '100%'}}/>)}
                                </Form.Item>
                            </Col>
                            <Col xs={24} sm={12} md={12} lg={8} xl={{span: 7, offset: 1}}>
@@ -592,6 +592,7 @@ class LessonEdit extends React.Component {
                                        action={this.props.rootUrl + '/admin/lesson/uploadLessonCover'}
                                        beforeUpload={beforeUpload}
                                        onChange={this.uploadChange}
+                                       accept='image/jpeg,image/png'
                                    >
                                        {imageUrl ? <img src={this.props.imgUrl + imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                                    </Upload>

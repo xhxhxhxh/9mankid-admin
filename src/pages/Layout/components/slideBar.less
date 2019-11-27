@@ -40,6 +40,35 @@
       box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
       position: relative;
       z-index: 2;
+      .anticon-menu-fold {
+        font-size: 20px;
+        padding-top: 3px;
+      }
+      .logout {
+        display: inline-block;
+        height: 100%;
+        padding: 0 12px;
+        cursor: pointer;
+        transition: all .3s;
+        float: right;
+        margin-right: 12px;
+        &:hover {
+          background-color: rgba(0, 0, 0, .025);
+        }
+        img {
+          height: 24px;
+          width: 24px;
+          border-radius: 50%;
+          margin-right: 8px;
+          vertical-align: middle;
+        }
+        span {
+          display: inline-block;
+          height: 24px;
+          line-height: 24px;
+          vertical-align: middle;
+        }
+      }
     }
     .breadcrumb {
       padding: 12px 24px;

@@ -90,7 +90,7 @@ class SelectCourseModal extends React.Component {
         Axios.get(this.props.rootUrl + '/admin/lesson/queryLesson', {params})
             .then(res => {
                 let data = res.data;
-                console.log(data)
+                // console.log(data)
                 if (data.code === 200) {
                     const courseList = data.data.data;
                     this.setState({

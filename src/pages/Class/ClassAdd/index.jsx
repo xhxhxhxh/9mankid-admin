@@ -114,7 +114,6 @@ class ClassAdd extends React.Component {
     addCycle = value => {
         const {cycle, cycleHasChanged} = this.state;
         const index = cycle.indexOf(value);
-        console.log(cycle, cycleHasChanged)
         if (!cycleHasChanged) {
             this.setState({
                 cycleHasChanged: true
