@@ -23,9 +23,46 @@
           }
         }
         .selectBox {
-          > span {
-            display: inline-block;
-            width: 40px;
+          display: flex;
+          justify-content: space-between;
+          .selectBox-item {
+            margin-bottom: 24px;
+            > span {
+              margin-right: 10px;
+            }
+          }
+        }
+        @media (max-width: 768px){
+          .selectBox {
+            display: block;
+            .selectBox-item {
+              width: 100%;
+              display: flex;
+              > span {
+                display: inline-block;
+                width: 60px;
+                line-height: 32px;
+                text-align: right;
+              }
+              > div {
+                flex: 1;
+              }
+            }
+          }
+
+        }
+        .addClass {
+          float: right;
+          margin-bottom: 24px;
+        }
+        @media (max-width: 1600px){
+          .addClass {
+            float: left;
+          }
+        }
+        @media (max-width: 1200px){
+          .addClass {
+            float: right;
           }
         }
       }

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import style from './index.less'
 import {connect} from "react-redux";
 import Axios from "@/axios";
+import AddClassModal from "./component/AddClassModal"
 
 const { Search } = Input;
 const { Option } = Select;
@@ -85,6 +86,8 @@ class Class extends React.Component {
             pageSize: 10,
             type: 'all',
             level: 'all',
+            studentNum: 'all',
+            modalVisible: false
         }
     }
 
@@ -184,46 +187,86 @@ class Class extends React.Component {
         })
     };
 
+    // 学生数量筛选
+    studentNumChange = value => {
+        this.setState({
+            studentNum: value
+        })
+    };
+
+    closeModal = () => {
+        this.setState({modalVisible: false})
+    };
+
+    openModal = () => {
+        this.setState({modalVisible: true})
+    };
+
 
     render() {
-        const { columns, data, totalCount, pageSize, pageNum, loading, type, level } = this.state;
+        const { columns, data, totalCount, pageSize, pageNum, loading, type, level, studentNum, modalVisible } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <div className={style['class-container']}>
+                <AddClassModal rootUrl={this.props.rootUrl} history={this.props.history}
+                                modalVisible={modalVisible} closeModal={this.closeModal}></AddClassModal>
                 <div className="check">
                     <Form hideRequiredMark={true}>
                         <Row gutter={{ xs: 0, sm: 16, md: 16, lg: 0, xl: 0 }}>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={8}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={7}>
                                 <Form.Item colon={false}>
                                     {getFieldDecorator('phone')(<Search placeholder="请输入班级名或学生教师账号"
                                                                        style={{marginBottom: '24px'}} />)}
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={24} md={12} lg={{span: 12}} xl={{span: 4, offset: 1}}>
+                            <Col xs={24} sm={24} md={12} lg={{span: 12}} xl={{span: 9, offset: 1}} xxl={{span: 4, offset: 1}}>
                                 <div className="buttonBox">
                                     <Button style={{marginRight: '8px', marginBottom: '24px'}} type="primary"
                                             onClick={this.querySingleClass}>查询</Button>
                                     <Button onClick={this.resetForm}>重置</Button>
                                 </div>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={{span: 24}} xl={{span: 11}}>
-                                <div className="selectBox">
-                                    <span>类型</span>
-                                    <Select value={type} style={{ width: 100, marginRight: '16px', marginBottom: '24px' }} onChange={this.typeChange}>
-                                        <Option value={1}>正式课</Option>
-                                        <Option value={2}>体验课</Option>
-                                        <Option value={'all'}>所有</Option>
-                                    </Select>
-                                    <span>阶段</span>
-                                    <Select value={level} style={{ width: 100 }} onChange={this.levelChange}>
-                                        <Option value={1}>L1</Option>
-                                        <Option value={2}>L2</Option>
-                                        <Option value={3}>L3</Option>
-                                        <Option value={'all'}>所有</Option>
-                                    </Select>
-                                    <Button type="primary" style={{float: 'right'}} onClick={() => this.props.history.push('/class/add')}>新建班级</Button>
-                                </div>
+                            <Col xs={24} sm={24} md={24} lg={{span: 24}} xl={24} xxl={12}>
+                                <Row gutter={0}>
+                                    <Col xs={24} sm={24} md={24} lg={20} xl={14} xxl={19}>
+                                        <div className="selectBox">
+                                            <div className="selectBox-item">
+                                                <span>类型</span>
+                                                <Select value={type} style={{ width: 100}} onChange={this.typeChange}>
+                                                    <Option value={1}>正式课</Option>
+                                                    <Option value={2}>试听课</Option>
+                                                    <Option value={'all'}>所有</Option>
+                                                </Select>
+                                            </div>
+                                            <div className="selectBox-item">
+                                                <span>学生数量</span>
+                                                <Select value={studentNum} style={{ width: 100 }} onChange={this.studentNumChange}>
+                                                    <Option value={1}>1</Option>
+                                                    <Option value={2}>2</Option>
+                                                    <Option value={3}>3</Option>
+                                                    <Option value={4}>4</Option>
+                                                    <Option value={'all'}>不限</Option>
+                                                </Select>
+                                            </div>
+                                            <div className="selectBox-item">
+                                                <span>班级进度</span>
+                                                <Select value={level} style={{ width: 100 }} onChange={this.levelChange}>
+                                                    <Option value={1}>L1</Option>
+                                                    <Option value={2}>L2</Option>
+                                                    <Option value={3}>L3</Option>
+                                                    <Option value={'end'}>已结课</Option>
+                                                    <Option value={'all'}>所有</Option>
+                                                </Select>
+                                            </div>
+                                        </div>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={24} lg={4} xl={{span: 9, offset: 1}} xxl={{span: 5, offset: 0}}>
+                                        <Button type="primary" className="addClass" onClick={this.openModal}>新建班级</Button>
+                                    </Col>
+                                </Row>
+
                             </Col>
+
                         </Row>
                     </Form>
                 </div>
