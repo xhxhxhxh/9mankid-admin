@@ -27,7 +27,6 @@ class PrivateRoute extends React.Component {
 
     };
 
-
     //校验props类型
     static propTypes = {
         path: ReactType.string.isRequired,
