@@ -53,7 +53,7 @@ const routes = [
                         name: 'studentEdit',
                         component: StudentEdit,
                         hidden: true,
-                        meta: { title: '学生编辑'},
+                        meta: { title: '学生账户详情'},
                     }
                 ]
             },
@@ -100,15 +100,8 @@ const routes = [
                 name: 'classEdit',
                 component: ClassEdit,
                 hidden: true,
-                meta: { title: '班级编辑'}
+                meta: { title: '班级信息'}
             },
-            {
-                path: 'add',
-                name: 'classAdd',
-                component: ClassAdd,
-                hidden: true,
-                meta: { title: '新建班级'}
-            }
         ]
     },
     {

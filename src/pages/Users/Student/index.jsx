@@ -4,6 +4,22 @@ import { Link } from 'react-router-dom';
 import style from './index.less'
 import {connect} from "react-redux";
 import Axios from "@/axios";
+import moment from "moment";
+import AddStudentModal from "./component/AddStudentModal"
+
+const { Search } = Input;
+
+// 计算年龄
+const renderAge = (date) => {
+    if (date) {
+        const birth = moment(date);
+        const now = moment();
+        const age = now.diff(birth, 'years');
+        return  age + '周岁'
+    } else {
+        return ''
+    }
+};
 
 const columns = [
     {
@@ -11,39 +27,40 @@ const columns = [
         render: (text,record,index) => index + 1,
     },
     {
-        title: '孩子呢称',
-        render: (text,record) => record.child[0].uname,
-        key: 'uname',
-    },
-    {
-        title: '手机号',
+        title: '账号',
         dataIndex: 'phone',
         key: 'phone',
     },
     {
-        title: '报名/注册时间',
+        title: '账号呢称',
+        key: 'uname',
+        dataIndex: 'uname',
+    },
+    {
+        title: '孩子年龄',
+        dataIndex: 'birth',
+        key: 'birth',
+        render: text => renderAge(text)
+    },
+    {
+        title: '创建时间',
         dataIndex: 'create_time',
         key: 'create_time',
     },
     {
-        title: '报名渠道',
-        dataIndex: 'platform',
-        key: 'platform',
-    },
-    {
-        title: '联系人',
+        title: '沟通次数',
         dataIndex: 'contacts',
         key: 'contacts',
     },
     {
-        title: '联系人微信',
-        dataIndex: 'wx',
-        key: 'wx',
+        title: '课时余额',
+        dataIndex: 'balance',
+        key: 'balance',
     },
     {
         title: '操作',
         key: 'operate',
-        render: (text,record) => <Link to={'/user/student/edit?id=' + record.uid}>查看编辑</Link>,
+        render: (text,record) => <Link to={'/user/student/edit?uid=' + record.uid}>查看编辑</Link>,
     },
 ];
 
@@ -55,6 +72,8 @@ class Student extends React.Component {
             data: [],
             pageNum: 1,
             pageSize: 10,
+            key: '',
+            modalVisible: false
         }
     }
 
@@ -74,23 +93,23 @@ class Student extends React.Component {
         }
     };
 
-    queryStudents = (phone) => {
-        const { pageNum, pageSize } = this.state;
+    queryStudents = () => {
+        const { pageNum, pageSize, key } = this.state;
 
         const params = {
             pageno: pageNum,
             pagesize: pageSize
         };
 
-        if (phone) {
-            Object.assign(params, {phone: phone})
+        if (key) {
+            Object.assign(params, {key: key})
         }
 
         this.setState({
             loading: true
         });
 
-        Axios.get(this.props.rootUrl + '/admin/user/queryUser', {params})
+        Axios.get(this.props.rootUrl + '/admin/userProfile/queryUserProfile', {params})
             .then(res => {
                 let data = res.data;
                 if (data.code === 200) {
@@ -114,29 +133,28 @@ class Student extends React.Component {
     };
 
     // 查询单个学生
-    querySingleStudent = () => {
-        this.props.form.validateFields((err, values) => {
-            if (err) return false;
-            const phone = values.phone;
-            if (phone) {
-                this.setState({
-                    pageNum: 1
-                }, () => {this.queryStudents(phone)})
-            }
-        })
+    queryStudentByKey = () => {
+        this.setState({
+            pageNum: 1
+        }, this.queryStudents)
     };
 
     // 重置查询结果
     resetForm = () => {
         this.props.form.resetFields();
-        this.queryStudents()
+        this.setState({
+            pageNum: 1,
+            key: ''
+        }, this.queryStudents)
     };
 
-    // 处理输入数字长度
-    handleInput = (e, length) => {
+    // 搜索词改变
+    keyChange = e => {
         e.persist();
-        const target = e.target;
-        target.value = target.value.slice(0,length)
+        const key = e.target.value;
+        this.setState({
+            key
+        })
     };
 
     // 页码改变
@@ -146,31 +164,38 @@ class Student extends React.Component {
         }, this.queryStudents)
     };
 
+    closeModal = () => {
+        this.setState({modalVisible: false})
+    };
+
+    openModal = () => {
+        this.setState({modalVisible: true})
+    };
+
     render() {
-        const { columns, data, totalCount, pageSize, pageNum, loading } = this.state;
+        const { columns, data, totalCount, pageSize, pageNum, loading, modalVisible } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <div className={style['student-container']}>
+                <AddStudentModal rootUrl={this.props.rootUrl} history={this.props.history}
+                               modalVisible={modalVisible} closeModal={this.closeModal}></AddStudentModal>
                 <div className="check">
                     <Form hideRequiredMark={true}>
                         <Row gutter={{ xs: 0, sm: 16, md: 16, lg: 0, xl: 0 }}>
-                            <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-                                <Form.Item label="姓名:&nbsp;" colon={false}>
-                                    {getFieldDecorator('name')(<Input placeholder="请输入学生姓名"/>)}
+                            <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                                <Form.Item colon={false}>
+                                    {getFieldDecorator('key')(<Search placeholder="请输入账号或账号昵称" onSearch={this.queryStudentByKey}
+                                                                      onChange={this.keyChange}
+                                                                      style={{marginBottom: '24px'}} />)}
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={12} md={12} lg={{span: 8, offset: 1}} xl={{span: 8, offset: 1}}>
-                                <Form.Item label="手机号:&nbsp;" colon={false}>
-                                    {getFieldDecorator('phone',{
-                                        rules: [{ pattern: /^1\d{10}$/, message: '手机号格式不正确' }],
-                                    })(<Input placeholder="请输入手机号" onInput={(e) => {this.handleInput(e, 11)}}/>)}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={{span: 6, offset: 1}} xl={{span: 4, offset: 1}}>
+                            <Col xs={24} sm={24} md={12} lg={{span: 15, offset: 1}} xl={{span: 15, offset: 1}}>
                                 <div className="buttonBox">
                                     <Button style={{marginRight: '8px', marginBottom: '24px'}} type="primary"
-                                            onClick={this.querySingleStudent}>查询</Button>
-                                    <Button onClick={this.resetForm}>重置</Button>
+                                            onClick={this.queryStudentByKey}>查询</Button>
+                                    <Button onClick={this.resetForm} style={{marginRight: '16px'}}>重置</Button>
+                                    <Button onClick={this.openModal}
+                                            style={{float: 'right'}} type="primary">创建账户</Button>
                                 </div>
                             </Col>
                         </Row>

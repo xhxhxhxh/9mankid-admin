@@ -1,12 +1,13 @@
 import React from "react";
 import Axios from "@/axios";
-import {Button, Col, Form, Input, message, Modal, Row, Table} from "antd";
+import {Button, Col, Form, Input, message, Modal, Row, Select, Table} from "antd";
 import style from "./style.less";
 
 const { confirm } = Modal;
 const { Search } = Input;
+const { Option } = Select;
 
-class SelectTeacherModal extends React.Component {
+class SelectCoursewareModal extends React.Component {
     constructor (props) {
         super(props);
         this.columns = [
@@ -16,25 +17,21 @@ class SelectTeacherModal extends React.Component {
                 render: (text,record,index) => index + 1,
             },
             {
-                title: '账号',
-                dataIndex: 'phone',
-                key: 'phone',
+                title: '阶段',
+                dataIndex: 'level',
+                render: text => 'L' + text,
+                key: 'level',
             },
             {
-                title: '教师姓名',
-                dataIndex: 'realname',
-                key: 'realname',
-            },
-            {
-                title: '教师昵称',
-                dataIndex: 'uname',
-                key: 'uname',
-            },
-            {
-                title: '教学科目',
-                dataIndex: 'subjects',
+                title: '科目',
+                dataIndex: 'subject_id',
+                key: 'subject_id',
                 render: text => this.renderSubject(text),
-                key: 'subjects',
+            },
+            {
+                title: '课件名称',
+                dataIndex: 'name',
+                key: 'name',
             },
             {
                 title: '操作',
@@ -48,18 +45,14 @@ class SelectTeacherModal extends React.Component {
             pageNum: 1,
             pageSize: 5,
             totalCount: 0,
-            key: ''
+            key: '',
+            subject: 'all',
+            level: 'all'
         };
     }
 
     componentWillMount() {
-        this.queryTeacher(this.props.selectSubjectId)
-    };
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (this.props.selectSubjectId !== nextProps.selectSubjectId || (this.props.modalVisible !== nextProps.modalVisible && nextProps.modalVisible)) {
-            this.queryTeacher(nextProps.selectSubjectId)
-        }
+        this.queryCourseware()
     };
 
     componentWillUnmount = () => {
@@ -68,36 +61,36 @@ class SelectTeacherModal extends React.Component {
         };
     };
 
-    renderSubject = id => {
-        const subjectArr = id.split(',');
-        const newSubjectArr = []
-        for (let item of subjectArr) {
-            newSubjectArr.push(this.props.subjectObj[item])
-        }
-        return newSubjectArr.join(',')
-    };
-
-    queryTeacher = (selectSubjectId) => {
-        const {pageNum, pageSize, key} = this.state;
+    queryCourseware = () => {
+        const {pageNum, pageSize, key, subject, level} = this.state;
         const params = {
+            type: this.props.type,
             pageno: pageNum,
             pagesize: pageSize,
-            subject_id: selectSubjectId
         }
+
         if (key) {
             Object.assign(params, {key: key})
         }
+
+        if (subject !== 'all') {
+            Object.assign(params, {subject: subject})
+        }
+
+        if (level !== 'all') {
+            Object.assign(params, {level: level})
+        }
+
         this.setState({
             loading: true
         })
-        Axios.get(this.props.rootUrl + '/admin/teacher/queryTeacher', {params})
+        Axios.get(this.props.rootUrl + '/admin/courseware/queryCourseware', {params})
             .then(res => {
                 let data = res.data;
-                // console.log(data)
                 if (data.code === 200) {
-                    const teacherList = data.data.data;
+                    const coursewareList = data.data.data;
                     this.setState({
-                        data: teacherList,
+                        data: coursewareList,
                         totalCount: data.data.count,
                         loading: false
                     })
@@ -116,31 +109,51 @@ class SelectTeacherModal extends React.Component {
         }
     };
 
+    renderSubject = id => {
+        return this.props.subjectObj[id]
+    };
+
     // 重置查询结果
     resetForm = () => {
         this.props.form.resetFields();
         this.setState({
             pageNum: 1,
             key: ''
-        }, () => {this.queryTeacher(this.props.selectSubjectId)})
+        }, () => {this.queryCourseware()})
     };
 
     // 页码改变
     pageChange = (page) => {
         this.setState({
             pageNum: page
-        }, () => this.queryTeacher(this.props.selectSubjectId))
+        }, () => this.queryCourseware())
+    };
+
+    // 阶段筛选
+    levelChange = value => {
+        this.setState({
+            level: value,
+            pageNum: 1,
+        }, this.queryCourseware)
+    };
+
+    // 科目筛选
+    subjectChange = value => {
+        this.setState({
+            subject: value,
+            pageNum: 1,
+        }, this.queryCourseware)
     };
 
     // 通过关键字查询
-    queryTeacherByKey = () => {
+    queryCoursewareByKey = () => {
         this.setState({
             pageNum: 1,
-        }, () => this.queryTeacher(this.props.selectSubjectId))
+        }, this.queryCourseware)
     };
 
     // 取消添加
-    cancelSelectTeacher = () => {
+    cancelSelectCourseware = () => {
         this.props.form.resetFields();
         this.props.closeModal()
     };
@@ -156,14 +169,14 @@ class SelectTeacherModal extends React.Component {
 
     showConfirm = (data) => {
         confirm({
-            title: '确定要选择该老师吗?',
+            title: '确定要选择该课件吗?',
             centered: true,
             okText: '确定',
             cancelText: '取消',
             okButtonProps: {style: {lineHeight: '30px'}},
             cancelButtonProps: {style: {lineHeight: '30px'}},
             onOk: () => {
-                this.props.setTeacher(data, this.props.selectSubjectId);
+                this.props.setCourseware(data);
             },
             onCancel() {
                 console.log('Cancel');
@@ -172,17 +185,17 @@ class SelectTeacherModal extends React.Component {
     };
 
     render () {
-        const { totalCount, pageNum, pageSize, loading, data } = this.state;
+        const { totalCount, pageNum, pageSize, loading, data, subject, level } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <Modal
-                title={'选择老师: ' + this.props.selectSubjectName}
+                title={'选择课件'}
                 style={{top: 200}}
                 width="1000px"
                 maskClosable={false}
                 visible={this.props.modalVisible}
-                onCancel={this.cancelSelectTeacher}
-                onOk={this.cancelSelectTeacher}
+                onCancel={this.cancelSelectCourseware}
+                onOk={this.cancelSelectCourseware}
                 className={style['modal-container']}
                 okText="关闭"
                 cancelButtonProps={{ style: {display: 'none'} }}
@@ -193,8 +206,7 @@ class SelectTeacherModal extends React.Component {
                             <Row gutter={{ xs: 0, sm: 16, md: 16, lg: 0, xl: 0 }}>
                                 <Col xs={24} sm={12} md={12} lg={8} xl={8}>
                                     <Form.Item colon={false}>
-                                        {getFieldDecorator('teacherName')(<Search placeholder="请输入账户/教师名称/教师昵称"
-                                                                                  onSearch={this.queryTeacherByKey}
+                                        {getFieldDecorator('coursewareName')(<Search placeholder="请输入课件名称" onSearch={this.queryCoursewareByKey}
                                                                                   onChange={this.keyChange}
                                                                                   style={{marginBottom: '24px'}} />)}
                                     </Form.Item>
@@ -202,8 +214,29 @@ class SelectTeacherModal extends React.Component {
                                 <Col xs={24} sm={24} md={24} lg={{span: 6, offset: 1}} xl={{span: 4, offset: 1}}>
                                     <div className="buttonBox">
                                         <Button style={{marginRight: '8px', marginBottom: '24px'}} type="primary"
-                                                onClick={this.queryTeacherByKey}>查询</Button>
+                                                onClick={this.queryCoursewareByKey}>查询</Button>
                                         <Button onClick={this.resetForm}>重置</Button>
+                                    </div>
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={{span: 6, offset: 1}} xl={{span: 10, offset: 1}}>
+                                    <div className="selectBox">
+                                        <div className="selectBox-item">
+                                            <span>科目</span>
+                                            <Select value={subject} style={{ width: 100}} onChange={this.subjectChange}>
+                                                {Object.keys(this.props.subjectObj).map(item =>
+                                                    <Option value={item} key={item}>{this.props.subjectObj[item]}</Option>)}
+                                                <Option value={'all'}>所有</Option>
+                                            </Select>
+                                        </div>
+                                        <div className="selectBox-item">
+                                            <span>阶段</span>
+                                            <Select value={level} style={{ width: 100 }} onChange={this.levelChange}>
+                                                <Option value={1}>L1</Option>
+                                                <Option value={2}>L2</Option>
+                                                <Option value={3}>L3</Option>
+                                                <Option value={'all'}>所有</Option>
+                                            </Select>
+                                        </div>
                                     </div>
                                 </Col>
                             </Row>
@@ -217,4 +250,4 @@ class SelectTeacherModal extends React.Component {
     }
 }
 
-export default Form.create({ name: 'selectCourseModal' })(SelectTeacherModal)
+export default Form.create({ name: 'selectCourseModal' })(SelectCoursewareModal)

@@ -228,6 +228,7 @@ class SlideBar extends React.Component {
                         style={{
                             margin: '24px 16px',
                             minHeight: 280,
+                            minWidth: 400
                         }}
                     >
                         <Switch>

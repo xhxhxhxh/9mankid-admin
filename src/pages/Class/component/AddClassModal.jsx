@@ -12,6 +12,7 @@ class AddClassModal extends React.Component {
             addClassLoading: false,
             cycle: [],
             cycleHasChanged: false,
+            type: 2
         };
     }
 
@@ -23,35 +24,35 @@ class AddClassModal extends React.Component {
 
     // 添加班级
     addClass = () => {
-        const {cycle, cycleHasChanged} = this.state
+        const {cycle, cycleHasChanged, type} = this.state
         this.props.form.validateFields((err, values) => {
-            if (cycle.length === 0) {
+            const {className, startDate, startTime} = values;
+            if (type === 1 && cycle.length === 0) {
                 if (!cycleHasChanged) {
                     this.setState({
                         cycleHasChanged: true
                     })
                 }
             }
-            if (err || cycle.length < 3) return false;
+            if (err || (type === 1 && cycle.length < 3)) return false;
 
-            const {className, startDate, startTime, type} = values;
-            cycle.sort((a, b) => a - b);
-
-            return
             const params = {
-                lesson_id: courseId,
+                type,
                 name: className,
                 startdate: startDate.format('YYYY-MM-DD') + ' ' + startTime.format('HH:mm:ss'),
-                cycle,
-                "limit_num": 6
             };
+
+            if (type === 1) {
+                cycle.sort((a, b) => a - b);
+                Object.assign(params, {cycle: cycle.toString()})
+            }
 
             Axios.post(this.props.rootUrl + '/admin/classes/addClass', params)
                 .then(res => {
                     let data = res.data;
                     if (data.code === 200) {
                         message.success('新建班级成功',5);
-                        this.props.history.push('/class')
+                        this.props.history.push('/class/edit?id=' + data.data.data.id)
                     } else {
                         message.warning(data.msg,5);
                     }
@@ -84,8 +85,15 @@ class AddClassModal extends React.Component {
         })
     };
 
+    // 课程类型改变事件
+    typeChange = value => {
+        this.setState({
+            type: value
+        })
+    };
+
     render () {
-        const { addClassLoading, cycle, cycleHasChanged } = this.state;
+        const { addClassLoading, cycle, cycleHasChanged, type } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <Modal
@@ -107,10 +115,10 @@ class AddClassModal extends React.Component {
                         })(<Input/>)}
                     </Form.Item>
                     <Form.Item label="课程类型:&nbsp;" colon={false}>
-                        {getFieldDecorator('type', {initialValue: '2'})(<Select style={{width: '100%'}}>
-                            <Option value="2">试听课</Option>
-                            <Option value="1">正式课</Option>
-                        </Select>)}
+                        <Select style={{width: '100%'}} value={type} onChange={this.typeChange}>
+                            <Option value={2}>试听课</Option>
+                            <Option value={1}>正式课</Option>
+                        </Select>
                     </Form.Item>
                     <Form.Item label="上课时间:&nbsp;" colon={false}>
                         <Form.Item style={{ display: 'inline-block', marginRight: '24px', width: 'calc(50% - 12px)' }}>
@@ -126,9 +134,9 @@ class AddClassModal extends React.Component {
                                 <TimePicker style={{width: '100%'}}/>)}
                         </Form.Item>
                     </Form.Item>
-                    <Form.Item label="上课周期:&nbsp;" colon={false}
-                               validateStatus="error"
-                               help={(cycleHasChanged && cycle.length < 3)? '上课周期数不能小于3': ''}>
+                    {type === 1? <Form.Item label="上课周期:&nbsp;" colon={false}
+                                            validateStatus="error"
+                                            help={(cycleHasChanged && cycle.length < 3)? '上课周期数不能小于3': ''}>
                         <div className="cycle">
                             <Button className={cycle.indexOf(1) !== -1? 'selected': ''}
                                     onClick={() => {this.addCycle(1)}}>一</Button>
@@ -142,10 +150,10 @@ class AddClassModal extends React.Component {
                                     onClick={() => {this.addCycle(5)}}>五</Button>
                             <Button className={cycle.indexOf(6) !== -1? 'selected': ''}
                                     onClick={() => {this.addCycle(6)}}>六</Button>
-                            <Button className={cycle.indexOf(7) !== -1? 'selected': ''}
-                                    onClick={() => {this.addCycle(7)}}>日</Button>
+                            <Button className={cycle.indexOf(0) !== -1? 'selected': ''}
+                                    onClick={() => {this.addCycle(0)}}>日</Button>
                         </div>
-                    </Form.Item>
+                    </Form.Item>: ''}
                 </Form>
             </Modal>
         )

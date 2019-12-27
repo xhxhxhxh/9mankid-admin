@@ -4,89 +4,109 @@ import { Link } from 'react-router-dom';
 import style from './index.less'
 import {connect} from "react-redux";
 import Axios from "@/axios";
-import AddClassModal from "./component/AddClassModal"
+import AddClassModal from "./component/AddClassModal";
+import moment from "moment";
 
 const { Search } = Input;
 const { Option } = Select;
 
-const columns = [
-    {
-        key: 'num',
-        title: '序号',
-        render: (text,record,index) => index + 1,
-    },
-    {
-        title: '班级名称',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: '阶段',
-        render: text => 'L' + text,
-        dataIndex: 'level',
-        key: 'level',
-    },
-    {
-        title: '类型',
-        render: text => text === 1? '正式课': '体验课',
-        dataIndex: 'type',
-        key: 'type',
-    },
-    {
-        title: '上课时间',
-        dataIndex: 'startdate',
-        key: 'startdate',
-    },
-    {
-        title: '教师',
-        dataIndex: 'teacher',
-        render: text => <div>{text.map(item => <p key={item.id} style={{marginBottom: 0}}>{item['subject_name'] + ': ' + item['teacher_name']}</p>)}</div>,
-        key: 'teacher',
-    },
-    {
-        title: '最大学生数',
-        dataIndex: 'limit_num',
-        key: 'limit_num',
-    },
-    {
-        title: '报名学生数',
-        dataIndex: 'reserve_num',
-        key: 'reserve_num',
-    },
-    {
-        title: '在班学生数',
-        dataIndex: 'actual_num',
-        key: 'actual_num',
-    },
-    {
-        title: '已上课程数',
-        dataIndex: 'finish_count',
-        key: 'finish_count',
-    },
-    {
-        title: '剩余课程数',
-        render: (text, record) => text - record['finish_count'],
-        dataIndex: 'count',
-        key: 'count',
-    },
-    {
-        title: '操作',
-        key: 'operate',
-        render: (text,record) => <Link to={'/class/edit?id=' + record.id}>查看编辑</Link>,
-    },
-];
+const weekDay = {0: '日', 1: '一', 2: '二', 3: '三', 4: '四', 5: '五', 6: '六'}
+
+const renderClassStartDate = function (text) {
+    const momentObj = moment(text);
+    const date = momentObj.format('YYYY-MM-DD');
+    const time = momentObj.format('HH:mm');
+    const week = momentObj.format('ddd');
+    return (
+        <div>
+            <p>{date}</p>
+            <p>{time}</p>
+            <p>{week}</p>
+        </div>
+    )
+}
 
 class Class extends React.Component {
     constructor () {
         super();
+        this.columns = [
+            {
+                key: 'num',
+                title: '序号',
+                render: (text,record,index) => this.renderIndex(index),
+            },
+            {
+                title: '班级名称',
+                dataIndex: 'name',
+                key: 'name',
+            },
+            {
+                title: '类型',
+                render: text => text === 1? '正式课': '试听课',
+                dataIndex: 'type',
+                key: 'type',
+            },
+            {
+                title: '课堂进度',
+                render: text => text? 'L' + text: '',
+                dataIndex: 'level',
+                key: 'level',
+            },
+            {
+                title: '上课时间',
+                dataIndex: 'startdate',
+                key: 'startdate',
+                render: text => renderClassStartDate(text)
+            },
+            {
+                title: '上课周期',
+                dataIndex: 'cycle',
+                key: 'cycle',
+                render: text => {
+                    if (!text) return
+                    const cycleArr = text.split(',');
+                    return (
+                        <div>
+                            {cycleArr.map((item, index) => {
+                                if (index % 2 === 0) {
+                                    if (index + 1 === cycleArr.length) {
+                                        return <span key={index}>{'周' + weekDay[item]}</span>
+                                    } else {
+                                        return <span key={index}>{'周' + weekDay[item] + '，'}</span>
+                                    }
+                                }else {
+                                    return <React.Fragment key={index}><span>{'周' + weekDay[item]}</span><br/></React.Fragment>
+                                }
+                            })}
+                        </div>
+                    )
+                }
+            },
+            {
+                title: '教师',
+                dataIndex: 'teacher',
+                render: text => <div>{text.map(item => <p key={item.id} style={{marginBottom: 0}}>{item['subject_name'] + ': ' + item['uname']}</p>)}</div>,
+                key: 'teacher',
+            },
+            {
+                title: '学生数量',
+                dataIndex: 'student_count',
+                key: 'student_count',
+            },
+            {
+                title: '操作',
+                key: 'operate',
+                render: (text,record) => <Link to={'/class/edit?id=' + record.id + '&type=' + record.type}>查看编辑</Link>,
+            },
+        ];
         this.state = {
-            columns,
             data: [],
             pageNum: 1,
             pageSize: 10,
             type: 'all',
             level: 'all',
             studentNum: 'all',
+            key: '',
             modalVisible: false
         }
     }
@@ -99,7 +119,7 @@ class Class extends React.Component {
         this.setState = ()=>{
             return false;
         };
-    }
+    };
 
     rowClassName = (record, index) => {
         if (index % 2 === 1) {
@@ -107,8 +127,13 @@ class Class extends React.Component {
         }
     };
 
-    queryClass = (key) => {
-        const { pageNum, pageSize } = this.state;
+    renderIndex = index => {
+        // const {pageNum, pageSize} = this.state;
+        return index + 1;
+    };
+
+    queryClass = () => {
+        const { pageNum, pageSize, type, level, studentNum, key } = this.state;
 
         const params = {
             pageno: pageNum,
@@ -117,6 +142,18 @@ class Class extends React.Component {
 
         if (key) {
             Object.assign(params, {key: key})
+        }
+
+        if (type !== 'all') {
+            Object.assign(params, {type: type})
+        }
+
+        if (level !== 'all') {
+            Object.assign(params, {level: level})
+        }
+
+        if (studentNum !== 'all') {
+            Object.assign(params, {student_count: studentNum})
         }
 
         this.setState({
@@ -147,23 +184,13 @@ class Class extends React.Component {
             })
     };
 
-    // 查询指定班级
-    querySingleClass = () => {
-        this.props.form.validateFields((err, values) => {
-            if (err) return false;
-            const key = values.phone;
-            if (key) {
-                this.setState({
-                    pageNum: 1
-                }, () => {this.queryClass(key)})
-            }
-        })
-    };
-
     // 重置查询结果
     resetForm = () => {
         this.props.form.resetFields();
-        this.queryClass()
+        this.setState({
+            pageNum: 1,
+            key: ''
+        }, this.queryClass)
     };
 
     // 页码改变
@@ -176,22 +203,41 @@ class Class extends React.Component {
     // 类型筛选
     typeChange = value => {
         this.setState({
-            type: value
+            type: value,
+            pageNum: 1,
+        }, this.queryClass)
+    };
+
+    // 搜索词改变
+    keyChange = e => {
+        e.persist();
+        const key = e.target.value;
+        this.setState({
+            key
         })
     };
 
     // 阶段筛选
     levelChange = value => {
         this.setState({
-            level: value
-        })
+            level: value,
+            pageNum: 1,
+        }, this.queryClass)
     };
 
     // 学生数量筛选
     studentNumChange = value => {
         this.setState({
-            studentNum: value
-        })
+            studentNum: value,
+            pageNum: 1,
+        }, this.queryClass)
+    };
+
+    // 通过关键字查询班级
+    queryClassByKey = () => {
+        this.setState({
+            pageNum: 1,
+        }, this.queryClass)
     };
 
     closeModal = () => {
@@ -204,7 +250,7 @@ class Class extends React.Component {
 
 
     render() {
-        const { columns, data, totalCount, pageSize, pageNum, loading, type, level, studentNum, modalVisible } = this.state;
+        const { data, totalCount, pageSize, pageNum, loading, type, level, studentNum, modalVisible } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <div className={style['class-container']}>
@@ -215,14 +261,15 @@ class Class extends React.Component {
                         <Row gutter={{ xs: 0, sm: 16, md: 16, lg: 0, xl: 0 }}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={7}>
                                 <Form.Item colon={false}>
-                                    {getFieldDecorator('phone')(<Search placeholder="请输入班级名或学生教师账号"
+                                    {getFieldDecorator('phone')(<Search placeholder="请输入班级名称" onSearch={this.queryClassByKey}
+                                                                        onChange={this.keyChange}
                                                                        style={{marginBottom: '24px'}} />)}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={{span: 12}} xl={{span: 9, offset: 1}} xxl={{span: 4, offset: 1}}>
                                 <div className="buttonBox">
                                     <Button style={{marginRight: '8px', marginBottom: '24px'}} type="primary"
-                                            onClick={this.querySingleClass}>查询</Button>
+                                            onClick={this.queryClassByKey}>查询</Button>
                                     <Button onClick={this.resetForm}>重置</Button>
                                 </div>
                             </Col>
@@ -270,7 +317,7 @@ class Class extends React.Component {
                         </Row>
                     </Form>
                 </div>
-                <Table columns={columns} dataSource={data} rowClassName={this.rowClassName} rowKey="id" loading={loading}
+                <Table columns={this.columns} dataSource={data} rowClassName={this.rowClassName} rowKey="id" loading={loading}
                        pagination={{total: totalCount, pageSize: pageSize, current: pageNum, onChange: this.pageChange}}/>
             </div>
         )

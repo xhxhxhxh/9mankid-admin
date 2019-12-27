@@ -2,11 +2,12 @@ import React from "react";
 import Axios from "@/axios";
 import {Button, Col, Form, Input, message, Modal, Row, Table} from "antd";
 import style from "./style.less";
+import moment from "moment";
 
 const { confirm } = Modal;
 const { Search } = Input;
 
-class SelectTeacherModal extends React.Component {
+class SelectStudentModal extends React.Component {
     constructor (props) {
         super(props);
         this.columns = [
@@ -21,20 +22,20 @@ class SelectTeacherModal extends React.Component {
                 key: 'phone',
             },
             {
-                title: '教师姓名',
-                dataIndex: 'realname',
-                key: 'realname',
-            },
-            {
-                title: '教师昵称',
+                title: '昵称',
                 dataIndex: 'uname',
                 key: 'uname',
             },
             {
-                title: '教学科目',
-                dataIndex: 'subjects',
-                render: text => this.renderSubject(text),
-                key: 'subjects',
+                title: '孩子年龄',
+                dataIndex: 'birth',
+                key: 'birth',
+                render: text => this.renderAge(text)
+            },
+            {
+                title: '课时余额',
+                dataIndex: 'balance',
+                key: 'balance',
             },
             {
                 title: '操作',
@@ -53,14 +54,14 @@ class SelectTeacherModal extends React.Component {
     }
 
     componentWillMount() {
-        this.queryTeacher(this.props.selectSubjectId)
+        this.queryStudent()
     };
 
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (this.props.selectSubjectId !== nextProps.selectSubjectId || (this.props.modalVisible !== nextProps.modalVisible && nextProps.modalVisible)) {
-            this.queryTeacher(nextProps.selectSubjectId)
-        }
-    };
+    // componentWillReceiveProps(nextProps, nextContext) {
+    //     if (this.props.selectSubjectId !== nextProps.selectSubjectId || (this.props.modalVisible !== nextProps.modalVisible && nextProps.modalVisible)) {
+    //         this.queryStudent(null, nextProps.selectSubjectId)
+    //     }
+    // };
 
     componentWillUnmount = () => {
         this.setState = ()=>{
@@ -68,21 +69,11 @@ class SelectTeacherModal extends React.Component {
         };
     };
 
-    renderSubject = id => {
-        const subjectArr = id.split(',');
-        const newSubjectArr = []
-        for (let item of subjectArr) {
-            newSubjectArr.push(this.props.subjectObj[item])
-        }
-        return newSubjectArr.join(',')
-    };
-
-    queryTeacher = (selectSubjectId) => {
+    queryStudent = () => {
         const {pageNum, pageSize, key} = this.state;
         const params = {
             pageno: pageNum,
             pagesize: pageSize,
-            subject_id: selectSubjectId
         }
         if (key) {
             Object.assign(params, {key: key})
@@ -90,14 +81,14 @@ class SelectTeacherModal extends React.Component {
         this.setState({
             loading: true
         })
-        Axios.get(this.props.rootUrl + '/admin/teacher/queryTeacher', {params})
+        Axios.get(this.props.rootUrl + '/admin/userProfile/queryUserProfile', {params})
             .then(res => {
                 let data = res.data;
                 // console.log(data)
                 if (data.code === 200) {
-                    const teacherList = data.data.data;
+                    const studentList = data.data.data;
                     this.setState({
-                        data: teacherList,
+                        data: studentList,
                         totalCount: data.data.count,
                         loading: false
                     })
@@ -116,31 +107,36 @@ class SelectTeacherModal extends React.Component {
         }
     };
 
+    // 计算年龄
+    renderAge = (date) => {
+        if (date) {
+            const birth = moment(date);
+            const now = moment();
+            const age = now.diff(birth, 'years');
+            return  age + '周岁'
+        } else {
+            return ''
+        }
+    };
+
     // 重置查询结果
     resetForm = () => {
         this.props.form.resetFields();
         this.setState({
             pageNum: 1,
             key: ''
-        }, () => {this.queryTeacher(this.props.selectSubjectId)})
+        }, () => {this.queryStudent()})
     };
 
     // 页码改变
     pageChange = (page) => {
         this.setState({
             pageNum: page
-        }, () => this.queryTeacher(this.props.selectSubjectId))
-    };
-
-    // 通过关键字查询
-    queryTeacherByKey = () => {
-        this.setState({
-            pageNum: 1,
-        }, () => this.queryTeacher(this.props.selectSubjectId))
+        }, () => this.queryStudent())
     };
 
     // 取消添加
-    cancelSelectTeacher = () => {
+    cancelSelectStudent = () => {
         this.props.form.resetFields();
         this.props.closeModal()
     };
@@ -154,16 +150,23 @@ class SelectTeacherModal extends React.Component {
         })
     };
 
+    // 通过关键字查询
+    queryStudentByKey = () => {
+        this.setState({
+            pageNum: 1,
+        }, this.queryStudent)
+    };
+
     showConfirm = (data) => {
         confirm({
-            title: '确定要选择该老师吗?',
+            title: '确定要选择该学生吗?',
             centered: true,
             okText: '确定',
             cancelText: '取消',
             okButtonProps: {style: {lineHeight: '30px'}},
             cancelButtonProps: {style: {lineHeight: '30px'}},
             onOk: () => {
-                this.props.setTeacher(data, this.props.selectSubjectId);
+                this.props.setStudent(data);
             },
             onCancel() {
                 console.log('Cancel');
@@ -176,13 +179,13 @@ class SelectTeacherModal extends React.Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <Modal
-                title={'选择老师: ' + this.props.selectSubjectName}
+                title={'添加学生'}
                 style={{top: 200}}
                 width="1000px"
                 maskClosable={false}
                 visible={this.props.modalVisible}
-                onCancel={this.cancelSelectTeacher}
-                onOk={this.cancelSelectTeacher}
+                onCancel={this.cancelSelectStudent}
+                onOk={this.cancelSelectStudent}
                 className={style['modal-container']}
                 okText="关闭"
                 cancelButtonProps={{ style: {display: 'none'} }}
@@ -193,8 +196,7 @@ class SelectTeacherModal extends React.Component {
                             <Row gutter={{ xs: 0, sm: 16, md: 16, lg: 0, xl: 0 }}>
                                 <Col xs={24} sm={12} md={12} lg={8} xl={8}>
                                     <Form.Item colon={false}>
-                                        {getFieldDecorator('teacherName')(<Search placeholder="请输入账户/教师名称/教师昵称"
-                                                                                  onSearch={this.queryTeacherByKey}
+                                        {getFieldDecorator('studentName')(<Search placeholder="请输入账号或账号昵称" onSearch={this.queryStudentByKey}
                                                                                   onChange={this.keyChange}
                                                                                   style={{marginBottom: '24px'}} />)}
                                     </Form.Item>
@@ -202,7 +204,7 @@ class SelectTeacherModal extends React.Component {
                                 <Col xs={24} sm={24} md={24} lg={{span: 6, offset: 1}} xl={{span: 4, offset: 1}}>
                                     <div className="buttonBox">
                                         <Button style={{marginRight: '8px', marginBottom: '24px'}} type="primary"
-                                                onClick={this.queryTeacherByKey}>查询</Button>
+                                                onClick={this.queryStudentByKey}>查询</Button>
                                         <Button onClick={this.resetForm}>重置</Button>
                                     </div>
                                 </Col>
@@ -217,4 +219,4 @@ class SelectTeacherModal extends React.Component {
     }
 }
 
-export default Form.create({ name: 'selectCourseModal' })(SelectTeacherModal)
+export default Form.create({ name: 'selectCourseModal' })(SelectStudentModal)

@@ -1,11 +1,65 @@
 .student-edit-container {
   :global {
+    .ant-collapse {
+      border: 0;
+      background-color: unset;
+      .ant-collapse-item {
+        background-color: #fff;
+        border-radius: 4px;
+        overflow: hidden;
+        border: 0;
+        margin-bottom: 24px;
+        .ant-collapse-header {
+          font-size: 16px;
+          padding: 16px 42px;
+          border-bottom: 1px solid #e8e8e8;
+        }
+        .ant-collapse-content {
+          border: 0;
+        }
+        &.contact-history {
+          .contact-box {
+            border:1px solid rgba(220,220,220,1);
+            border-radius:6px;
+            padding: 24px;
+            margin-bottom: 24px;
+            color: rgba(0, 0, 0, 0.85);
+            .ant-col {
+              display: flex;
+              .title {
+                line-height: 32px;
+                display: inline-block;
+                width: 90px;
+                margin-right: 10px;
+                text-align: right;
+              }
+              .content {
+                line-height: 32px;
+                flex: 1;
+                word-break:break-all;
+                margin-bottom: 0;
+              }
+            }
+          }
+        }
+      }
+    }
     .ant-row.ant-form-item {
       display: flex;
       height: 32px;
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button{
+        -webkit-appearance: none !important;
+      }
+      input[type="number"]{
+        -moz-appearance:textfield;
+      }
+      &.ant-form-item-with-help {
+        margin-bottom: 24px;
+      }
       .ant-form-item-label {
         line-height: 32px;
-        width: 64px;
+        width: 91px;
         text-align: right;
         margin-right: 10px;
         > label::after {
@@ -19,33 +73,20 @@
           line-height: 32px;
         }
       }
-    }
-    .register-info {
-      background-color: #fff;
-      margin-bottom: 24px;
-      border-radius: 2px;
-      .register-head {
-        color: rgba(0, 0, 0, 0.85);
-        font-weight: 500;
-        font-size: 16px;
-        padding: 16px 24px;
-        border-bottom: 1px solid #e8e8e8;
-        border-radius: 2px 2px 0 0;
-      }
-      .register-body {
-        padding: 24px;
-        color: rgba(0, 0, 0, 0.85);
-        border-radius: 0 0 2px 2px;
+      &.contactContent {
+        height: auto;
+        &.ant-form-item-with-help {
+          margin-bottom: 5px;
+        }
+        .ant-form-item-control {
+          height: auto;
+        }
       }
     }
     .update {
       margin-top: 50px;
+      margin-bottom: 50px;
       text-align: center;
-      button {
-        &:first-child {
-          margin-right: 50px;
-        }
-      }
     }
   }
 }
