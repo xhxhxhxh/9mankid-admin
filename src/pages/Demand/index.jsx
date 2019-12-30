@@ -192,14 +192,14 @@ class Demand extends React.Component {
                                                                        style={{marginBottom: '24px'}} />)}
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={24} md={12} lg={{span: 12}} xl={{span: 4, offset: 1}}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={{span: 4, offset: 1}}>
                                 <div className="buttonBox">
                                     <Button style={{marginRight: '8px', marginBottom: '24px'}} type="primary"
                                             onClick={this.querySingleDemand}>查询</Button>
                                     <Button onClick={this.resetForm}>重置</Button>
                                 </div>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={{span: 24}} xl={{span: 11}}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={11}>
                                 <div className="selectBox">
                                     <span>类型</span>
                                     <Select value={type} style={{ width: 100, marginRight: '16px', marginBottom: '24px' }} onChange={this.typeChange}>

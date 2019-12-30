@@ -1,8 +1,18 @@
-.teacher-add-container {
+.modal-container {
   :global {
-    .ant-row.ant-form-item {
+    .ant-modal-body {
+      padding-bottom: 0;
+    }
+    .ant-form-item {
       display: flex;
       height: 32px;
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button{
+        -webkit-appearance: none !important;
+      }
+      input[type="number"]{
+        -moz-appearance:textfield;
+      }
       .ant-form-item-label {
         line-height: 32px;
         width: 64px;
@@ -20,24 +30,8 @@
         .ant-form-item-control {
           height: 32px;
           line-height: 32px;
-        }
-      }
-    }
-    .teacher-info {
-      background-color: #fff;
-      margin-bottom: 24px;
-      border-radius: 2px;
-      .teacher-body {
-        padding: 24px;
-        color: rgba(0, 0, 0, 0.85);
-        border-radius: 0 0 2px 2px;
-        .update {
-          margin-top: 50px;
-          text-align: center;
-          button {
-            &:first-child {
-              margin-right: 50px;
-            }
+          .ant-upload-list-item {
+            margin-top: 5px;
           }
         }
       }

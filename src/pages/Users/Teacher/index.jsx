@@ -1,11 +1,14 @@
 import React from 'react';
-import {Input, Row, Col, Form, Button, Table, message} from 'antd';
+import {Input, Row, Col, Form, Button, Table, message, Select} from 'antd';
 import { Link } from 'react-router-dom';
 import style from './index.less'
 import {connect} from "react-redux";
 import Axios from "@/axios";
+import AddTeacherModal from "./component/AddTeacherModal";
+import EditTeacherModal from "./component/EditTeacherModal";
 
 const { Search } = Input;
+const { Option } = Select;
 
 class Teacher extends React.Component {
     constructor () {
@@ -15,6 +18,11 @@ class Teacher extends React.Component {
                 key: 'num',
                 title: '序号',
                 render: (text,record,index) => index + 1,
+            },
+            {
+                title: '账户',
+                dataIndex: 'phone',
+                key: 'phone'
             },
             {
                 title: '老师姓名',
@@ -32,16 +40,10 @@ class Teacher extends React.Component {
                 key: 'subjects',
                 render: (text) => this.renderSubjects(text),
             },
-
-            {
-                title: '手机号',
-                dataIndex: 'phone',
-                key: 'phone'
-            },
             {
                 title: '操作',
                 key: 'operate',
-                render: (text,record) => <Link to={'/user/teacher/edit?id=' + record.id}>查看编辑</Link>,
+                render: (text,record) => <a onClick={() => this.openEditTeacherModal(record)} href="javascript:void(0)">查看编辑</a>,
             },
         ];
 
@@ -49,7 +51,13 @@ class Teacher extends React.Component {
             data: [],
             pageNum: 1,
             pageSize: 10,
-            subjectObj: {}
+            subjectObj: {},
+            subjectList: [],
+            subject: 'all',
+            key: '',
+            currentTeacherInfo: {},
+            addTeacherModalVisible: false,
+            editTeacherModalVisible: false,
         }
     }
 
@@ -86,17 +94,20 @@ class Teacher extends React.Component {
 
     // 查询科目信息
     querySubject = () => {
-        Axios.get(this.props.rootUrl + '/admin/lesson/querySubject')
+        Axios.get(this.props.rootUrl + '/admin/subject/querySubject')
             .then(res => {
                 let data = res.data;
                 if (data.code === 200) {
                     const subjectList = data.data.data;
                     const subjectObj = {};
                     subjectList.forEach(item => {
-                        subjectObj[item.id] = item.name
+                        subjectObj[item.id] = item.name;
+                        item.label = item.name;
+                        item.value = item.id;
                     });
                     this.setState({
-                        subjectObj
+                        subjectObj,
+                        subjectList
                     })
                 } else {
                     message.warning(data.msg,5);
@@ -107,8 +118,8 @@ class Teacher extends React.Component {
             })
     };
 
-    queryTeachers = (key) => {
-        const { pageNum, pageSize } = this.state;
+    queryTeachers = () => {
+        const { pageNum, pageSize, key, subject } = this.state;
 
         const params = {
             pageno: pageNum,
@@ -117,6 +128,10 @@ class Teacher extends React.Component {
 
         if (key) {
             Object.assign(params, {key: key})
+        }
+
+        if (subject !== 'all') {
+            Object.assign(params, {subject_id : subject})
         }
 
         this.setState({
@@ -146,30 +161,13 @@ class Teacher extends React.Component {
             })
     };
 
-    // 查询单个老师
-    querySingleTeacher = () => {
-        this.props.form.validateFields((err, values) => {
-            if (err) return false;
-            const name = values.name;
-            if (name) {
-                this.setState({
-                    pageNum: 1
-                }, () => {this.queryTeachers(name)})
-            }
-        })
-    };
-
     // 重置查询结果
     resetForm = () => {
         this.props.form.resetFields();
-        this.queryTeachers()
-    };
-
-    // 处理输入数字长度
-    handleInput = (e, length) => {
-        e.persist();
-        const target = e.target;
-        target.value = target.value.slice(0,length)
+        this.setState({
+            pageNum: 1,
+            key: ''
+        }, this.queryTeachers)
     };
 
     // 页码改变
@@ -179,26 +177,99 @@ class Teacher extends React.Component {
         }, this.queryTeachers)
     };
 
+    // 类型筛选
+    subjectChange = value => {
+        this.setState({
+            subject: value
+        }, this.queryTeachers)
+    };
+
+    // 搜索词改变
+    keyChange = e => {
+        e.persist();
+        const key = e.target.value;
+        this.setState({
+            key
+        })
+    };
+
+    // 查询单个老师
+    queryTeacherByKey = () => {
+        this.setState({
+            pageNum: 1
+        }, this.queryTeachers)
+    };
+
+    closeAddTeacherModal = isSuccess => {
+        this.setState({addTeacherModalVisible: false});
+        if (isSuccess) {
+            this.queryTeachers()
+        }
+    };
+
+    openAddTeacherModal = () => {
+        this.setState({addTeacherModalVisible: true})
+    };
+
+    closeEditTeacherModal = data => {
+        this.setState({editTeacherModalVisible: false});
+        if (data) {
+            console.log(data)
+            const teacherList = [...this.state.data];
+            const teacherInfo = teacherList.filter(item => item.id === data.id)[0];
+            teacherInfo.uname = data.uname;
+            teacherInfo.realname = data.realname;
+            teacherInfo.subjects = data.subjects;
+            this.setState({
+                data: teacherList
+            })
+        }
+    };
+
+    openEditTeacherModal = data => {
+        this.setState({
+            editTeacherModalVisible: true,
+            currentTeacherInfo: data
+        })
+    };
+
     render() {
-        const { data, totalCount, pageSize, pageNum, loading } = this.state;
+        const { data, totalCount, pageSize, pageNum, loading, subjectObj, subject, subjectList, addTeacherModalVisible,
+            editTeacherModalVisible, currentTeacherInfo} = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <div className={style['teacher-container']}>
+                <AddTeacherModal rootUrl={this.props.rootUrl} history={this.props.history} subjectList={subjectList}
+                                 modalVisible={addTeacherModalVisible} closeModal={this.closeAddTeacherModal}></AddTeacherModal>
+                <EditTeacherModal rootUrl={this.props.rootUrl} history={this.props.history} teacherInfo={currentTeacherInfo} subjectList={subjectList}
+                                  modalVisible={editTeacherModalVisible} closeModal={this.closeEditTeacherModal}></EditTeacherModal>
                 <div className="check">
                     <Form hideRequiredMark={true}>
                         <Row gutter={{ xs: 0, sm: 16, md: 16, lg: 0, xl: 0 }}>
-                            <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={8}>
                                 <Form.Item colon={false}>
-                                    {getFieldDecorator('name')(<Search placeholder="请输入手机号、教师姓名或昵称"/>)}
+                                    {getFieldDecorator('name')(<Search placeholder="请输入账户/教师姓名/教师昵称" onSearch={this.queryTeacherByKey}
+                                                                       onChange={this.keyChange}
+                                                                       style={{marginBottom: '24px'}} />)}
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={24} md={12} lg={{span: 15, offset: 1}} xl={{span: 15, offset: 1}}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={{span: 4, offset: 1}}>
                                 <div className="buttonBox">
                                     <Button style={{marginRight: '8px', marginBottom: '24px'}} type="primary"
-                                            onClick={this.querySingleTeacher}>查询</Button>
-                                    <Button onClick={this.resetForm} style={{marginRight: '16px'}}>重置</Button>
-                                    <Button onClick={() => {this.props.history.push('/user/teacher/add')}}
-                                            style={{float: 'right'}} type="primary">新增老师</Button>
+                                            onClick={this.queryTeacherByKey}>查询</Button>
+                                    <Button onClick={this.resetForm}>重置</Button>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={11}>
+                                <div className="selectBox">
+                                    <span>科目</span>
+                                    <Select value={subject} style={{ width: 100, marginRight: '16px', marginBottom: '24px' }}
+                                            onChange={this.subjectChange}>
+                                        {Object.keys(subjectObj).map(key => <Option value={Number(key)} key={key}>{subjectObj[key]}</Option>)}
+                                        <Option value="all">所有</Option>
+                                    </Select>
+                                    <Button onClick={this.openAddTeacherModal}
+                                            style={{float: 'right'}} type="primary">新建教师账户</Button>
                                 </div>
                             </Col>
                         </Row>

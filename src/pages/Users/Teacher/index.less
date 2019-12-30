@@ -10,20 +10,21 @@
       }
     }
 
-    @media (max-width: 768px){
+    @media (max-width: 1200px){
       .buttonBox {
         float: right;
       }
     }
     .check {
+      .selectBox {
+        > span {
+          display: inline-block;
+          width: 40px;
+        }
+      }
       .ant-row.ant-form-item {
         display: flex;
         height: 32px;
-        .ant-input-suffix {
-          i {
-            cursor: unset;
-          }
-        }
         .ant-form-item-label {
           line-height: 32px;
         }

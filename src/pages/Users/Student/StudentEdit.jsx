@@ -4,6 +4,7 @@ import moment from 'moment';
 import {Button, Col, Form, Input, Row, Select, DatePicker, message, Collapse, TimePicker} from "antd";
 import Axios from "@/axios";
 import {connect} from "react-redux";
+import AddClassHourModal from "@/pages/Users/Student/component/AddClassHourModal"
 
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -22,6 +23,7 @@ class StudentEdit extends React.Component {
             cacheChannel: ['朋友介绍', '微信广告', '公交广告'],
             contact: ['爸爸', '妈妈'],
             cacheContact: ['爸爸', '妈妈'],
+            modalVisible: false
         }
     }
 
@@ -114,7 +116,12 @@ class StudentEdit extends React.Component {
                         trackInfo,
                     },() => {
                         const birth = trackInfo.birth;
-                        let formatBirth = moment(birth);
+                        let formatBirth = null;
+                        if (birth) {
+                            formatBirth = moment(birth);
+                        } else {
+                            formatBirth = moment();
+                        }
                         this.countAgeByBirth(formatBirth)
                     })
                 } else {
@@ -337,14 +344,27 @@ class StudentEdit extends React.Component {
         target.value = target.value.slice(0,length)
     };
 
+    closeModal = uodateClassHour => {
+        this.setState({modalVisible: false});
+        if (uodateClassHour) {
+            this.queryClassHourInfo();
+        }
+    };
+
+    openModal = () => {
+        this.setState({modalVisible: true})
+    };
+
     render() {
-        const { studentInfo, classHourInfo, trackInfo, age, channel, contact, contactHistory } = this.state;
+        const { studentInfo, classHourInfo, trackInfo, age, channel, contact, contactHistory, modalVisible } = this.state;
         const { getFieldDecorator } = this.props.form;
         const {balance, recharge_total, free_total, id} = classHourInfo;
         const totalClassHour = id? recharge_total + free_total: 0;
 
         return (
             <div className={style['student-edit-container']}>
+                <AddClassHourModal rootUrl={this.props.rootUrl} history={this.props.history} studentInfo={studentInfo}
+                                 modalVisible={modalVisible} closeModal={this.closeModal}></AddClassHourModal>
                 <Collapse className="info" defaultActiveKey={['1', '2', '3', '4', '5']}>
                     <Panel header="账户信息" key="1">
                         <Row>
@@ -409,7 +429,7 @@ class StudentEdit extends React.Component {
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={{span: 6, offset: 2}} xl={{span: 6, offset: 2}}>
                                 <Form.Item>
-                                    <Button type="primary">增加课时</Button>
+                                    <Button type="primary" onClick={this.openModal}>增加课时</Button>
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -534,11 +554,11 @@ class StudentEdit extends React.Component {
                     </Panel>
                     <Panel header="沟通历史" key="5" className="contact-history">
                         <Row>
-                            {contactHistory.map(item =>
+                            {contactHistory.map((item, index) =>
                                 <Col xs={24} sm={24} md={24} lg={{span: 22, offset:1}} xl={{span: 22, offset:1}} key={item.id} className="contact-box">
                                     <Col xs={24} sm={24} md={12} lg={8} xl={8}>
                                         <span className="title">沟通序号:</span>
-                                        <p className="content">{item.id}</p>
+                                        <p className="content">{contactHistory.length - index}</p>
                                     </Col>
                                     <Col xs={24} sm={24} md={12} lg={8} xl={8}>
                                         <span className="title">沟通顾问:</span>
@@ -565,6 +585,7 @@ class StudentEdit extends React.Component {
                         </Row>
                     </Panel>
                 </Collapse>
+
                 <div className="update">
                     <Button size="large" onClick={() => this.props.history.push('/user/student')}>取消返回</Button>
                 </div>
