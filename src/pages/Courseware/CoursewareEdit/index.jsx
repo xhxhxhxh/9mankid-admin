@@ -6,7 +6,6 @@ import {
     Form,
     Input,
     Row,
-    Select,
     Icon,
     Table,
     message,
@@ -18,7 +17,6 @@ import Axios from '@/axios'
 import {connect} from "react-redux";
 import common from "@/api/common";
 
-const { Option } = Select;
 const { confirm } = Modal;
 
 let startIndex = ''; // 缓存拖拽行的序号
@@ -99,7 +97,7 @@ class CoursewareEdit extends React.Component {
             data: [],
             loading: false,
             uploadImageIdObj: {}, // 存储正在上传的图片课件资源id
-            subjectList: [],
+            subjectObj: {},
             showIndexInputIndex: '', // 控制改变序号输入框显示
             showInputTitle: '', // 控制文件标题输入框显示
             originTitle: '', // 文件标题初始值
@@ -109,42 +107,47 @@ class CoursewareEdit extends React.Component {
             pageNum: 1,
             pageSize: 100,
             totalCount: 0,
-            lessonInfo: {},
+            coursewareInfo: {},
             fileName: {}, // 上传文件的名称
             imgUrlObj: {},
         };
     }
 
     componentWillMount() {
-        const urlParams = this.props.location.search.substr(1).split('&');
-        const lessonId = urlParams[0].split('=')[1];
-        const coursewareId = urlParams[1].split('=')[1];
-        const coursewareName = urlParams[2].split('=')[1];
-        const coursewareSubject = urlParams[3].split('=')[1];
+        const search = this.props.location.search.substr(1).split('&');
+        const searchObj = {};
+        search.forEach(item => {
+            const contentArr = item.split('=');
+            searchObj[contentArr[0]] = contentArr[1]
+        })
+        const num = searchObj.num;
+        const id = searchObj.id;
         this.setState({
-            lessonId,
-            coursewareId,
-            coursewareName: decodeURIComponent(coursewareName),
-            coursewareSubject
+            coursewareNum: num,
+            coursewareId: id
         }, () => {
-            this.queryLessonInfo();
+            this.queryCoursewareInfo();
             this.queryCoursewareResource()
         });
 
-        const params = {id: lessonId};
-
-        Axios.get(this.props.rootUrl + '/admin/lesson/queryLessonSubject', {params})
+        Axios.get(this.props.rootUrl + '/admin/subject/querySubject')
             .then(res => {
                 let data = res.data;
                 if (data.code === 200) {
+                    const subjectList = data.data.data;
+                    const subjectObj = {};
+                    subjectList.forEach(item => {
+                        subjectObj[item.id] = item.name;
+                    });
                     this.setState({
-                        subjectList: data.data.data,
+                        subjectObj
                     })
                 } else {
                     message.warning(data.msg,5);
                 }
             })
             .catch(() => {
+
             })
     }
 
@@ -419,18 +422,21 @@ class CoursewareEdit extends React.Component {
                         if (data.code === 200) {
                             // console.log(data);
                             message.success('课件资源删除成功',5);
-                            let { pageNum, pageSize, totalCount, data} = this.state;
-                            const currentCount = totalCount - 1;
-                            if (currentCount <= pageSize * (pageNum - 1)) {
-                                pageNum --;
-                                pageNum = pageNum <= 0? 1: pageNum;
-                                this.setState({pageNum}, this.queryCoursewareResource);
-                            } else if (pageSize * pageNum < totalCount) {
-                                this.queryCoursewareResource()
-                            } else {
-                                data = data.filter(item => item.id !== id);
-                                this.setState({data, totalCount: currentCount});
-                            }
+                            let data = this.state.data;
+                            data = data.filter(item => item.id !== id);
+                            this.setState({data});
+                            // let { pageNum, pageSize, totalCount, data} = this.state;
+                            // const currentCount = totalCount - 1;
+                            // if (currentCount <= pageSize * (pageNum - 1)) {
+                            //     pageNum --;
+                            //     pageNum = pageNum <= 0? 1: pageNum;
+                            //     this.setState({pageNum}, this.queryCoursewareResource);
+                            // } else if (pageSize * pageNum < totalCount) {
+                            //     this.queryCoursewareResource()
+                            // } else {
+                            //     data = data.filter(item => item.id !== id);
+                            //     this.setState({data, totalCount: currentCount});
+                            // }
                         } else {
                             message.warning(data.msg,5);
                         }
@@ -444,19 +450,19 @@ class CoursewareEdit extends React.Component {
         });
     };
 
-    // 查询课程信息
-    queryLessonInfo = () => {
+    // 查询课件信息
+    queryCoursewareInfo = () => {
         const params = {
-            id: this.state.lessonId
+            courseware_no: this.state.coursewareNum
         };
-        Axios.get(this.props.rootUrl + '/admin/lesson/queryLesson', {params})
+        Axios.get(this.props.rootUrl + '/admin/courseware/queryCoursewareInfo', {params})
             .then(res => {
                 let data = res.data;
                 if (data.code === 200) {
                     // console.log(data);
-                    const lessonInfo = data.data.data;
+                    const coursewareInfo = data.data.data;
                     this.setState({
-                        lessonInfo,
+                        coursewareInfo,
                     })
                 } else {
                     message.warning(data.msg,5);
@@ -554,12 +560,8 @@ class CoursewareEdit extends React.Component {
         }, this.queryCoursewareResource)
     };
 
-    rowClassName = (record, index) => {
+    rowClassName = record => {
         let className = 'row-id-' + record.id;
-
-        // if (index % 2 === 1) {
-        //     className += ' changeColor';
-        // }
         return className
     };
 
@@ -621,10 +623,20 @@ class CoursewareEdit extends React.Component {
         this.updateCoursewareResource(params, '资源更新成功');
     };
 
+    // 返回上一页
+    goBack = () => {
+        const type = this.state.coursewareInfo.type;
+        if (type === 1) {
+            this.props.history.push('/courseware/formal')
+        }else if (type === 2) {
+            this.props.history.push('/courseware/test')
+        }
+    };
+
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { addCoursewareResourseVisible, addCoursewareResourseLoading, coursewareResourseType, subjectList,
-            columns, data, loading, lessonId, lessonInfo, coursewareName, coursewareSubject, totalCount, pageSize, pageNum} = this.state;
+        const { addCoursewareResourseVisible, addCoursewareResourseLoading, coursewareResourseType, subjectObj,
+            columns, data, loading, coursewareInfo } = this.state;
         return (
             <div className={style['courseware-edit-container']}>
                 <Modal
@@ -641,64 +653,42 @@ class CoursewareEdit extends React.Component {
                         <Radio value={2}>游戏</Radio>
                     </Radio.Group>
                 </Modal>
-                <div className="lesson-info">
-                    <div className="lesson-head">课程信息</div>
-                    <div className="lesson-body">
-                        <Row gutter={16}>
-                            <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-                                <Form.Item label="课程名称:&nbsp;" colon={false}>
-                                    {lessonInfo.name}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-                                <Form.Item label="课程类型:&nbsp;" colon={false}>
-                                    {lessonInfo.type === 1? '正式课': '体验课'}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-                                <Form.Item label="所属阶段:&nbsp;" colon={false}>
-                                    {'L' + lessonInfo.level}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-                                <Form.Item label="年龄段:&nbsp;" colon={false}>
-                                    {lessonInfo.stage + '周岁'}
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                <div className="courseware-info">
+                    <div className="courseware-head">课件信息</div>
+                    <div className="courseware-body">
+                        <Form hideRequiredMark={true}>
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={{span: 6, offset: 1}} xl={{span: 6, offset: 1}}>
+                                    <Form.Item label="课件名称:&nbsp;" colon={false}>
+                                        {getFieldDecorator('name', {initialValue: coursewareInfo.name,
+                                            rules: [{ required: true, message: '请输入课件名称' }]})(
+                                            <Input />)}
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={{span: 6, offset: 2}} xl={{span: 6, offset: 2}}>
+                                    <Form.Item label="所属阶段:&nbsp;" colon={false}>
+                                        {'L' + coursewareInfo.level}
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={{span: 6, offset: 2}} xl={{span: 6, offset: 2}}>
+                                    <Form.Item label="科目:&nbsp;" colon={false}>
+                                        {subjectObj[coursewareInfo.subject_id]}
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Form>
                     </div>
                 </div>
                 <div className="courseware-edit-info">
-                    <Form hideRequiredMark={true}>
-                        <Row>
-                            <Col xs={24} sm={12} md={12} lg={{span: 8, offset: 2}} xl={{span: 8, offset: 2}}>
-                                <Form.Item label="课件名称:&nbsp;" colon={false}>
-                                    {getFieldDecorator('name', {initialValue: coursewareName,
-                                        rules: [{ required: true, message: '请输入课件名称' }],
-                                    })(<Input/>)}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={12} md={12} lg={{span: 8, offset: 2}} xl={{span: 8, offset: 2}}>
-                                <Form.Item label="科目:&nbsp;" colon={false}>
-                                    {getFieldDecorator('subjectid', {initialValue: parseInt(coursewareSubject),
-                                        rules: [{ required: true, message: '请选择科目' }],
-                                    })(<Select style={{width: '100%'}}>
-                                        {subjectList.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}
-                                    </Select>)}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    </Form>
+                    <div className="courseware-edit-head">课件资源</div>
                     <div className="add-courseware">
-                        <span onClick={() => this.setState({addCoursewareResourseVisible: true})}>
-                            <Icon type="plus-circle" />
-                            <span>添加动画/游戏</span>
-                        </span>
+                        <Button icon="plus-circle" size="large" type="primary"
+                                onClick={() => this.setState({addCoursewareResourseVisible: true})}>添加资源</Button>
                     </div>
                     <Table columns={columns} dataSource={data} rowClassName={this.rowClassName} rowKey="id" onRow={this.dragRow}
-                           loading={loading} pagination={{total: totalCount, pageSize: pageSize, current: pageNum, onChange: this.pageChange}}/>
+                           loading={loading} pagination={false}/>
                     <div className="update">
-                        <Button size="large" onClick={() => this.props.history.push('/lesson/edit?id=' + lessonId)}>取消返回</Button>
+                        <Button size="large" onClick={this.goBack}>退出</Button>
                         <Button type="primary" size="large" onClick={this.updateCourseware}>保存</Button>
                     </div>
                 </div>

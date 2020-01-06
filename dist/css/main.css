@@ -16246,18 +16246,19 @@ textarea.ant-time-picker-input {
     overflow-x: auto;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .src-pages-Users-Teacher-index-teacher-container-d5dd5 .buttonBox {
     float: right;
   }
+}
+.src-pages-Users-Teacher-index-teacher-container-d5dd5 .check .selectBox > span {
+  display: inline-block;
+  width: 40px;
 }
 .src-pages-Users-Teacher-index-teacher-container-d5dd5 .check .ant-row.ant-form-item {
   display: -webkit-box;
   display: flex;
   height: 32px;
-}
-.src-pages-Users-Teacher-index-teacher-container-d5dd5 .check .ant-row.ant-form-item .ant-input-suffix i {
-  cursor: unset;
 }
 .src-pages-Users-Teacher-index-teacher-container-d5dd5 .check .ant-row.ant-form-item .ant-form-item-label {
   line-height: 32px;
@@ -16274,100 +16275,242 @@ textarea.ant-time-picker-input {
   background-color: #e6f7ff;
 }
 
-.src-pages-Users-Teacher-teacherEdit-teacher-edit-container-ebc8a .ant-row.ant-form-item {
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-modal-body {
+  padding-bottom: 0;
+}
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-form-item {
   display: -webkit-box;
   display: flex;
   height: 32px;
 }
-.src-pages-Users-Teacher-teacherEdit-teacher-edit-container-ebc8a .ant-row.ant-form-item .ant-form-item-label {
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-form-item input::-webkit-outer-spin-button,
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-form-item input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-form-item input[type="number"] {
+  -moz-appearance: textfield;
+}
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-form-item .ant-form-item-label {
   line-height: 32px;
   width: 64px;
   text-align: right;
   margin-right: 10px;
 }
-.src-pages-Users-Teacher-teacherEdit-teacher-edit-container-ebc8a .ant-row.ant-form-item .ant-form-item-label > label::after {
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-form-item .ant-form-item-label > label::after {
   margin: 0;
 }
-.src-pages-Users-Teacher-teacherEdit-teacher-edit-container-ebc8a .ant-row.ant-form-item.ant-form-item-with-help {
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-form-item.ant-form-item-with-help {
   margin-bottom: 24px;
 }
-.src-pages-Users-Teacher-teacherEdit-teacher-edit-container-ebc8a .ant-row.ant-form-item .ant-form-item-control-wrapper {
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-form-item .ant-form-item-control-wrapper {
   -webkit-box-flex: 1;
           flex: 1;
 }
-.src-pages-Users-Teacher-teacherEdit-teacher-edit-container-ebc8a .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
   height: 32px;
   line-height: 32px;
 }
-.src-pages-Users-Teacher-teacherEdit-teacher-edit-container-ebc8a .teacher-info {
-  background-color: #fff;
-  margin-bottom: 24px;
-  border-radius: 2px;
-}
-.src-pages-Users-Teacher-teacherEdit-teacher-edit-container-ebc8a .teacher-info .teacher-body {
-  padding: 24px;
-  color: rgba(0, 0, 0, 0.85);
-  border-radius: 0 0 2px 2px;
-}
-.src-pages-Users-Teacher-teacherEdit-teacher-edit-container-ebc8a .teacher-info .teacher-body .update {
-  margin-top: 50px;
-  text-align: center;
-}
-.src-pages-Users-Teacher-teacherEdit-teacher-edit-container-ebc8a .teacher-info .teacher-body .update button:first-child {
-  margin-right: 50px;
+.src-pages-Users-Teacher-component-AddTeacherModal-modal-container-277aa .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-upload-list-item {
+  margin-top: 5px;
 }
 
-.src-pages-Users-Teacher-teacherAdd-teacher-add-container-5d502 .ant-row.ant-form-item {
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-collapse {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  -webkit-font-feature-settings: 'tnum';
+          font-feature-settings: 'tnum';
+  background-color: #fafafa;
+  border: 1px solid #d9d9d9;
+  border-bottom: 0;
+  border-radius: 4px;
+}
+.ant-collapse > .ant-collapse-item {
+  border-bottom: 1px solid #d9d9d9;
+}
+.ant-collapse > .ant-collapse-item:last-child,
+.ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header {
+  border-radius: 0 0 4px 4px;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  position: relative;
+  padding: 12px 16px;
+  padding-left: 40px;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 22px;
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  display: inline-block;
+  font-size: 12px;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow > * {
+  line-height: 1;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow svg {
+  display: inline-block;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow::before {
+  display: none;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow-icon {
+  display: block;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow svg {
+  -webkit-transition: -webkit-transform 0.24s;
+  transition: -webkit-transform 0.24s;
+  transition: transform 0.24s;
+  transition: transform 0.24s, -webkit-transform 0.24s;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-extra {
+  float: right;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header:focus {
+  outline: none;
+}
+.ant-collapse > .ant-collapse-item.ant-collapse-no-arrow > .ant-collapse-header {
+  padding-left: 12px;
+}
+.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
+  padding: 12px 16px;
+  padding-right: 40px;
+}
+.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  right: 16px;
+  left: initial;
+}
+.ant-collapse-anim-active {
+  -webkit-transition: height 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: height 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.ant-collapse-content {
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.65);
+  background-color: #fff;
+  border-top: 1px solid #d9d9d9;
+}
+.ant-collapse-content > .ant-collapse-content-box {
+  padding: 16px;
+}
+.ant-collapse-content-inactive {
+  display: none;
+}
+.ant-collapse-item:last-child > .ant-collapse-content {
+  border-radius: 0 0 4px 4px;
+}
+.ant-collapse-borderless {
+  background-color: #fff;
+  border: 0;
+}
+.ant-collapse-borderless > .ant-collapse-item {
+  border-bottom: 1px solid #d9d9d9;
+}
+.ant-collapse-borderless > .ant-collapse-item:last-child,
+.ant-collapse-borderless > .ant-collapse-item:last-child .ant-collapse-header {
+  border-radius: 0;
+}
+.ant-collapse-borderless > .ant-collapse-item > .ant-collapse-content {
+  background-color: transparent;
+  border-top: 0;
+}
+.ant-collapse-borderless > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box {
+  padding-top: 4px;
+}
+.ant-collapse .ant-collapse-item-disabled > .ant-collapse-header,
+.ant-collapse .ant-collapse-item-disabled > .ant-collapse-header > .arrow {
+  color: rgba(0, 0, 0, 0.25);
+  cursor: not-allowed;
+}
+
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-collapse {
+  border: 0;
+  background-color: unset;
+}
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-collapse .ant-collapse-item {
+  background-color: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 0;
+  margin-bottom: 24px;
+}
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-collapse .ant-collapse-item .ant-collapse-header {
+  font-size: 16px;
+  padding: 16px 42px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-collapse .ant-collapse-item .ant-collapse-content {
+  border: 0;
+}
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-collapse .ant-collapse-item.contact-history .contact-box {
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  padding: 24px;
+  margin-bottom: 24px;
+  color: rgba(0, 0, 0, 0.85);
+}
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-collapse .ant-collapse-item.contact-history .contact-box .ant-col {
   display: -webkit-box;
   display: flex;
-  height: 32px;
 }
-.src-pages-Users-Teacher-teacherAdd-teacher-add-container-5d502 .ant-row.ant-form-item .ant-form-item-label {
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-collapse .ant-collapse-item.contact-history .contact-box .ant-col .title {
   line-height: 32px;
-  width: 64px;
-  text-align: right;
+  display: inline-block;
+  width: 90px;
   margin-right: 10px;
+  text-align: right;
 }
-.src-pages-Users-Teacher-teacherAdd-teacher-add-container-5d502 .ant-row.ant-form-item .ant-form-item-label > label::after {
-  margin: 0;
-}
-.src-pages-Users-Teacher-teacherAdd-teacher-add-container-5d502 .ant-row.ant-form-item.ant-form-item-with-help {
-  margin-bottom: 24px;
-}
-.src-pages-Users-Teacher-teacherAdd-teacher-add-container-5d502 .ant-row.ant-form-item .ant-form-item-control-wrapper {
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-collapse .ant-collapse-item.contact-history .contact-box .ant-col .content {
+  line-height: 32px;
   -webkit-box-flex: 1;
           flex: 1;
+  word-break: break-all;
+  margin-bottom: 0;
 }
-.src-pages-Users-Teacher-teacherAdd-teacher-add-container-5d502 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
-  height: 32px;
-  line-height: 32px;
-}
-.src-pages-Users-Teacher-teacherAdd-teacher-add-container-5d502 .teacher-info {
-  background-color: #fff;
-  margin-bottom: 24px;
-  border-radius: 2px;
-}
-.src-pages-Users-Teacher-teacherAdd-teacher-add-container-5d502 .teacher-info .teacher-body {
-  padding: 24px;
-  color: rgba(0, 0, 0, 0.85);
-  border-radius: 0 0 2px 2px;
-}
-.src-pages-Users-Teacher-teacherAdd-teacher-add-container-5d502 .teacher-info .teacher-body .update {
-  margin-top: 50px;
-  text-align: center;
-}
-.src-pages-Users-Teacher-teacherAdd-teacher-add-container-5d502 .teacher-info .teacher-body .update button:first-child {
-  margin-right: 50px;
-}
-
 .src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item {
   display: -webkit-box;
   display: flex;
   height: 32px;
 }
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item input::-webkit-outer-spin-button,
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item input[type="number"] {
+  -moz-appearance: textfield;
+}
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item.ant-form-item-with-help {
+  margin-bottom: 24px;
+}
 .src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item .ant-form-item-label {
   line-height: 32px;
-  width: 64px;
+  width: 91px;
   text-align: right;
   margin-right: 10px;
 }
@@ -16382,53 +16525,19 @@ textarea.ant-time-picker-input {
   height: 32px;
   line-height: 32px;
 }
-.src-pages-Users-Student-studentEdit-student-edit-container-6143f .register-info {
-  background-color: #fff;
-  margin-bottom: 24px;
-  border-radius: 2px;
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item.contactContent {
+  height: auto;
 }
-.src-pages-Users-Student-studentEdit-student-edit-container-6143f .register-info .register-head {
-  color: rgba(0, 0, 0, 0.85);
-  font-weight: 500;
-  font-size: 16px;
-  padding: 16px 24px;
-  border-bottom: 1px solid #e8e8e8;
-  border-radius: 2px 2px 0 0;
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item.contactContent.ant-form-item-with-help {
+  margin-bottom: 5px;
 }
-.src-pages-Users-Student-studentEdit-student-edit-container-6143f .register-info .register-body {
-  padding: 24px;
-  color: rgba(0, 0, 0, 0.85);
-  border-radius: 0 0 2px 2px;
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item.contactContent .ant-form-item-control {
+  height: auto;
 }
 .src-pages-Users-Student-studentEdit-student-edit-container-6143f .update {
   margin-top: 50px;
+  margin-bottom: 50px;
   text-align: center;
-}
-.src-pages-Users-Student-studentEdit-student-edit-container-6143f .update button:first-child {
-  margin-right: 50px;
-}
-
-.src-pages-Lesson-index-lesson-container-ef7ba {
-  padding: 24px;
-  background-color: #fff;
-  border-radius: 2px;
-}
-@media (max-width: 1000px) {
-  .src-pages-Lesson-index-lesson-container-ef7ba .ant-table {
-    width: 100%;
-    overflow-x: auto;
-  }
-}
-@media (max-width: 768px) {
-  .src-pages-Lesson-index-lesson-container-ef7ba .buttonBox {
-    float: right;
-  }
-}
-.src-pages-Lesson-index-lesson-container-ef7ba .check .ant-row .ant-input-suffix i {
-  cursor: unset;
-}
-.src-pages-Lesson-index-lesson-container-ef7ba .ant-table .changeColor {
-  background-color: #e6f7ff;
 }
 
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
@@ -16726,33 +16835,50 @@ textarea.ant-input-number {
   color: rgba(0, 0, 0, 0.25);
 }
 
-.src-pages-Lesson-component-style-modal-container-c9015 .ant-form-item {
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item {
   display: -webkit-box;
   display: flex;
   height: 32px;
 }
-.src-pages-Lesson-component-style-modal-container-c9015 .ant-form-item .ant-form-item-label {
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item input::-webkit-outer-spin-button,
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item input[type="number"] {
+  -moz-appearance: textfield;
+}
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item .ant-form-item-label {
   line-height: 32px;
-  width: 64px;
+  width: 91px;
   text-align: right;
   margin-right: 10px;
 }
-.src-pages-Lesson-component-style-modal-container-c9015 .ant-form-item .ant-form-item-label > label::after {
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item .ant-form-item-label > label::after {
   margin: 0;
 }
-.src-pages-Lesson-component-style-modal-container-c9015 .ant-form-item.ant-form-item-with-help {
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item.ant-form-item-with-help {
   margin-bottom: 24px;
 }
-.src-pages-Lesson-component-style-modal-container-c9015 .ant-form-item .ant-form-item-control-wrapper {
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item .ant-form-item-control-wrapper {
   -webkit-box-flex: 1;
           flex: 1;
 }
-.src-pages-Lesson-component-style-modal-container-c9015 .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
   height: 32px;
   line-height: 32px;
 }
-.src-pages-Lesson-component-style-modal-container-c9015 .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-upload-list-item {
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-upload-list-item {
   margin-top: 5px;
+}
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item.remark {
+  height: auto;
+  margin-bottom: 0;
+}
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item.remark.ant-form-item-with-help {
+  margin-bottom: 5px;
+}
+.src-pages-Users-Student-component-AddClassHourModal-modal-container-3d696 .ant-form-item.remark .ant-form-item-control {
+  height: auto;
 }
 
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
@@ -17456,366 +17582,46 @@ textarea.ant-input-number {
   }
 }
 
-/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
-/* stylelint-disable no-duplicate-selectors */
-/* stylelint-disable */
-/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
-.ant-divider {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  color: rgba(0, 0, 0, 0.65);
-  font-size: 14px;
-  font-variant: tabular-nums;
-  line-height: 1.5;
-  list-style: none;
-  -webkit-font-feature-settings: 'tnum';
-          font-feature-settings: 'tnum';
-  background: #e8e8e8;
-}
-.ant-divider,
-.ant-divider-vertical {
-  position: relative;
-  top: -0.06em;
-  display: inline-block;
-  width: 1px;
-  height: 0.9em;
-  margin: 0 8px;
-  vertical-align: middle;
-}
-.ant-divider-horizontal {
-  display: block;
-  clear: both;
-  width: 100%;
-  min-width: 100%;
-  height: 1px;
-  margin: 24px 0;
-}
-.ant-divider-horizontal.ant-divider-with-text-center,
-.ant-divider-horizontal.ant-divider-with-text-left,
-.ant-divider-horizontal.ant-divider-with-text-right {
-  display: table;
-  margin: 16px 0;
-  color: rgba(0, 0, 0, 0.85);
-  font-weight: 500;
-  font-size: 16px;
-  white-space: nowrap;
-  text-align: center;
-  background: transparent;
-}
-.ant-divider-horizontal.ant-divider-with-text-center::before,
-.ant-divider-horizontal.ant-divider-with-text-left::before,
-.ant-divider-horizontal.ant-divider-with-text-right::before,
-.ant-divider-horizontal.ant-divider-with-text-center::after,
-.ant-divider-horizontal.ant-divider-with-text-left::after,
-.ant-divider-horizontal.ant-divider-with-text-right::after {
-  position: relative;
-  top: 50%;
-  display: table-cell;
-  width: 50%;
-  border-top: 1px solid #e8e8e8;
-  -webkit-transform: translateY(50%);
-      -ms-transform: translateY(50%);
-          transform: translateY(50%);
-  content: '';
-}
-.ant-divider-horizontal.ant-divider-with-text-left .ant-divider-inner-text,
-.ant-divider-horizontal.ant-divider-with-text-right .ant-divider-inner-text {
-  display: inline-block;
-  padding: 0 10px;
-}
-.ant-divider-horizontal.ant-divider-with-text-left::before {
-  top: 50%;
-  width: 5%;
-}
-.ant-divider-horizontal.ant-divider-with-text-left::after {
-  top: 50%;
-  width: 95%;
-}
-.ant-divider-horizontal.ant-divider-with-text-right::before {
-  top: 50%;
-  width: 95%;
-}
-.ant-divider-horizontal.ant-divider-with-text-right::after {
-  top: 50%;
-  width: 5%;
-}
-.ant-divider-inner-text {
-  display: inline-block;
-  padding: 0 24px;
-}
-.ant-divider-dashed {
-  background: none;
-  border-color: #e8e8e8;
-  border-style: dashed;
-  border-width: 1px 0 0;
-}
-.ant-divider-horizontal.ant-divider-with-text-center.ant-divider-dashed,
-.ant-divider-horizontal.ant-divider-with-text-left.ant-divider-dashed,
-.ant-divider-horizontal.ant-divider-with-text-right.ant-divider-dashed {
-  border-top: 0;
-}
-.ant-divider-horizontal.ant-divider-with-text-center.ant-divider-dashed::before,
-.ant-divider-horizontal.ant-divider-with-text-left.ant-divider-dashed::before,
-.ant-divider-horizontal.ant-divider-with-text-right.ant-divider-dashed::before,
-.ant-divider-horizontal.ant-divider-with-text-center.ant-divider-dashed::after,
-.ant-divider-horizontal.ant-divider-with-text-left.ant-divider-dashed::after,
-.ant-divider-horizontal.ant-divider-with-text-right.ant-divider-dashed::after {
-  border-style: dashed none none;
-}
-.ant-divider-vertical.ant-divider-dashed {
-  border-width: 0 0 0 1px;
-}
-
-@media (max-width: 1300px) {
-  .src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .lesson-add-info .age-item .ant-select {
-    width: 50px !important;
-  }
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .ant-row.ant-form-item {
-  display: -webkit-box;
-  display: flex;
-  height: 32px;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .ant-row.ant-form-item.uploadImg .avatar-uploader {
-  margin-top: -15px;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .ant-row.ant-form-item.uploadImg .avatar-uploader .ant-upload {
-  width: 100px;
-  height: 62px;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .ant-row.ant-form-item.uploadImg .avatar-uploader .ant-upload img {
-  width: unset;
-  height: 100%;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .ant-row.ant-form-item .ant-form-item-label {
-  line-height: 32px;
-  width: 64px;
-  text-align: right;
-  margin-right: 10px;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .ant-row.ant-form-item .ant-form-item-label > label::after {
-  margin: 0;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .ant-row.ant-form-item.ant-form-item-with-help {
-  margin-bottom: 24px;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .ant-row.ant-form-item .ant-form-item-control-wrapper {
-  -webkit-box-flex: 1;
-          flex: 1;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
-  height: 32px;
-  line-height: 32px;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-upload-list-item {
-  margin-top: 5px;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .lesson-add-info {
-  background-color: #fff;
-  margin-bottom: 24px;
-  border-radius: 2px;
-  color: rgba(0, 0, 0, 0.85);
-  padding: 24px;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .lesson-add-info .addCourseware {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
-  color: #1890ff;
-  margin-top: 20px;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .lesson-add-info .addCourseware > span {
-  cursor: pointer;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .lesson-add-info .ant-table-wrapper {
-  margin-top: 24px;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .lesson-add-info .ant-table-wrapper .ant-table .changeColor {
-  background-color: #e6f7ff;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .lesson-add-info .update {
-  margin-top: 50px;
-  text-align: center;
-}
-.src-pages-Lesson-LessonAdd-index-lesson-add-container-b8403 .lesson-add-info .update button:nth-child(2) {
-  margin: 0 50px;
-  background-color: #0DD78D;
-  border-color: #0DD78D;
-}
-
-@media (max-width: 1300px) {
-  .src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .age-item .ant-select {
-    width: 50px !important;
-  }
-}
 @media (max-width: 1000px) {
-  .src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-table {
+  .src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .ant-table {
     width: 100%;
     overflow-x: auto;
   }
 }
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-row.ant-form-item {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .ant-row.ant-form-item {
   display: -webkit-box;
   display: flex;
   height: 32px;
 }
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-row.ant-form-item.uploadImg .avatar-uploader {
-  margin-top: -15px;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-row.ant-form-item.uploadImg .avatar-uploader .ant-upload {
-  width: 100px;
-  height: 62px;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-row.ant-form-item.uploadImg .avatar-uploader .ant-upload img {
-  width: unset;
-  height: 100%;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-row.ant-form-item .ant-form-item-label {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .ant-row.ant-form-item .ant-form-item-label {
   line-height: 32px;
   width: 64px;
   text-align: right;
   margin-right: 10px;
 }
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-row.ant-form-item .ant-form-item-label > label::after {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .ant-row.ant-form-item .ant-form-item-label > label::after {
   margin: 0;
 }
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-row.ant-form-item.ant-form-item-with-help {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .ant-row.ant-form-item.ant-form-item-with-help {
   margin-bottom: 24px;
 }
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-row.ant-form-item .ant-form-item-control-wrapper {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .ant-row.ant-form-item .ant-form-item-control-wrapper {
   -webkit-box-flex: 1;
           flex: 1;
 }
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
   height: 32px;
   line-height: 32px;
 }
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-upload-list-item {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-upload-list-item {
   margin-top: 5px;
 }
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info {
-  background-color: #fff;
-  margin-bottom: 24px;
-  border-radius: 2px;
-  color: rgba(0, 0, 0, 0.85);
-  padding: 24px;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .add-courseware {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
-  color: #1890ff;
-  margin-top: 50px;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .add-courseware i {
-  font-size: 20px;
-  margin-right: 8px;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .add-courseware > span {
-  cursor: pointer;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-align: center;
-          align-items: center;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .ant-table-wrapper {
-  margin-top: 24px;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .ant-table-wrapper .ant-table .ant-table-row.dragging-over td * {
-  pointer-events: none;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .ant-table-wrapper .ant-table .top-border td {
-  border-top: 1px dashed #1890ff;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .ant-table-wrapper .ant-table .bottom-border td {
-  border-bottom: 1px dashed #1890ff;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .ant-table-wrapper .ant-table .changeColor {
-  background-color: #e6f7ff;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .update {
-  margin-top: 50px;
-  text-align: center;
-}
-.src-pages-Lesson-LessonEdit-index-lesson-edit-container-f423e .lesson-edit-info .update button:nth-child(2) {
-  margin: 0 50px;
-}
-
-.src-pages-Lesson-LessonEdit-component-style-modal-container-b2007 .ant-form-item {
-  display: -webkit-box;
-  display: flex;
-  height: 32px;
-}
-.src-pages-Lesson-LessonEdit-component-style-modal-container-b2007 .ant-form-item .ant-form-item-label {
-  line-height: 32px;
-  width: 64px;
-  text-align: right;
-  margin-right: 10px;
-}
-.src-pages-Lesson-LessonEdit-component-style-modal-container-b2007 .ant-form-item .ant-form-item-label > label::after {
-  margin: 0;
-}
-.src-pages-Lesson-LessonEdit-component-style-modal-container-b2007 .ant-form-item.ant-form-item-with-help {
-  margin-bottom: 24px;
-}
-.src-pages-Lesson-LessonEdit-component-style-modal-container-b2007 .ant-form-item .ant-form-item-control-wrapper {
-  -webkit-box-flex: 1;
-          flex: 1;
-}
-.src-pages-Lesson-LessonEdit-component-style-modal-container-b2007 .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
-  height: 32px;
-  line-height: 32px;
-}
-.src-pages-Lesson-LessonEdit-component-style-modal-container-b2007 .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-upload-list-item {
-  margin-top: 5px;
-}
-
-@media (max-width: 1000px) {
-  .src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .ant-table {
-    width: 100%;
-    overflow-x: auto;
-  }
-}
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .ant-row.ant-form-item {
-  display: -webkit-box;
-  display: flex;
-  height: 32px;
-}
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .ant-row.ant-form-item .ant-form-item-label {
-  line-height: 32px;
-  width: 64px;
-  text-align: right;
-  margin-right: 10px;
-}
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .ant-row.ant-form-item .ant-form-item-label > label::after {
-  margin: 0;
-}
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .ant-row.ant-form-item.ant-form-item-with-help {
-  margin-bottom: 24px;
-}
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .ant-row.ant-form-item .ant-form-item-control-wrapper {
-  -webkit-box-flex: 1;
-          flex: 1;
-}
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
-  height: 32px;
-  line-height: 32px;
-}
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-upload-list-item {
-  margin-top: 5px;
-}
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .lesson-info {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-info {
   background-color: #fff;
   margin-bottom: 24px;
   border-radius: 2px;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .lesson-info .lesson-head {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-info .courseware-head {
   color: rgba(0, 0, 0, 0.85);
   font-weight: 500;
   font-size: 16px;
@@ -17823,19 +17629,26 @@ textarea.ant-input-number {
   border-bottom: 1px solid #e8e8e8;
   border-radius: 2px 2px 0 0;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .lesson-info .lesson-body {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-info .courseware-body {
   padding: 24px;
   color: rgba(0, 0, 0, 0.85);
   border-radius: 0 0 2px 2px;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info {
   background-color: #fff;
   margin-bottom: 24px;
   border-radius: 2px;
   color: rgba(0, 0, 0, 0.85);
-  padding: 24px;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .add-courseware {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .courseware-edit-head {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  font-size: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e8e8e8;
+  border-radius: 2px 2px 0 0;
+}
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .add-courseware {
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: center;
@@ -17843,63 +17656,66 @@ textarea.ant-input-number {
   color: #1890ff;
   margin-top: 20px;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .add-courseware i {
-  font-size: 20px;
-  margin-right: 8px;
-}
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .add-courseware > span {
-  cursor: pointer;
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .add-courseware button {
   display: -webkit-box;
   display: flex;
   -webkit-box-align: center;
           align-items: center;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table-wrapper {
-  margin-top: 24px;
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .add-courseware button i {
+  font-size: 17px;
+  height: 17px;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table-wrapper .ant-table .ant-table-row.dragging-over td * {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table-wrapper {
+  margin-top: 24px;
+  padding: 0 24px;
+}
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table-wrapper .ant-table .ant-table-row.dragging-over td * {
   pointer-events: none;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table-wrapper .ant-table .changeColor {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table-wrapper .ant-table .changeColor {
   background-color: #e6f7ff;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table-wrapper .ant-table .top-border td {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table-wrapper .ant-table .top-border td {
   border-top: 1px dashed #1890ff;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table-wrapper .ant-table .bottom-border td {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table-wrapper .ant-table .bottom-border td {
   border-bottom: 1px dashed #1890ff;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table-wrapper .ant-table .title span {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table-wrapper .ant-table .title span {
   overflow: hidden;
   width: 200px;
   white-space: nowrap;
   display: inline-block;
   text-overflow: ellipsis;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table-wrapper .ant-table .index i:hover {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table-wrapper .ant-table .index i:hover {
   cursor: move !important;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table .ant-upload-list-item {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table .ant-upload-list-item {
   margin-top: 0;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table .ant-upload-list-item .ant-upload-list-item-name {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table .ant-upload-list-item .ant-upload-list-item-name {
   width: 200px;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table .avatar-uploader .ant-upload {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table .avatar-uploader .ant-upload {
   width: 92px;
   height: 57px;
   margin: 0;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .ant-table .avatar-uploader .ant-upload img {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .ant-table .avatar-uploader .ant-upload img {
   width: unset;
   height: 100%;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .update {
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .update {
   margin-top: 50px;
   text-align: center;
 }
-.src-pages-Lesson-CoursewareEdit-index-courseware-edit-container-90505 .courseware-edit-info .update button:nth-child(2) {
-  margin: 0 50px;
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .update button {
+  margin-bottom: 24px;
+}
+.src-pages-Courseware-CoursewareEdit-index-courseware-edit-container-a28e9 .courseware-edit-info .update button:nth-child(2) {
+  margin-left: 50px;
 }
 
 .src-pages-Class-index-class-container-a81f3 {
@@ -18298,197 +18114,272 @@ textarea.ant-input-number {
   background-color: #e6f7ff;
 }
 
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item {
-  display: -webkit-box;
-  display: flex;
-  height: 32px;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-label {
-  line-height: 32px;
-  width: 64px;
-  text-align: right;
-  margin-right: 10px;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-label > label::after {
-  margin: 0;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item.ant-form-item-with-help {
-  margin-bottom: 24px;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper {
-  -webkit-box-flex: 1;
-          flex: 1;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
-  height: 32px;
-  line-height: 32px;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control #classAdd_teacher {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
-  height: 64px;
-  margin-top: -16px;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control #classAdd_teacher span {
-  color: #1890ff;
-  cursor: pointer;
-  height: 20px;
-  display: inline-block;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .cycle button {
-  border-radius: unset;
-  position: relative;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .cycle button + button {
-  margin-left: -1px;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .cycle button.selected {
-  z-index: 1;
-  color: #096dd9 !important;
-  border-color: #096dd9 !important;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .cycle button:active {
-  color: rgba(0, 0, 0, 0.65);
-  border-color: #d9d9d9;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .cycle button:focus {
-  color: rgba(0, 0, 0, 0.65);
-  border-color: #d9d9d9;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .cycle button:hover {
-  z-index: 1;
-  color: #096dd9;
-  border-color: #096dd9;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .cycle button:first-of-type {
-  border-radius: 4px 0 0 4px;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .cycle button:last-of-type {
-  border-radius: 0 4px 4px 0;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .class-info {
-  background-color: #fff;
-  margin-bottom: 24px;
-  border-radius: 2px;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .class-info .class-body {
-  padding: 24px;
-  color: rgba(0, 0, 0, 0.85);
-  border-radius: 0 0 2px 2px;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .class-info .class-body .update {
-  margin-top: 50px;
-  text-align: center;
-}
-.src-pages-Class-ClassAdd-index-class-add-container-1e585 .class-info .class-body .update button:first-child {
-  margin-right: 50px;
-}
-
-.src-pages-Demand-index-demand-container-d69f9 {
+.src-pages-Account-index-account-container-ff01d {
   padding: 24px;
   background-color: #fff;
   border-radius: 2px;
 }
 @media (max-width: 1000px) {
-  .src-pages-Demand-index-demand-container-d69f9 .ant-table {
+  .src-pages-Account-index-account-container-ff01d .ant-table {
+    width: 100%;
+    overflow-x: auto;
+  }
+}
+.src-pages-Account-index-account-container-ff01d .check .ant-row.ant-form-item {
+  display: -webkit-box;
+  display: flex;
+  height: 32px;
+}
+.src-pages-Account-index-account-container-ff01d .check .ant-row.ant-form-item .ant-form-item-label {
+  line-height: 32px;
+}
+.src-pages-Account-index-account-container-ff01d .check .ant-row.ant-form-item .ant-form-item-control-wrapper {
+  -webkit-box-flex: 1;
+          flex: 1;
+}
+.src-pages-Account-index-account-container-ff01d .check .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
+  height: 32px;
+  line-height: 32px;
+}
+.src-pages-Account-index-account-container-ff01d .ant-table .changeColor {
+  background-color: #e6f7ff;
+}
+
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-modal-body {
+  padding-bottom: 0;
+}
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-form-item {
+  display: -webkit-box;
+  display: flex;
+  height: 32px;
+}
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-form-item input::-webkit-outer-spin-button,
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-form-item input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-form-item input[type="number"] {
+  -moz-appearance: textfield;
+}
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-form-item .ant-form-item-label {
+  line-height: 32px;
+  width: 64px;
+  text-align: right;
+  margin-right: 10px;
+}
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-form-item .ant-form-item-label > label::after {
+  margin: 0;
+}
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-form-item.ant-form-item-with-help {
+  margin-bottom: 24px;
+}
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-form-item .ant-form-item-control-wrapper {
+  -webkit-box-flex: 1;
+          flex: 1;
+}
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
+  height: 32px;
+  line-height: 32px;
+}
+.src-pages-Account-component-AddAccountModal-modal-container-57953 .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-upload-list-item {
+  margin-top: 5px;
+}
+
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-divider {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  -webkit-font-feature-settings: 'tnum';
+          font-feature-settings: 'tnum';
+  background: #e8e8e8;
+}
+.ant-divider,
+.ant-divider-vertical {
+  position: relative;
+  top: -0.06em;
+  display: inline-block;
+  width: 1px;
+  height: 0.9em;
+  margin: 0 8px;
+  vertical-align: middle;
+}
+.ant-divider-horizontal {
+  display: block;
+  clear: both;
+  width: 100%;
+  min-width: 100%;
+  height: 1px;
+  margin: 24px 0;
+}
+.ant-divider-horizontal.ant-divider-with-text-center,
+.ant-divider-horizontal.ant-divider-with-text-left,
+.ant-divider-horizontal.ant-divider-with-text-right {
+  display: table;
+  margin: 16px 0;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  font-size: 16px;
+  white-space: nowrap;
+  text-align: center;
+  background: transparent;
+}
+.ant-divider-horizontal.ant-divider-with-text-center::before,
+.ant-divider-horizontal.ant-divider-with-text-left::before,
+.ant-divider-horizontal.ant-divider-with-text-right::before,
+.ant-divider-horizontal.ant-divider-with-text-center::after,
+.ant-divider-horizontal.ant-divider-with-text-left::after,
+.ant-divider-horizontal.ant-divider-with-text-right::after {
+  position: relative;
+  top: 50%;
+  display: table-cell;
+  width: 50%;
+  border-top: 1px solid #e8e8e8;
+  -webkit-transform: translateY(50%);
+      -ms-transform: translateY(50%);
+          transform: translateY(50%);
+  content: '';
+}
+.ant-divider-horizontal.ant-divider-with-text-left .ant-divider-inner-text,
+.ant-divider-horizontal.ant-divider-with-text-right .ant-divider-inner-text {
+  display: inline-block;
+  padding: 0 10px;
+}
+.ant-divider-horizontal.ant-divider-with-text-left::before {
+  top: 50%;
+  width: 5%;
+}
+.ant-divider-horizontal.ant-divider-with-text-left::after {
+  top: 50%;
+  width: 95%;
+}
+.ant-divider-horizontal.ant-divider-with-text-right::before {
+  top: 50%;
+  width: 95%;
+}
+.ant-divider-horizontal.ant-divider-with-text-right::after {
+  top: 50%;
+  width: 5%;
+}
+.ant-divider-inner-text {
+  display: inline-block;
+  padding: 0 24px;
+}
+.ant-divider-dashed {
+  background: none;
+  border-color: #e8e8e8;
+  border-style: dashed;
+  border-width: 1px 0 0;
+}
+.ant-divider-horizontal.ant-divider-with-text-center.ant-divider-dashed,
+.ant-divider-horizontal.ant-divider-with-text-left.ant-divider-dashed,
+.ant-divider-horizontal.ant-divider-with-text-right.ant-divider-dashed {
+  border-top: 0;
+}
+.ant-divider-horizontal.ant-divider-with-text-center.ant-divider-dashed::before,
+.ant-divider-horizontal.ant-divider-with-text-left.ant-divider-dashed::before,
+.ant-divider-horizontal.ant-divider-with-text-right.ant-divider-dashed::before,
+.ant-divider-horizontal.ant-divider-with-text-center.ant-divider-dashed::after,
+.ant-divider-horizontal.ant-divider-with-text-left.ant-divider-dashed::after,
+.ant-divider-horizontal.ant-divider-with-text-right.ant-divider-dashed::after {
+  border-style: dashed none none;
+}
+.ant-divider-vertical.ant-divider-dashed {
+  border-width: 0 0 0 1px;
+}
+
+.src-pages-Courseware-index-courseware-container-38e5f {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 2px;
+}
+@media (max-width: 1000px) {
+  .src-pages-Courseware-index-courseware-container-38e5f .ant-table {
     width: 100%;
     overflow-x: auto;
   }
 }
 @media (max-width: 1200px) {
-  .src-pages-Demand-index-demand-container-d69f9 .buttonBox {
+  .src-pages-Courseware-index-courseware-container-38e5f .buttonBox {
     float: right;
   }
 }
-.src-pages-Demand-index-demand-container-d69f9 .check .ant-row .ant-input-suffix i {
-  cursor: unset;
-}
-.src-pages-Demand-index-demand-container-d69f9 .check .ant-row .selectBox > span {
+.src-pages-Courseware-index-courseware-container-38e5f .check .selectBox > span {
   display: inline-block;
   width: 40px;
 }
-.src-pages-Demand-index-demand-container-d69f9 .check .ant-row.ant-form-item {
+.src-pages-Courseware-index-courseware-container-38e5f .check .ant-row.ant-form-item {
   display: -webkit-box;
   display: flex;
   height: 32px;
 }
-.src-pages-Demand-index-demand-container-d69f9 .check .ant-row.ant-form-item .ant-form-item-label {
+.src-pages-Courseware-index-courseware-container-38e5f .check .ant-row.ant-form-item .ant-form-item-label {
   line-height: 32px;
 }
-.src-pages-Demand-index-demand-container-d69f9 .check .ant-row.ant-form-item .ant-form-item-control-wrapper {
+.src-pages-Courseware-index-courseware-container-38e5f .check .ant-row.ant-form-item .ant-form-item-control-wrapper {
   -webkit-box-flex: 1;
           flex: 1;
 }
-.src-pages-Demand-index-demand-container-d69f9 .check .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
+.src-pages-Courseware-index-courseware-container-38e5f .check .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
   height: 32px;
   line-height: 32px;
 }
-.src-pages-Demand-index-demand-container-d69f9 .ant-table .changeColor {
+.src-pages-Courseware-index-courseware-container-38e5f .ant-table .changeColor {
   background-color: #e6f7ff;
 }
-
-@media (max-width: 992px) {
-  .src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .ant-row.ant-form-item.teacher-item {
-    height: 73px;
-  }
+.src-pages-Courseware-index-courseware-container-38e5f .ant-table .add-courseware i {
+  cursor: pointer;
+  font-size: 15px;
 }
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .ant-row.ant-form-item {
+.src-pages-Courseware-index-courseware-container-38e5f .ant-table .add-courseware i:hover {
+  color: #1890ff;
+}
+
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-modal-body {
+  padding-bottom: 0;
+}
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-form-item {
   display: -webkit-box;
   display: flex;
   height: 32px;
 }
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .ant-row.ant-form-item.remark-box {
-  height: auto;
-  margin-bottom: 0;
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-form-item input::-webkit-outer-spin-button,
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-form-item input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
 }
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .ant-row.ant-form-item.remark-box .ant-form-item-control {
-  height: auto !important;
-  line-height: unset !important;
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-form-item input[type="number"] {
+  -moz-appearance: textfield;
 }
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .ant-row.ant-form-item .ant-form-item-label {
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-form-item .ant-form-item-label {
   line-height: 32px;
-  width: 87px;
+  width: 64px;
   text-align: right;
   margin-right: 10px;
 }
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .ant-row.ant-form-item .ant-form-item-label > label::after {
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-form-item .ant-form-item-label > label::after {
   margin: 0;
 }
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .ant-row.ant-form-item .ant-form-item-control-wrapper {
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-form-item.ant-form-item-with-help {
+  margin-bottom: 24px;
+}
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-form-item .ant-form-item-control-wrapper {
   -webkit-box-flex: 1;
           flex: 1;
 }
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .ant-row.ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control {
   height: 32px;
   line-height: 32px;
 }
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .demand-info {
-  background-color: #fff;
-  margin-bottom: 24px;
-  border-radius: 2px;
-}
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .demand-info .demand-body {
-  padding: 24px;
-  color: rgba(0, 0, 0, 0.85);
-  border-radius: 0 0 2px 2px;
-}
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .demand-info .demand-body .contact-num {
-  display: -webkit-box;
-  display: flex;
-}
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .update {
-  margin-top: 50px;
-  text-align: center;
-}
-.src-pages-Demand-DemandEdit-index-demand-edit-container-7a182 .update button:first-child {
-  margin-right: 50px;
+.src-pages-Courseware-component-AddCoursewareModal-modal-container-e2986 .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-upload-list-item {
+  margin-top: 5px;
 }
 
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */

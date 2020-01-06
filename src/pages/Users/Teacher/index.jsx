@@ -1,6 +1,5 @@
 import React from 'react';
 import {Input, Row, Col, Form, Button, Table, message, Select} from 'antd';
-import { Link } from 'react-router-dom';
 import style from './index.less'
 import {connect} from "react-redux";
 import Axios from "@/axios";
@@ -180,7 +179,8 @@ class Teacher extends React.Component {
     // 类型筛选
     subjectChange = value => {
         this.setState({
-            subject: value
+            subject: value,
+            pageNum: 1,
         }, this.queryTeachers)
     };
 
@@ -214,7 +214,6 @@ class Teacher extends React.Component {
     closeEditTeacherModal = data => {
         this.setState({editTeacherModalVisible: false});
         if (data) {
-            console.log(data)
             const teacherList = [...this.state.data];
             const teacherInfo = teacherList.filter(item => item.id === data.id)[0];
             teacherInfo.uname = data.uname;

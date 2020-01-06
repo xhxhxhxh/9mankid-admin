@@ -14,7 +14,7 @@ const { SubMenu } = Menu;
 
 const routesDom = [];
 const IconFont = Icon.createFromIconfontCN({
-    scriptUrl: '//at.alicdn.com/t/font_1458724_mj6sd7dfiq.js',
+    scriptUrl: '//at.alicdn.com/t/font_1458724_x207qkcjkg.js',
 });
 const redirectRoutes = {};
 const breadcrumbNameMap = {};

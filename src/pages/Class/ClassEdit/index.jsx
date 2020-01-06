@@ -427,9 +427,9 @@ class ClassEdit extends React.Component {
         if (hasChanged) {
             confirm({
                 title: '您还没有保存班级信息，确定退出?',
-                centered: true,
                 okText: '直接退出',
                 cancelText: '取消',
+                style: {top: 300},
                 okButtonProps: {style: {lineHeight: '30px'}},
                 cancelButtonProps: {style: {lineHeight: '30px'}},
                 onOk: () => {

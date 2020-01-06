@@ -1,14 +1,11 @@
 import Student from '@/pages/Users/Student'
 import Teacher from '@/pages/Users/Teacher'
 import StudentEdit from '@/pages/Users/Student/StudentEdit'
-import Lesson from '@/pages/Lesson'
-import LessonAdd from '@/pages/Lesson/LessonAdd'
-import LessonEdit from '@/pages/Lesson/LessonEdit'
-import CoursewareEdit from '@/pages/Lesson/CoursewareEdit'
+import CoursewareEdit from '@/pages/Courseware/CoursewareEdit'
 import Class from '@/pages/Class'
 import ClassEdit from '@/pages/Class/ClassEdit'
-import Demand from '@/pages/Demand'
-import DemandEdit from '@/pages/Demand/DemandEdit'
+import Account from '@/pages/Account'
+import Courseware from '@/pages/Courseware'
 
 const routes = [
     {
@@ -41,29 +38,36 @@ const routes = [
         ]
     },
     {
-        path: '/lesson',
-        name: 'lesson',
-        component: Lesson,
-        meta: { title: '课程', icon: 'icon-lesson'},
+        path: '/courseware',
+        name: 'courseware',
+        meta: { title: '课件', icon: 'icon-courseware'},
         children: [
             {
-                path: 'add',
-                name: 'lessonAdd',
-                component: LessonAdd,
-                hidden: true,
-                meta: { title: '新建课程'}
-            },
-            {
-                path: 'edit',
-                name: 'lessonEdit',
-                component: LessonEdit,
-                hidden: true,
-                meta: { title: '课程编辑'},
+                path: 'formal',
+                name: 'formalCourseware',
+                component: Courseware,
+                meta: { title: '正式课件', icon: 'icon-lesson'},
                 children: [
                     {
-                        path: 'coursewareEdit',
-                        name: 'coursewareEdit',
+                        path: 'edit',
+                        name: 'edit',
                         component: CoursewareEdit,
+                        hidden: true,
+                        meta: { title: '课件编辑'}
+                    }
+                ]
+            },
+            {
+                path: 'test',
+                name: 'testCourseware',
+                component: Courseware,
+                meta: { title: '试听课件', icon: 'icon-audio'},
+                children: [
+                    {
+                        path: 'edit',
+                        name: 'edit',
+                        component: CoursewareEdit,
+                        hidden: true,
                         meta: { title: '课件编辑'}
                     }
                 ]
@@ -86,19 +90,10 @@ const routes = [
         ]
     },
     {
-        path: '/demand',
-        name: 'demand',
-        component: Demand,
-        meta: { title: '需求', icon: 'icon-demandmanagement'},
-        children: [
-            {
-                path: 'edit',
-                name: 'demandEdit',
-                component: DemandEdit,
-                hidden: true,
-                meta: { title: '需求编辑'}
-            }
-        ]
+        path: '/account',
+        name: 'account',
+        component: Account,
+        meta: { title: '后台账户', icon: 'icon-IDcard'},
     }
 ];
 
