@@ -5,7 +5,7 @@ import Axios from "@/axios";
 import {connect} from "react-redux";
 import SelectCourseModal from "../component/SelectCourseModal";
 
-const typeObj = {1: '正式课', 2: '体验课', 0: '所有'};
+const typeObj = {1: '正式课', 2: '试听课', 0: '所有'};
 
 class ClassAdd extends React.Component {
     constructor () {

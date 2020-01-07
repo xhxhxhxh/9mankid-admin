@@ -18055,8 +18055,8 @@ textarea.ant-input-number {
   text-align: center;
   margin-bottom: 50px;
 }
-.src-pages-Class-ClassEdit-index-class-edit-container-b66cf .update button:first-child {
-  margin-right: 50px;
+.src-pages-Class-ClassEdit-index-class-edit-container-b66cf .update button:nth-child(2) {
+  margin: 0 50px;
 }
 
 .src-pages-Class-component-style-modal-container-e9291 .ant-form-item {

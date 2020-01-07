@@ -348,6 +348,41 @@ class ClassEdit extends React.Component {
             })
     };
 
+    // 激活班级
+    activeClass = () => {
+        const classInfo = this.state.classInfo;
+        const {id, isactive} = classInfo;
+        const params = {id};
+        if (isactive) return;
+        confirm({
+            title: '确定要激活班级吗?',
+            okText: '确定',
+            okType: 'danger',
+            cancelText: '取消',
+            style: {top: '300px'},
+            onOk: () => {
+                Axios.post(this.props.rootUrl + '/admin/classes/updateClassActive', params)
+                    .then(res => {
+                        let result = res.data;
+                        if (result.code === 200) {
+                            classInfo.isactive = 1;
+                            this.setState({
+                                classInfo
+                            })
+                            message.success('激活成功',5);
+                        } else {
+                            message.warning(result.msg,5);
+                        }
+                    })
+                    .catch(() => {
+                    })
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    };
+
     // 设置课件
     setCourseware = data => {
         this.updateClassInfo(data.courseware_no, data)
@@ -489,7 +524,7 @@ class ClassEdit extends React.Component {
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={12} xl={5}>
                                     <Form.Item label="类型:&nbsp;" colon={false}>
-                                        {getFieldDecorator('type')(<span>{type === '1'? '正式课': '体验课'}</span>)}
+                                        {getFieldDecorator('type')(<span>{type === '1'? '正式课': '试听课'}</span>)}
                                     </Form.Item>
                                 </Col>
                                 {type === '1'? <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -524,10 +559,11 @@ class ClassEdit extends React.Component {
                         <Row gutter={8}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item label="开课课件:&nbsp;" colon={false}>
-                                    <span style={{marginRight: '15px', width: '100px', display: 'inline-block'}}>
+                                    <span style={{marginRight: '15px', width: '150px', whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis', overflow: 'hidden', float: 'left'}}>
                                                     {coursewareId? ' ' + coursewareName: ' 未指定'}
                                     </span>
-                                    <Button type='primary' style={{height: '31px'}}
+                                    <Button type='primary' style={{height: '31px', float: 'left'}}
                                             onClick={() => this.setState({coursewareModalVisible: true})}>选择课件</Button>
                                 </Form.Item>
                             </Col>
@@ -543,11 +579,13 @@ class ClassEdit extends React.Component {
                                     <div className="teacher-box">
                                         {subjectList.map(item =>
                                         type === '1' || coursewareSubjectId === item.id?
-                                            <div key={item.id}>
-                                                <span style={{marginRight: '15px', marginBottom: '15px', width: '150px', display: 'inline-block'}}>
+                                            <div key={item.id} style={{overflow: 'hidden'}}>
+                                                <span style={{marginRight: '15px', marginBottom: '15px', width: '150px', whiteSpace: 'nowrap',
+                                                    textOverflow: 'ellipsis', overflow: 'hidden', float: 'left'}}>
                                                     {item.name + ':'}{selectTeacherObj[item.id]? ' ' + selectTeacherObj[item.id]['uname']: ' 未指定'}
                                                 </span>
-                                                <Button type='primary' style={{height: '31px'}} onClick={() => this.selectTeacher(item.id, item.name)}>选择老师</Button>
+                                                <Button type='primary' style={{height: '31px', float: 'left'}}
+                                                        onClick={() => this.selectTeacher(item.id, item.name)}>选择老师</Button>
                                             </div>: ''
                                         )}
                                     </div>
@@ -573,6 +611,7 @@ class ClassEdit extends React.Component {
                 <div className="update">
                     <Button size="large" onClick={this.goBack}>退出</Button>
                     <Button type="primary" size="large" onClick={() => this.updateClassInfo(null)}>保存</Button>
+                    <Button size="large" onClick={this.activeClass}>{classInfo.isactive? '已激活': '激活'}</Button>
                 </div>
             </div>
         )

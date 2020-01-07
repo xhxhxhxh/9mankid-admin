@@ -652,7 +652,7 @@ class CoursewareEdit extends React.Component {
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={8} xl={8}>
                                 <Form.Item label="课程类型:&nbsp;" colon={false}>
-                                    {lessonInfo.type === 1? '正式课': '体验课'}
+                                    {lessonInfo.type === 1? '正式课': '试听课'}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={8} xl={8}>

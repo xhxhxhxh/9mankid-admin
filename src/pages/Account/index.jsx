@@ -35,7 +35,8 @@ class Account extends React.Component {
                 title: '操作',
                 key: 'operate',
                 dataIndex: 'status',
-                render: (text,record) => <a onClick={() => this.updateAccountStatus(record)} href="javascript:void(0)">{text? '停用': '启用'}</a>,
+                render: (text,record) => <a onClick={() => this.updateAccountStatus(record)} style={{color: text? '#ff4d4f': '#40a9ff'}}
+                                            href="javascript:void(0)">{text? '停用': '启用'}</a>,
             },
         ];
 

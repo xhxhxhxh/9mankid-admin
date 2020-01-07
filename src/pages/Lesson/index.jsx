@@ -29,7 +29,7 @@ const columns = [
         title: '课程类型',
         dataIndex: 'type',
         key: 'type',
-        render: text => text === 1? '正式课': '体验课',
+        render: text => text === 1? '正式课': '试听课',
     },
     {
         title: '年龄段',

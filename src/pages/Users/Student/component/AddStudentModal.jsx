@@ -43,7 +43,7 @@ class AddStudentModal extends React.Component {
                     let data = res.data;
                     if (data.code === 200) {
                         message.success('创建账户成功',5);
-                        this.props.history.push('/user/student/edit?id=' + data.data.data.uid)
+                        this.props.history.push('/user/student/edit?uid=' + data.data.data.uid)
                     } else {
                         message.warning(data.msg,5);
                     }

@@ -544,7 +544,7 @@ class LessonEdit extends React.Component {
                            <Col xs={24} sm={12} md={12} lg={8} xl={{span: 7, offset: 1}}>
                                <Form.Item label="课程类型:&nbsp;" colon={false}>
                                    {getFieldDecorator('type', {initialValue: lessonInfo.type})(<Select style={{width: '100%'}} disabled>
-                                       <Option value={2}>体验课</Option>
+                                       <Option value={2}>试听课</Option>
                                        <Option value={1}>正式课</Option>
                                    </Select>)}
                                </Form.Item>

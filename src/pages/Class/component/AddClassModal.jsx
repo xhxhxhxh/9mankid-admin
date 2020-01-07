@@ -52,7 +52,7 @@ class AddClassModal extends React.Component {
                     let data = res.data;
                     if (data.code === 200) {
                         message.success('新建班级成功',5);
-                        this.props.history.push('/class/edit?id=' + data.data.data.id)
+                        this.props.history.push('/class/edit?id=' + data.data.data.id + '&type=' + data.data.data.type)
                     } else {
                         message.warning(data.msg,5);
                     }

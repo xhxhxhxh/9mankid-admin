@@ -9,7 +9,7 @@ const { Search } = Input;
 const { Option } = Select;
 
 const statusObj = {1: '未处理', 2: '处理中', 3: '待付款', 4: '待上课', 5: '完结', 6: '错过上课', 7: '冻结', 0: '所有'}
-const typeObj = {1: '正式课', 2: '体验课', 0: '所有'}
+const typeObj = {1: '正式课', 2: '试听课', 0: '所有'}
 
 const columns = [
     {

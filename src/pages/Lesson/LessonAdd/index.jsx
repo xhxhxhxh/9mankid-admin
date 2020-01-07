@@ -207,7 +207,7 @@ class LessonAdd extends React.Component {
                            <Col xs={24} sm={12} md={12} lg={8} xl={{span: 7, offset: 1}}>
                                <Form.Item label="课程类型:&nbsp;" colon={false}>
                                    {getFieldDecorator('type', {initialValue: '2'})(<Select style={{width: '100%'}}>
-                                       <Option value="2">体验课</Option>
+                                       <Option value="2">试听课</Option>
                                        <Option value="1">正式课</Option>
                                    </Select>)}
                                </Form.Item>

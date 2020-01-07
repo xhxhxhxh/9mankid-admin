@@ -157,7 +157,7 @@ class AddLessonModal extends React.Component {
                     </Form.Item>
                     <Form.Item label="课程类型:&nbsp;" colon={false}>
                         {getFieldDecorator('type', {initialValue: '2'})(<Select style={{width: '100%'}} onChange={this.lessonChange}>
-                            <Option value="2">体验课</Option>
+                            <Option value="2">试听课</Option>
                             <Option value="1">正式课</Option>
                         </Select>)}
                     </Form.Item>
