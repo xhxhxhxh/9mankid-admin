@@ -58,6 +58,8 @@ class Courseware extends React.Component {
                     <a href="javascript:void(0)" onClick={() => this.goEdit(record)}>编辑</a>
                     <Divider type="vertical" />
                     <a href="javascript:void(0)" onClick={() => this.deleteCourseware(record)}>删除</a>
+                    <Divider type="vertical" />
+                    <a href={'/live?id=' + record.id} target="_blank">查看</a>
                 </div>
             },
         ];
