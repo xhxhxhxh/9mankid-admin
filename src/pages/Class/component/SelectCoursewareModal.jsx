@@ -61,10 +61,11 @@ class SelectCoursewareModal extends React.Component {
         };
     };
 
-    queryCourseware = () => {
+    queryCourseware = (typeChange) => {
         const {pageNum, pageSize, key, subject, level} = this.state;
+        const type = this.props.type;
         const params = {
-            type: this.props.type,
+            type: typeChange? typeChange: type !== '0'? type: 1,
             pageno: pageNum,
             pagesize: pageSize,
         }
@@ -145,6 +146,13 @@ class SelectCoursewareModal extends React.Component {
         }, this.queryCourseware)
     };
 
+    // 类型筛选
+    typeChange = value => {
+        this.setState({
+            pageNum: 1,
+        }, () => this.queryCourseware(value))
+    };
+
     // 通过关键字查询
     queryCoursewareByKey = () => {
         this.setState({
@@ -220,6 +228,13 @@ class SelectCoursewareModal extends React.Component {
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={{span: 6, offset: 1}} xl={{span: 10, offset: 1}}>
                                     <div className="selectBox">
+                                        {this.props.type === '0'? <div className="selectBox-item">
+                                            <span>类型</span>
+                                            <Select defaultValue={1} style={{ width: 100 }} onChange={this.typeChange}>
+                                                <Option value={1}>正式</Option>
+                                                <Option value={2}>试用</Option>
+                                            </Select>
+                                        </div>: ''}
                                         <div className="selectBox-item">
                                             <span>科目</span>
                                             <Select value={subject} style={{ width: 100}} onChange={this.subjectChange}>

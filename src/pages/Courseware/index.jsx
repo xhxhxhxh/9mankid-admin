@@ -4,6 +4,7 @@ import style from './index.less'
 import Axios from "@/axios";
 import {connect} from "react-redux";
 import AddCoursewareModal from "./component/AddCoursewareModal"
+import common from "@/api/common"
 
 const { Search } = Input;
 const { Option } = Select;
@@ -84,13 +85,15 @@ class Courseware extends React.Component {
 
     componentWillMount() {
         const type = this.props.match.path.split('/')[2];
+        const searchObj = common.analyzeURL(this.props.location.search);
+        const pageNum = searchObj.pageNum? parseInt(searchObj.pageNum): 1;
         let level = 1;
         let formatType = 1;
         if (type === 'test') {
             formatType = 2;
             level = 'all';
         }
-        this.setState({type: formatType, level}, () => {
+        this.setState({type: formatType, level, pageNum}, () => {
             this.queryCourseware();
             this.querySubject();
         })
@@ -207,10 +210,11 @@ class Courseware extends React.Component {
         const num = data.courseware_no;
         const id = data.id;
         const type = this.state.type;
+        const pageNum = this.state.pageNum;
         if (type === 1) {
-            this.props.history.push('/courseware/formal/edit?num=' + num + '&id=' + id)
+            this.props.history.push('/courseware/formal/edit?num=' + num + '&id=' + id + '&pageNum=' + pageNum)
         }else if (type === 2) {
-            this.props.history.push('/courseware/test/edit?num=' + num + '&id=' + id)
+            this.props.history.push('/courseware/test/edit?num=' + num + '&id=' + id + '&pageNum=' + pageNum)
         }
     };
 

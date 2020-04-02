@@ -5,7 +5,8 @@ import style from './index.less'
 import {connect} from "react-redux";
 import Axios from "@/axios";
 import moment from "moment";
-import AddStudentModal from "./component/AddStudentModal"
+import AddStudentModal from "./component/AddStudentModal";
+import common from "@/api/common";
 
 const { Search } = Input;
 
@@ -21,54 +22,52 @@ const renderAge = (date) => {
     }
 };
 
-const columns = [
-    {
-        key: 'num',
-        render: (text,record,index) => index + 1,
-    },
-    {
-        title: '账号',
-        dataIndex: 'phone',
-        key: 'phone',
-    },
-    {
-        title: '账号呢称',
-        key: 'uname',
-        dataIndex: 'uname',
-    },
-    {
-        title: '孩子年龄',
-        dataIndex: 'birth',
-        key: 'birth',
-        render: text => renderAge(text)
-    },
-    {
-        title: '创建时间',
-        dataIndex: 'create_time',
-        key: 'create_time',
-    },
-    {
-        title: '沟通次数',
-        dataIndex: 'contacts',
-        key: 'contacts',
-    },
-    {
-        title: '课时余额',
-        dataIndex: 'balance',
-        key: 'balance',
-    },
-    {
-        title: '操作',
-        key: 'operate',
-        render: (text,record) => <Link to={'/user/student/edit?uid=' + record.uid}>查看编辑</Link>,
-    },
-];
-
 class Student extends React.Component {
     constructor () {
         super();
+        this.columns = [
+            {
+                key: 'num',
+                render: (text,record,index) => index + 1,
+            },
+            {
+                title: '账号',
+                dataIndex: 'phone',
+                key: 'phone',
+            },
+            {
+                title: '账号呢称',
+                key: 'uname',
+                dataIndex: 'uname',
+            },
+            {
+                title: '孩子年龄',
+                dataIndex: 'birth',
+                key: 'birth',
+                render: text => renderAge(text)
+            },
+            {
+                title: '创建时间',
+                dataIndex: 'create_time',
+                key: 'create_time',
+            },
+            {
+                title: '沟通次数',
+                dataIndex: 'contacts',
+                key: 'contacts',
+            },
+            {
+                title: '课时余额',
+                dataIndex: 'balance',
+                key: 'balance',
+            },
+            {
+                title: '操作',
+                key: 'operate',
+                render: (text,record) => <Link to={'/user/student/edit?uid=' + record.uid + '&pageNum=' + this.state.pageNum}>查看编辑</Link>,
+            },
+        ];
         this.state = {
-            columns,
             data: [],
             pageNum: 1,
             pageSize: 10,
@@ -78,7 +77,12 @@ class Student extends React.Component {
     }
 
     componentWillMount() {
-        this.queryStudents()
+        const searchObj = common.analyzeURL(this.props.location.search);
+        const pageNum = searchObj.pageNum? parseInt(searchObj.pageNum): 1;
+        this.setState({
+            pageNum,
+        }, this.queryStudents);
+
     }
 
     componentWillUnmount = () => {
@@ -173,7 +177,7 @@ class Student extends React.Component {
     };
 
     render() {
-        const { columns, data, totalCount, pageSize, pageNum, loading, modalVisible } = this.state;
+        const { data, totalCount, pageSize, pageNum, loading, modalVisible } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <div className={style['student-container']}>
@@ -201,7 +205,7 @@ class Student extends React.Component {
                         </Row>
                     </Form>
                 </div>
-                <Table columns={columns} dataSource={data} rowClassName={this.rowClassName} rowKey="id" loading={loading}
+                <Table columns={this.columns} dataSource={data} rowClassName={this.rowClassName} rowKey="id" loading={loading}
                        pagination={{total: totalCount, pageSize: pageSize, current: pageNum, onChange: this.pageChange}}/>
             </div>
         )

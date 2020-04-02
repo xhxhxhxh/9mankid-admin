@@ -7,6 +7,7 @@ import SelectTeacherModal from "../component/SelectTeacherModal";
 import SelectStudentModal from "../component/SelectStudentModal";
 import SelectCoursewareModal from "../component/SelectCoursewareModal";
 import moment from "moment";
+import common from "@/api/common"
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -28,6 +29,8 @@ class ClassEdit extends React.Component {
             selectStudentsObj: {},
             cycle: [],
             cycleHasChanged: false,
+            coursewareList: [], // 仅在测试班可用
+            oldCoursewareIndex: '', // 仅在测试班可用
             coursewareId: '',
             coursewareName: '',
             coursewareSubjectId: ''
@@ -36,17 +39,14 @@ class ClassEdit extends React.Component {
 
     componentWillMount() {
         this.querySubject();
-        const search = this.props.location.search.substr(1).split('&');
-        const searchObj = {};
-        search.forEach(item => {
-            const contentArr = item.split('=');
-            searchObj[contentArr[0]] = contentArr[1]
-        })
+        const searchObj = common.analyzeURL(this.props.location.search);
+        const pageNum = searchObj.pageNum? parseInt(searchObj.pageNum): 1;
         const classId = searchObj.id;
         const type = searchObj.type;
         this.setState({
             classId,
             type,
+            pageNum
         }, () => {
             this.queryClassInfo();
             this.queryClassTeachers();
@@ -92,23 +92,35 @@ class ClassEdit extends React.Component {
 
     // 查询班级信息
     queryClassInfo = () => {
-        const classId = this.state.classId;
-        const params = {
+        const {classId, type} = this.state;
+        let params = {
             id: classId,
             pageno: 1,
             pagesize: 1
         };
-        Axios.get(this.props.rootUrl + '/admin/classes/queryClass', {params})
+        let url = '/admin/classes/queryClass';
+        if (type === '0') { // 调用测试班级接口
+            url = '/admin/classRoom/queryTestClassRoom';
+            params = {class_id: classId}
+        }
+
+        Axios.get(this.props.rootUrl + url, {params})
             .then(res => {
                 let data = res.data;
                 if (data.code === 200) {
-                    const classInfo = data.data.data;
-                    this.setState({
-                        classInfo,
-                        cacheClassInfo: {...classInfo},
-                        cycle: classInfo.cycle.split(','),
-                        coursewareId: classInfo.courseware_no
-                    }, this.queryCoursewareInfo)
+                    if (type === '0') {
+                        this.setState({
+                            coursewareList: data.data.data
+                        })
+                    }else {
+                        const classInfo = data.data.data;
+                        this.setState({
+                            classInfo,
+                            cacheClassInfo: {...classInfo},
+                            cycle: classInfo.cycle.split(','),
+                            coursewareId: classInfo.courseware_no
+                        }, this.queryCoursewareInfo)
+                    }
                 } else {
                     message.warning(data.msg,5);
                 }
@@ -143,13 +155,19 @@ class ClassEdit extends React.Component {
     };
 
     updateClassInfo = (coursewareId, coursewareInfo) => {
-        const {cycle, cycleHasChanged, classId, type, cacheClassInfo} = this.state;
+        const {cycle, cycleHasChanged, classId, type, cacheClassInfo, oldCoursewareIndex, coursewareList} = this.state;
         let params = null;
+        let url = '/admin/classes/updateClass'
         if (coursewareId) {
             params = {
-                id: classId,
                 courseware_no: coursewareId
             };
+            if(type === '0') {
+                Object.assign(params, {room_no: coursewareList[oldCoursewareIndex].room_no})
+                url = '/admin/classRoom/updateTestClassRoomCourseware';
+            }else {
+                Object.assign(params, {id: classId})
+            }
         } else {
             this.props.form.validateFields((err, values) => {
                 if (type === '1' && cycle.length === 0) {
@@ -168,22 +186,31 @@ class ClassEdit extends React.Component {
                     startdate,
                     cycle: cycle.toString()
                 };
-                console.log(params)
             })
         }
 
         if (params) {
-            Axios.post(this.props.rootUrl + '/admin/classes/updateClass', params)
+            Axios.post(this.props.rootUrl + url, params)
                 .then(res => {
                     let data = res.data;
                     if (data.code === 200) {
                         if (coursewareId) {
                             message.success('课件更新成功',5);
-                            this.setState({
-                                coursewareId: coursewareInfo.courseware_no,
-                                coursewareName: coursewareInfo.name,
-                                coursewareSubjectId: coursewareInfo.subject_id
-                            }, this.closeCoursewareModal)
+                            if (type === '0') {
+                                const coursewareList = [...this.state.coursewareList];
+                                const currentcourseware = coursewareList[oldCoursewareIndex];
+                                currentcourseware.courseware_no = coursewareId;
+                                currentcourseware.courseware_name = coursewareInfo.name;
+                                this.setState({
+                                    coursewareList
+                                }, this.closeCoursewareModal)
+                            } else {
+                                this.setState({
+                                    coursewareId: coursewareInfo.courseware_no,
+                                    coursewareName: coursewareInfo.name,
+                                    coursewareSubjectId: coursewareInfo.subject_id
+                                }, this.closeCoursewareModal)
+                            }
                         } else {
                             cacheClassInfo.name = params.name;
                             cacheClassInfo.startdate = params.startdate;
@@ -283,7 +310,6 @@ class ClassEdit extends React.Component {
     // 设置老师
     setTeacher = (data, subjectId) => {
         const selectTeacherObj = {...this.state.selectTeacherObj};
-        console.log(selectTeacherObj)
         selectTeacherObj[subjectId] = {uname: data.uname, uid: data.uid};
         this.addClassTeacher(data.uid, subjectId)
             .then(res => {
@@ -428,7 +454,6 @@ class ClassEdit extends React.Component {
         if (type === '1') {
             Object.assign(currentClassInfo, {cycle: cycle.toString()})
         }
-        console.log(currentClassInfo)
         let hasChanged = false;
         for (let currentClassInfoKey in currentClassInfo) {
             if (currentClassInfo[currentClassInfoKey] !== cacheClassInfo[currentClassInfoKey]) {
@@ -458,7 +483,15 @@ class ClassEdit extends React.Component {
 
     // 返回
     goBack = () => {
-        const hasChanged = this.judgeClassInfoHasChanged()
+        const pageNum = this.state.pageNum;
+
+        if(this.state.type === '0') {
+            this.props.history.push('/class?pageNum=' + pageNum);
+            return
+        }
+
+        const hasChanged = this.judgeClassInfoHasChanged();
+
         if (hasChanged) {
             confirm({
                 title: '您还没有保存班级信息，确定退出?',
@@ -468,20 +501,21 @@ class ClassEdit extends React.Component {
                 okButtonProps: {style: {lineHeight: '30px'}},
                 cancelButtonProps: {style: {lineHeight: '30px'}},
                 onOk: () => {
-                    this.props.history.push('/class');
+                    this.props.history.push('/class?pageNum=' + pageNum);
                 },
                 onCancel() {
                     console.log('Cancel');
                 },
             });
         } else {
-            this.props.history.push('/class');
+            this.props.history.push('/class?pageNum=' + pageNum);
         }
     }
 
     render() {
         const { classInfo, subjectList, modalVisible, selectSubjectName, selectSubjectId, subjectObj, selectTeacherObj, selectStudentsObj,
-            cycle, cycleHasChanged, studentModalVisible, coursewareModalVisible, type, coursewareId, coursewareName, coursewareSubjectId} = this.state;
+            cycle, cycleHasChanged, studentModalVisible, coursewareModalVisible, type, coursewareId, coursewareName, coursewareSubjectId,
+            coursewareList} = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <div className={style['class-edit-container']}>
@@ -524,7 +558,7 @@ class ClassEdit extends React.Component {
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={12} xl={5}>
                                     <Form.Item label="类型:&nbsp;" colon={false}>
-                                        {getFieldDecorator('type')(<span>{type === '1'? '正式课': '试听课'}</span>)}
+                                        {getFieldDecorator('type')(<span>{type !== '0'? type === '1'? '正式课': '试听课': '测试课'}</span>)}
                                     </Form.Item>
                                 </Col>
                                 {type === '1'? <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -549,6 +583,11 @@ class ClassEdit extends React.Component {
                                         </div>
                                     </Form.Item>
                                 </Col>:''}
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Form.Item style={{textAlign: 'center'}}>
+                                        <Button type="primary" onClick={() => this.updateClassInfo(null)}>保存</Button>
+                                    </Form.Item>
+                                </Col>
                             </Row>
                         </Form>
                     </div>
@@ -557,16 +596,31 @@ class ClassEdit extends React.Component {
                     <div className="courseware-head">课件信息</div>
                     <div className="courseware-body">
                         <Row gutter={8}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item label="开课课件:&nbsp;" colon={false}>
+                            {type === '0'? coursewareList.map((item, index) =>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} key={item.id}>
+                                        <Form.Item label="开课课件:&nbsp;" colon={false}>
+                                    <span style={{marginRight: '15px', width: '150px', whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis', overflow: 'hidden', float: 'left'}}>
+                                                    {item.courseware_no? ' ' + item.courseware_name: ' 未指定'}
+                                    </span>
+                                            <Button type='primary' style={{height: '31px', float: 'left'}}
+                                                    onClick={() => this.setState({
+                                                        coursewareModalVisible: true,
+                                                        oldCoursewareIndex: index
+                                                    })}>选择课件</Button>
+                                        </Form.Item>
+                                    </Col>):
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Form.Item label="开课课件:&nbsp;" colon={false}>
                                     <span style={{marginRight: '15px', width: '150px', whiteSpace: 'nowrap',
                                         textOverflow: 'ellipsis', overflow: 'hidden', float: 'left'}}>
                                                     {coursewareId? ' ' + coursewareName: ' 未指定'}
                                     </span>
-                                    <Button type='primary' style={{height: '31px', float: 'left'}}
-                                            onClick={() => this.setState({coursewareModalVisible: true})}>选择课件</Button>
-                                </Form.Item>
-                            </Col>
+                                        <Button type='primary' style={{height: '31px', float: 'left'}}
+                                                onClick={() => this.setState({coursewareModalVisible: true})}>选择课件</Button>
+                                    </Form.Item>
+                                </Col>}
+
                         </Row>
                     </div>
                 </div>
@@ -578,7 +632,7 @@ class ClassEdit extends React.Component {
                                 <Form.Item label="授课老师:&nbsp;" colon={false} className="teacher-container">
                                     <div className="teacher-box">
                                         {subjectList.map(item =>
-                                        type === '1' || coursewareSubjectId === item.id?
+                                        type === '1' || coursewareSubjectId === item.id || type === '0'?
                                             <div key={item.id} style={{overflow: 'hidden'}}>
                                                 <span style={{marginRight: '15px', marginBottom: '15px', width: '150px', whiteSpace: 'nowrap',
                                                     textOverflow: 'ellipsis', overflow: 'hidden', float: 'left'}}>
@@ -610,7 +664,6 @@ class ClassEdit extends React.Component {
                 </div>
                 <div className="update">
                     <Button size="large" onClick={this.goBack}>退出</Button>
-                    <Button type="primary" size="large" onClick={() => this.updateClassInfo(null)}>保存</Button>
                     <Button size="large" onClick={this.activeClass}>{classInfo.isactive? '已激活': '激活'}</Button>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import Axios from "@/axios";
 import AddClassModal from "./component/AddClassModal";
 import moment from "moment";
+import common from "@/api/common"
 
 const { Search } = Input;
 const { Option } = Select;
@@ -96,7 +97,7 @@ class Class extends React.Component {
             {
                 title: '操作',
                 key: 'operate',
-                render: (text,record) => <Link to={'/class/edit?id=' + record.id + '&type=' + record.type}>查看编辑</Link>,
+                render: (text,record) => <Link to={'/class/edit?id=' + record.id + '&type=' + record.type + '&pageNum=' + this.state.pageNum}>查看编辑</Link>,
             },
         ];
         this.state = {
@@ -112,7 +113,11 @@ class Class extends React.Component {
     }
 
     componentWillMount() {
-        this.queryClass()
+        const searchObj = common.analyzeURL(this.props.location.search);
+        const pageNum = searchObj.pageNum? parseInt(searchObj.pageNum): 1;
+        this.setState({
+            pageNum,
+        }, this.queryClass);
     }
 
     componentWillUnmount = () => {
@@ -282,6 +287,7 @@ class Class extends React.Component {
                                                 <Select value={type} style={{ width: 100}} onChange={this.typeChange}>
                                                     <Option value={1}>正式课</Option>
                                                     <Option value={2}>试听课</Option>
+                                                    <Option value={0}>测试课</Option>
                                                     <Option value={'all'}>所有</Option>
                                                 </Select>
                                             </div>

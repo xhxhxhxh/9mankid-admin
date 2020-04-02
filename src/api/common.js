@@ -21,4 +21,17 @@ common.getLocalStorage = (key) =>{
 
 };
 
+/**
+ * 解析url参数
+ */
+common.analyzeURL = (searchURL) =>{
+    const search = searchURL.substr(1).split('&');
+    const searchObj = {};
+    search.forEach(item => {
+        const contentArr = item.split('=');
+        searchObj[contentArr[0]] = contentArr[1]
+    })
+    return searchObj
+};
+
 export default common

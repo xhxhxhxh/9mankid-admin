@@ -114,17 +114,14 @@ class CoursewareEdit extends React.Component {
     }
 
     componentWillMount() {
-        const search = this.props.location.search.substr(1).split('&');
-        const searchObj = {};
-        search.forEach(item => {
-            const contentArr = item.split('=');
-            searchObj[contentArr[0]] = contentArr[1]
-        })
+        const searchObj = common.analyzeURL(this.props.location.search);
+        const pageNum = searchObj.pageNum? parseInt(searchObj.pageNum): 1;
         const num = searchObj.num;
         const id = searchObj.id;
         this.setState({
             coursewareNum: num,
-            coursewareId: id
+            coursewareId: id,
+            pageNum
         }, () => {
             this.queryCoursewareInfo();
             this.queryCoursewareResource()
@@ -626,10 +623,11 @@ class CoursewareEdit extends React.Component {
     // 返回上一页
     goBack = () => {
         const type = this.state.coursewareInfo.type;
+        const pageNum = this.state.pageNum;
         if (type === 1) {
-            this.props.history.push('/courseware/formal')
+            this.props.history.push('/courseware/formal?pageNum=' + pageNum)
         }else if (type === 2) {
-            this.props.history.push('/courseware/test')
+            this.props.history.push('/courseware/test?pageNum=' + pageNum)
         }
     };
 

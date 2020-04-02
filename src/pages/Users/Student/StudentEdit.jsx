@@ -4,7 +4,8 @@ import moment from 'moment';
 import {Button, Col, Form, Input, Row, Select, DatePicker, message, Collapse, TimePicker} from "antd";
 import Axios from "@/axios";
 import {connect} from "react-redux";
-import AddClassHourModal from "@/pages/Users/Student/component/AddClassHourModal"
+import AddClassHourModal from "@/pages/Users/Student/component/AddClassHourModal";
+import common from '@/api/common';
 
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -28,15 +29,12 @@ class StudentEdit extends React.Component {
     }
 
     componentWillMount() {
-        const search = this.props.location.search.substr(1).split('&');
-        const searchObj = {};
-        search.forEach(item => {
-            const contentArr = item.split('=');
-            searchObj[contentArr[0]] = contentArr[1]
-        })
+        const searchObj = common.analyzeURL(this.props.location.search);
+        const pageNum = searchObj.pageNum? parseInt(searchObj.pageNum): 1
         const studentUid = searchObj.uid;
         this.setState({
-            studentUid
+            studentUid,
+            pageNum,
         }, () => {
             this.queryStudentInfo();
             this.queryClassHourInfo();
@@ -356,7 +354,7 @@ class StudentEdit extends React.Component {
     };
 
     render() {
-        const { studentInfo, classHourInfo, trackInfo, age, channel, contact, contactHistory, modalVisible } = this.state;
+        const { pageNum, studentInfo, classHourInfo, trackInfo, age, channel, contact, contactHistory, modalVisible } = this.state;
         const { getFieldDecorator } = this.props.form;
         const {balance, recharge_total, free_total, id} = classHourInfo;
         const totalClassHour = id? recharge_total + free_total: 0;
@@ -587,7 +585,7 @@ class StudentEdit extends React.Component {
                 </Collapse>
 
                 <div className="update">
-                    <Button size="large" onClick={() => this.props.history.push('/user/student')}>取消返回</Button>
+                    <Button size="large" onClick={() => this.props.history.push('/user/student?pageNum=' + pageNum)}>取消返回</Button>
                 </div>
             </div>
         )

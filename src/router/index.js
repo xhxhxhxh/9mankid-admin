@@ -40,6 +40,7 @@ const routes = [
     {
         path: '/courseware',
         name: 'courseware',
+        redirect: '/courseware/formal',
         meta: { title: '课件', icon: 'icon-courseware'},
         children: [
             {
