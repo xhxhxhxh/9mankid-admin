@@ -75,7 +75,7 @@ class SelectCoursewareModal extends React.Component {
         }
 
         if (subject !== 'all') {
-            Object.assign(params, {subject: subject})
+            Object.assign(params, {subject_id: subject})
         }
 
         if (level !== 'all') {
@@ -232,7 +232,7 @@ class SelectCoursewareModal extends React.Component {
                                             <span>类型</span>
                                             <Select defaultValue={1} style={{ width: 100 }} onChange={this.typeChange}>
                                                 <Option value={1}>正式</Option>
-                                                <Option value={2}>试用</Option>
+                                                <Option value={2}>试听</Option>
                                             </Select>
                                         </div>: ''}
                                         <div className="selectBox-item">
