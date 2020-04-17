@@ -1,0 +1,46 @@
+.lessonList-container {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 2px;
+  :global {
+    @media (max-width: 1000px) {
+      .ant-table {
+        width: 100%;
+        overflow-x: auto;
+      }
+    }
+    .check {
+      .ant-row {
+        .selectBox {
+          margin-bottom: 24px;
+          > span {
+            display: inline-block;
+            width: 40px;
+          }
+        }
+      }
+      .ant-row.ant-form-item {
+        display: flex;
+        height: 32px;
+        .ant-form-item-label {
+          line-height: 32px;
+        }
+        .ant-form-item-control-wrapper {
+          flex: 1;
+          .ant-form-item-control {
+            height: 32px;
+            line-height: 32px;
+          }
+        }
+      }
+    }
+    .ant-table {
+      .changeColor {
+        background-color: #e6f7ff;
+      }
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

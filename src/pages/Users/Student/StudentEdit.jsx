@@ -44,7 +44,7 @@ class StudentEdit extends React.Component {
     }
 
     componentWillUnmount = () => {
-        this.setState = ()=>{
+        this.setState = () => {
             return false;
         };
     }
@@ -217,7 +217,7 @@ class StudentEdit extends React.Component {
     };
 
     countAgeByBirth = (date) => {
-        const birth = date;
+        const birth = date? date: moment();
         const now = moment();
         const age = now.diff(birth, 'years');
         this.setState({
@@ -256,13 +256,12 @@ class StudentEdit extends React.Component {
             id: trackInfo.id,
             uname: studentName,
             sex: studentSex,
-            birth: studentBirth.format('YYYY-MM-DD'),
+            birth: studentBirth? studentBirth.format('YYYY-MM-DD'): null,
             contacts: contact,
             phone: contactPhone,
             wx: contactWX,
             channel_learn: learnChannel
         };
-        console.log(params)
 
         Axios.post(this.props.rootUrl + '/admin/userTrack/updateUserTrack', params)
             .then(res => {
@@ -283,14 +282,17 @@ class StudentEdit extends React.Component {
             if (err) return;
             const studentUid = this.state.studentUid;
             const {purpose, content, contactDate, contactTime} = values;
-            let contact_time = moment(contactDate).format('YYYY-MM-DD') + ' ' + moment(contactTime).format('HH:mm:ss');
 
             const params = {
                 uid: studentUid,
                 purpose,
                 content,
-                contact_time
             };
+
+            if(contactDate) {
+                let contact_time = moment(contactDate).format('YYYY-MM-DD') + ' ' + moment(contactTime).format('HH:mm:ss');
+                Object.assign(params, {contact_time})
+            }
 
             Axios.post(this.props.rootUrl + '/admin/contactLog/addContactLog', params)
                 .then(res => {
@@ -383,12 +385,12 @@ class StudentEdit extends React.Component {
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={{span: 6, offset: 1}} xl={{span: 6, offset: 1}}>
                                 <Form.Item label="性别:&nbsp;" colon={false}>
-                                    {getFieldDecorator('sex')(<span>{studentInfo.sex === 1? '男孩': '女孩'}</span>)}
+                                    {getFieldDecorator('sex')(<span>{studentInfo.sex? studentInfo.sex === 1? '男孩': '女孩': '未填写'}</span>)}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={{span: 6, offset: 2}} xl={{span: 6, offset: 2}}>
                                 <Form.Item label="出生年月:&nbsp;" colon={false}>
-                                    {getFieldDecorator('birth')(<span>{studentInfo.birth? moment(studentInfo.birth).format('LL'): ''}</span>)}
+                                    {getFieldDecorator('birth')(<span>{studentInfo.birth? moment(studentInfo.birth).format('LL'): '未填写'}</span>)}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={{span: 6, offset: 2}} xl={{span: 6, offset: 2}}>
@@ -529,15 +531,11 @@ class StudentEdit extends React.Component {
                                 <Col xs={24} sm={24} md={24} lg={{span: 14, offset:1}} xl={{span: 10, offset:1}}>
                                     <Form.Item label="下次沟通时间:&nbsp;" colon={false}>
                                         <Form.Item style={{ display: 'inline-block', marginRight: '24px', width: 'calc(50% - 12px)' }}>
-                                            {getFieldDecorator('contactDate', {
-                                                rules: [{ required: true, message: '请选择沟通日期' }],
-                                            })(
-                                                <DatePicker  style={{width: '100%'}}/>)}
+                                            {getFieldDecorator('contactDate')(
+                                                <DatePicker style={{width: '100%'}}/>)}
                                         </Form.Item>
                                         <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 12px)'}}>
-                                            {getFieldDecorator('contactTime', {
-                                                rules: [{ required: true, message: '请选择沟通时间' }],
-                                            })(
+                                            {getFieldDecorator('contactTime')(
                                                 <TimePicker style={{width: '100%'}}/>)}
                                         </Form.Item>
                                     </Form.Item>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, Route, Link, Redirect, Switch} from "react-router-dom";
+import {Router, Route, Redirect, Switch} from "react-router-dom";
 
 // 导入基本组件
 import Login from './pages/Login';

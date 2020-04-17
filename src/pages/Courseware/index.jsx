@@ -66,7 +66,7 @@ class Courseware extends React.Component {
         ];
         this.state = {
             data: [],
-            loading: true,
+            loading: false,
             addCoursewareModalVisible: false,
             cachePageNum: 1, // 缓存页码数，以便于序号递增显示
             pageNum: 1,
@@ -148,6 +148,10 @@ class Courseware extends React.Component {
         if (level !== 'all') {
             Object.assign(params, {level : level})
         }
+
+        this.setState({
+            loading: true
+        });
 
         Axios.get(this.props.rootUrl + '/admin/courseware/queryCourseware', {params})
             .then(res => {

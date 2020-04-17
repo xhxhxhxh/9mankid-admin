@@ -6,6 +6,7 @@ import Class from '@/pages/Class'
 import ClassEdit from '@/pages/Class/ClassEdit'
 import Account from '@/pages/Account'
 import Courseware from '@/pages/Courseware'
+import LessonList from '@/pages/LessonList'
 
 const routes = [
     {
@@ -89,6 +90,12 @@ const routes = [
                 meta: { title: '班级信息'}
             },
         ]
+    },
+    {
+        path: '/lessonList',
+        name: 'lessonList',
+        component: LessonList,
+        meta: { title: '课堂列表', icon: 'icon-Group1'},
     },
     {
         path: '/account',
