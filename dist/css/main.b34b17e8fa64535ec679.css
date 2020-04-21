@@ -13295,10 +13295,14 @@ textarea.ant-pagination-options-quick-jumper input {
     overflow-x: auto;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .src-pages-Users-Student-index-student-container-67d55 .buttonBox {
     float: right;
   }
+}
+.src-pages-Users-Student-index-student-container-67d55 .check .selectBox > span {
+  display: inline-block;
+  width: 40px;
 }
 .src-pages-Users-Student-index-student-container-67d55 .check .ant-row.ant-form-item {
   display: -webkit-box;
@@ -16617,6 +16621,11 @@ textarea.ant-time-picker-input {
 }
 .src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item.ant-form-item-with-help {
   margin-bottom: 24px;
+}
+.src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item.hiddenText .ant-form-item-control-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .src-pages-Users-Student-studentEdit-student-edit-container-6143f .ant-row.ant-form-item .ant-form-item-label {
   line-height: 32px;

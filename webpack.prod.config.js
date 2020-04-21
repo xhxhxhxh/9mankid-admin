@@ -12,7 +12,7 @@ module.exports = {
     mode: 'production',
     output: {
         path: path.join(__dirname,'./dist'),
-        filename: 'js/bundle.js',
+        filename: 'js/[name].[hash:8].js',
         publicPath: "/"
     },
     plugins: [
@@ -25,8 +25,8 @@ module.exports = {
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // all options are optional
-            filename: 'css/[name].css',
-            chunkFilename: 'css/[id].css',
+            filename: 'css/[name].[hash:8].css',
+            chunkFilename: 'css/[id].[hash:8].css',
             ignoreOrder: false, // Enable to remove warnings about conflicting order
         }),
     ],

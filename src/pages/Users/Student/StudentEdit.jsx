@@ -315,14 +315,17 @@ class StudentEdit extends React.Component {
     formatUserPurpose = value => {
         let result = ''
         switch (value) {
-            case 0:
+            case 1:
                 result = '低';
                 break
-            case 1:
+            case 2:
                 result = '一般';
                 break
-            case 2:
+            case 3:
                 result = '高';
+                break
+            default:
+                result = '未知';
                 break
         }
         return result
@@ -437,8 +440,8 @@ class StudentEdit extends React.Component {
                     <Panel header="跟踪信息" key="3">
                         <Row>
                             <Col xs={24} sm={12} md={12} lg={{span: 6, offset: 1}} xl={{span: 6, offset: 1}}>
-                                <Form.Item label="报名渠道:&nbsp;" colon={false}>
-                                    {getFieldDecorator('applyChannel')(<span>{trackInfo.channel_enroll}</span>)}
+                                <Form.Item label="报名渠道:&nbsp;" colon={false} className="hiddenText">
+                                    {getFieldDecorator('applyChannel')(<span>{studentInfo.platform}</span>)}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={{span: 6, offset: 2}} xl={{span: 6, offset: 2}}>
@@ -516,9 +519,9 @@ class StudentEdit extends React.Component {
                                         {getFieldDecorator('purpose',
                                             {rules: [{ required: true, message: '请选择客户意向' }]})(
                                             <Select style={{width: '100%'}}>
-                                                <Option value={2}>高</Option>
-                                                <Option value={1}>一般</Option>
-                                                <Option value={0}>低</Option>
+                                                <Option value={3}>高</Option>
+                                                <Option value={2}>一般</Option>
+                                                <Option value={1}>低</Option>
                                             </Select>)}
                                     </Form.Item>
                                 </Col>

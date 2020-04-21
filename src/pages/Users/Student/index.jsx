@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input, Row, Col, Form, Button, Table, message} from 'antd';
+import {Input, Row, Col, Form, Button, Table, message, Select} from 'antd';
 import { Link } from 'react-router-dom';
 import style from './index.less'
 import {connect} from "react-redux";
@@ -9,6 +9,7 @@ import AddStudentModal from "./component/AddStudentModal";
 import common from "@/api/common";
 
 const { Search } = Input;
+const { Option } = Select;
 
 // 计算年龄
 const renderAge = (date) => {
@@ -21,6 +22,25 @@ const renderAge = (date) => {
         return ''
     }
 };
+
+// 解析意愿
+const renderPurpose = purpose => {
+    let result
+    switch (purpose) {
+        case 1:
+            result = <span style={{color: '#f5222d'}}>低</span>;
+            break;
+        case 2:
+            result = <span style={{color: '#1890ff'}}>一般</span>;
+            break;
+        case 3:
+            result = <span style={{color: '#52c41a'}}>高</span>;
+            break;
+        default:
+            result = <span>未知</span>;
+    }
+    return result
+}
 
 class Student extends React.Component {
     constructor () {
@@ -53,13 +73,19 @@ class Student extends React.Component {
             },
             {
                 title: '沟通次数',
-                dataIndex: 'contacts',
-                key: 'contacts',
+                dataIndex: 'contact_count',
+                key: 'contact_count',
             },
             {
                 title: '课时余额',
                 dataIndex: 'balance',
                 key: 'balance',
+            },
+            {
+                title: '意愿',
+                dataIndex: 'purpose',
+                key: 'purpose',
+                render: text => renderPurpose(text)
             },
             {
                 title: '操作',
@@ -72,7 +98,8 @@ class Student extends React.Component {
             pageNum: 1,
             pageSize: 10,
             key: '',
-            modalVisible: false
+            modalVisible: false,
+            purpose: 'all'
         }
     }
 
@@ -98,7 +125,7 @@ class Student extends React.Component {
     };
 
     queryStudents = () => {
-        const { pageNum, pageSize, key } = this.state;
+        const { pageNum, pageSize, key, purpose } = this.state;
 
         const params = {
             pageno: pageNum,
@@ -107,6 +134,10 @@ class Student extends React.Component {
 
         if (key) {
             Object.assign(params, {key: key})
+        }
+
+        if (purpose !== 'all') {
+            Object.assign(params, {purpose})
         }
 
         this.setState({
@@ -161,6 +192,14 @@ class Student extends React.Component {
         })
     };
 
+    // 意愿筛选
+    purposeChange = value => {
+        this.setState({
+            purpose: value,
+            pageNum: 1,
+        }, this.queryStudents)
+    };
+
     // 页码改变
     pageChange = (page) => {
         this.setState({
@@ -177,7 +216,7 @@ class Student extends React.Component {
     };
 
     render() {
-        const { data, totalCount, pageSize, pageNum, loading, modalVisible } = this.state;
+        const { data, totalCount, pageSize, pageNum, loading, modalVisible, purpose } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <div className={style['student-container']}>
@@ -186,20 +225,39 @@ class Student extends React.Component {
                 <div className="check">
                     <Form hideRequiredMark={true}>
                         <Row gutter={{ xs: 0, sm: 16, md: 16, lg: 0, xl: 0 }}>
-                            <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={8}>
                                 <Form.Item colon={false}>
                                     {getFieldDecorator('key')(<Search placeholder="请输入账号或账号昵称" onSearch={this.queryStudentByKey}
                                                                       onChange={this.keyChange}
                                                                       style={{marginBottom: '24px'}} />)}
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={24} md={12} lg={{span: 15, offset: 1}} xl={{span: 15, offset: 1}}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={{span: 4, offset: 1}}>
                                 <div className="buttonBox">
                                     <Button style={{marginRight: '8px', marginBottom: '24px'}} type="primary"
                                             onClick={this.queryStudentByKey}>查询</Button>
-                                    <Button onClick={this.resetForm} style={{marginRight: '16px'}}>重置</Button>
+                                    <Button onClick={this.resetForm}>重置</Button>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={11}>
+                                <div className="selectBox">
+                                    <span>意愿</span>
+                                    <Select value={purpose} style={{ width: 100, marginRight: '16px', marginBottom: '24px' }}
+                                            onChange={this.purposeChange}>
+                                        <Option value="3">高</Option>
+                                        <Option value="2">一般</Option>
+                                        <Option value="1">低</Option>
+                                        <Option value="0">未知</Option>
+                                        <Option value="all">所有</Option>
+                                    </Select>
                                     <Button onClick={this.openModal}
                                             style={{float: 'right'}} type="primary">创建账户</Button>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={12} lg={{span: 15, offset: 1}} xl={{span: 15, offset: 1}}>
+                                <div className="buttonBox">
+
+
                                 </div>
                             </Col>
                         </Row>
