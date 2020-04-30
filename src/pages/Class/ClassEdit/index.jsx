@@ -179,7 +179,7 @@ class ClassEdit extends React.Component {
                 }
                 if (err || (type === '1' && cycle.length < 3)) return false;
                 const {className, startDate, startTime} = values;
-                let startdate = moment(startDate).format('YYYY-MM-DD') + ' ' + moment(startTime).format('HH:mm:ss');
+                let startdate = moment(startDate).format('YYYY-MM-DD') + ' ' + moment(startTime).format('HH:mm');
                 params = {
                     id: classId,
                     name: className,
@@ -552,7 +552,7 @@ class ClassEdit extends React.Component {
                                             {getFieldDecorator('startTime', {initialValue: classInfo.startdate? moment(classInfo.startdate): null,
                                                 rules: [{ required: true, message: '请选择上课时间' }],
                                             })(
-                                                <TimePicker style={{width: '100%'}}/>)}
+                                                <TimePicker style={{width: '100%'}} format={'HH:mm'}/>)}
                                         </Form.Item>
                                     </Form.Item>
                                 </Col>

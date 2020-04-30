@@ -39,7 +39,7 @@ class AddClassModal extends React.Component {
             const params = {
                 type,
                 name: className,
-                startdate: startDate.format('YYYY-MM-DD') + ' ' + startTime.format('HH:mm:ss'),
+                startdate: startDate.format('YYYY-MM-DD') + ' ' + startTime.format('HH:mm'),
             };
 
             if (type === 1) {
@@ -131,7 +131,7 @@ class AddClassModal extends React.Component {
                             {getFieldDecorator('startTime', {
                                 rules: [{ required: true, message: '请选择上课时间' }],
                             })(
-                                <TimePicker style={{width: '100%'}}/>)}
+                                <TimePicker style={{width: '100%'}} format={'HH:mm'}/>)}
                         </Form.Item>
                     </Form.Item>
                     {type === 1? <Form.Item label="上课周期:&nbsp;" colon={false}

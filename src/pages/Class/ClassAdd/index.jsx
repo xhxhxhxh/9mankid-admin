@@ -82,7 +82,7 @@ class ClassAdd extends React.Component {
             const params = {
                 lesson_id: courseId,
                 name: className,
-                startdate: startDate.format('YYYY-MM-DD') + ' ' + startTime.format('HH:mm:ss'),
+                startdate: startDate.format('YYYY-MM-DD') + ' ' + startTime.format('HH:mm'),
                 cycle,
                 "limit_num": 6
             };
@@ -164,7 +164,7 @@ class ClassAdd extends React.Component {
                                         {getFieldDecorator('startTime', {
                                             rules: [{ required: true, message: '请选择上课时间' }],
                                         })(
-                                            <TimePicker style={{width: '100%'}}/>)}
+                                            <TimePicker style={{width: '100%'}} format={'HH:mm'}/>)}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={8} xl={{span: 6, offset: 2}}>

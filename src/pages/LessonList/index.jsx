@@ -87,7 +87,7 @@ class LessonList extends React.Component {
         const params = {
             pageno: pageNum,
             pagesize: pageSize,
-            date: date.toDate()
+            date: date.format('YYYY-MM-DD')
         };
 
         if (key) {
@@ -128,7 +128,7 @@ class LessonList extends React.Component {
 
     // 前往直播页
     goLive = record => {
-        const src = `https://www.9mankid.com/liveForStudent/${record.class_id}/${record.room_no}/${record.teacher_uid}/${this.state.userInfo.uid}/${record.courseware_no}/${record.class_name}/${this.state.userInfo.uname}`
+        const src = `https://www.9mankid.com/liveForStudent/${record.id}/4/${record.room_no}/${record.teacher_uid}/${this.state.userInfo.uid}/${record.courseware_no}/${record.class_name}/${this.state.userInfo.uname}`
         window.open(src)
     };
 

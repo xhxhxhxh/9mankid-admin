@@ -290,7 +290,7 @@ class StudentEdit extends React.Component {
             };
 
             if(contactDate) {
-                let contact_time = moment(contactDate).format('YYYY-MM-DD') + ' ' + moment(contactTime).format('HH:mm:ss');
+                let contact_time = moment(contactDate).format('YYYY-MM-DD') + ' ' + moment(contactTime).format('HH:mm');
                 Object.assign(params, {contact_time})
             }
 
@@ -539,7 +539,7 @@ class StudentEdit extends React.Component {
                                         </Form.Item>
                                         <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 12px)'}}>
                                             {getFieldDecorator('contactTime')(
-                                                <TimePicker style={{width: '100%'}}/>)}
+                                                <TimePicker style={{width: '100%'}} format={'HH:mm'}/>)}
                                         </Form.Item>
                                     </Form.Item>
                                 </Col>
