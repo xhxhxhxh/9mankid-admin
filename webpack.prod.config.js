@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const htmlPlugin = new htmlWebpackPlugin ({
     template: path.join(__dirname, './src/index.html'),
     filename: 'index.html',
@@ -29,6 +30,7 @@ module.exports = {
             chunkFilename: 'css/[id].[hash:8].css',
             ignoreOrder: false, // Enable to remove warnings about conflicting order
         }),
+        new CleanWebpackPlugin(),
     ],
     module: {
         rules: [

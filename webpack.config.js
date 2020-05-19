@@ -14,6 +14,7 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: "/"
     },
+    entry: ['react-hot-loader/patch', './src'],
     devServer: {
         open: true,
         port: 8085,

@@ -90,7 +90,8 @@ class Student extends React.Component {
             {
                 title: '操作',
                 key: 'operate',
-                render: (text,record) => <Link to={'/user/student/edit?uid=' + record.uid + '&pageNum=' + this.state.pageNum}>查看编辑</Link>,
+                render: (text,record) => <Link to={'/user/student/edit?uid=' + record.uid + '&pageNum=' + this.state.pageNum
+                + '&purpose=' + this.state.purpose}>查看编辑</Link>,
             },
         ];
         this.state = {
@@ -106,8 +107,10 @@ class Student extends React.Component {
     componentWillMount() {
         const searchObj = common.analyzeURL(this.props.location.search);
         const pageNum = searchObj.pageNum? parseInt(searchObj.pageNum): 1;
+        const purpose = searchObj.purpose ? searchObj.purpose : 'all';
         this.setState({
             pageNum,
+            purpose
         }, this.queryStudents);
 
     }
@@ -252,12 +255,6 @@ class Student extends React.Component {
                                     </Select>
                                     <Button onClick={this.openModal}
                                             style={{float: 'right'}} type="primary">创建账户</Button>
-                                </div>
-                            </Col>
-                            <Col xs={24} sm={24} md={12} lg={{span: 15, offset: 1}} xl={{span: 15, offset: 1}}>
-                                <div className="buttonBox">
-
-
                                 </div>
                             </Col>
                         </Row>

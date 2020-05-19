@@ -5,8 +5,10 @@ import style from './slideBar.less';
 import routes from '@/router';
 import common from '@/api/common';
 import Avatar from '../images/avatar.png';
-import history from "@/history"
-import NotFound404 from "@/pages/404"
+import history from "@/history";
+import NotFound404 from "@/pages/404";
+import logoLeft from '../images/logoLeft.png';
+import logoRight from '../images/logoRight.png';
 
 
 const { Header, Sider, Content } = Layout;
@@ -25,7 +27,7 @@ class SlideBar extends React.Component {
         super(props);
         this.state = {
             collapsed: false,
-            subMenuExpand: props.location.pathname
+            subMenuExpand: props.location.pathname,
         };
     }
 
@@ -198,7 +200,10 @@ class SlideBar extends React.Component {
         return (
             <Layout className={style.layout}>
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed} width="256">
-                    <div className="logo" />
+                    <div className="logo">
+                        <img src={logoLeft} alt="" className="left"/>
+                        {this.state.collapsed ? '' : <h1>九漫少儿思维</h1>}
+                    </div>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.state.subMenuExpand]}
                           selectedKeys={[this.selectedKeys()]}
                           defaultOpenKeys={['/' + this.state.subMenuExpand.split('/')[1]]}>

@@ -24,17 +24,20 @@ class StudentEdit extends React.Component {
             cacheChannel: ['朋友介绍', '微信广告', '公交广告'],
             contact: ['爸爸', '妈妈'],
             cacheContact: ['爸爸', '妈妈'],
-            modalVisible: false
+            modalVisible: false,
+            purpose: ''
         }
     }
 
     componentWillMount() {
         const searchObj = common.analyzeURL(this.props.location.search);
-        const pageNum = searchObj.pageNum? parseInt(searchObj.pageNum): 1
+        const pageNum = searchObj.pageNum ? parseInt(searchObj.pageNum) : 1;
+        const purpose = searchObj.purpose ? searchObj.purpose : 'all';
         const studentUid = searchObj.uid;
         this.setState({
             studentUid,
             pageNum,
+            purpose
         }, () => {
             this.queryStudentInfo();
             this.queryClassHourInfo();
@@ -359,7 +362,7 @@ class StudentEdit extends React.Component {
     };
 
     render() {
-        const { pageNum, studentInfo, classHourInfo, trackInfo, age, channel, contact, contactHistory, modalVisible } = this.state;
+        const { pageNum, studentInfo, classHourInfo, trackInfo, age, channel, contact, contactHistory, modalVisible, purpose } = this.state;
         const { getFieldDecorator } = this.props.form;
         const {balance, recharge_total, free_total, id} = classHourInfo;
         const totalClassHour = id? recharge_total + free_total: 0;
@@ -586,7 +589,8 @@ class StudentEdit extends React.Component {
                 </Collapse>
 
                 <div className="update">
-                    <Button size="large" onClick={() => this.props.history.push('/user/student?pageNum=' + pageNum)}>取消返回</Button>
+                    <Button size="large" onClick={() => this.props.history.push('/user/student?pageNum=' + pageNum
+                     + '&purpose=' + purpose)}>取消返回</Button>
                 </div>
             </div>
         )

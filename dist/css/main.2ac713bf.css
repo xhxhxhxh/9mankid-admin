@@ -9282,7 +9282,7 @@ textarea.ant-input {
           align-items: center;
 }
 .src-pages-Login-index-login-e079a .logo {
-  height: 44px;
+  height: 46px;
   display: -webkit-box;
   display: flex;
   -webkit-box-align: center;
@@ -10709,6 +10709,27 @@ textarea.ant-input {
   max-width: 0;
   display: inline-block;
   opacity: 0;
+}
+.src-pages-Layout-components-slideBar-layout-f7c03 .logo {
+  background-color: unset !important;
+}
+.src-pages-Layout-components-slideBar-layout-f7c03 .logo img {
+  vertical-align: middle;
+  margin-top: 7px;
+  width: 100%;
+}
+.src-pages-Layout-components-slideBar-layout-f7c03 .logo img.left {
+  width: 48px;
+}
+.src-pages-Layout-components-slideBar-layout-f7c03 .logo h1 {
+  display: inline-block;
+  margin: 8px 0 0 12px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 20px;
+  vertical-align: middle;
+  -webkit-animation: fade-in 0.3s;
+          animation: fade-in 0.3s;
 }
 .src-pages-Layout-components-slideBar-layout-f7c03 .trigger {
   font-size: 18px;
@@ -19114,6 +19135,28 @@ textarea.ant-input-number {
 }
 @keyframes fadeInArea {
     to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    100% {
         opacity: 1;
     }
 }

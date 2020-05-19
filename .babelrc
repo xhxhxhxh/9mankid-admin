@@ -1,6 +1,6 @@
 {
   "presets": ["env","stage-0","react"],
-  "plugins": ["transform-runtime",["import", {
+  "plugins": ["transform-runtime",["react-hot-loader/babel"],["import", {
     "libraryName": "antd",
     "libraryDirectory": "es",
     "style": "css"

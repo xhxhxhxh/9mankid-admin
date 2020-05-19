@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import {Router, Route, Redirect, Switch} from "react-router-dom";
 
@@ -11,7 +12,7 @@ import Live from './pages/Live';
 import history from '@/history';
 import common from "@/api/common";
 
-export default class App extends React.Component {
+class App extends React.Component {
     constructor () {
         super();
         this.state = {
@@ -44,3 +45,5 @@ export default class App extends React.Component {
         );
     }
 }
+
+export default hot(App)

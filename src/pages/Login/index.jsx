@@ -1,7 +1,7 @@
 import React from 'react';
 import NormalLoginForm from './components/NormalLoginForm'
 import styles from './index.less';
-import LogoImg from './images/logo.svg'
+import LogoImg from './images/logo.png'
 import common from "@/api/common";
 
 export default class Login extends React.Component {
