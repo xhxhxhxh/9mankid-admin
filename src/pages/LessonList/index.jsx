@@ -179,6 +179,7 @@ class LessonList extends React.Component {
 
     // 日期筛选
     dateChange = value => {
+        if(!value) return
         this.setState({
             date: value,
             pageNum: 1,
